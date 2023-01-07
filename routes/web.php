@@ -28,4 +28,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::namespace('App\Http\Livewire')->group(function () {
+
+    //? Routes that can be accessed only when logging in
+    Route::middleware(['auth', 'verified'])->group(function () {
+
+        //? Route for dashboard page
+        Route::prefix('/dashboard')->name('dashboard.')->group(function () {
+
+            Route::get('/', Index::class)->name('index');
+            
+            // livewire crud-generator Tall
+            Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
+
+         
+
+        });
+
+    });
+});
+
 require __DIR__.'/auth.php';

@@ -12,7 +12,7 @@
         </div>
         <div class="flex items-center"> <h1> Academic Year: 
             <br>
-           Semester: {{  }}
+           Semester: 
         </h1> 
 
         </div>
