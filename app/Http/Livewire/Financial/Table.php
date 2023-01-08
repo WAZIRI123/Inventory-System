@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Financial;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -9,7 +9,7 @@ use \Illuminate\View\View;
 
 use App\Models\Financial;
 
-class Wert extends Component
+class Table extends Component
 {
     use WithPagination;
 
@@ -55,9 +55,9 @@ class Wert extends Component
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->paginate($this->per_page);
 
-        return view('livewire.wert', [
+        return view('livewire.financial.table', [
             'results' => $results
-        ]);
+        ])->layoutData(['title' => 'Financial | School Management System']);
     }
 
     public function sortBy(string $field): void

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Financial;
 
 use Livewire\Component;
 use \Illuminate\View\View;
 use App\Models\Financial;
 use App\Models\Invoice;
 
-class WertChild extends Component
+class Create extends Component
 {
 
     public $item;
@@ -70,7 +70,7 @@ class WertChild extends Component
 
     public function render(): View
     {
-        return view('livewire.wert-child');
+        return view('livewire.financial.create');
     }
 
     public function showDeleteForm(int $id): void
@@ -85,7 +85,7 @@ class WertChild extends Component
         $this->confirmingItemDeletion = false;
         $this->primaryKey = '';
         $this->reset(['item']);
-        $this->emitTo('wert', 'refresh');
+        $this->emitTo('table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
     }
  
@@ -109,7 +109,7 @@ class WertChild extends Component
             'invoice_id' => $this->item['invoice_id'] ?? 0, 
         ]);
         $this->confirmingItemCreation = false;
-        $this->emitTo('wert', 'refresh');
+        $this->emitTo('table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
     }
  
@@ -128,7 +128,7 @@ class WertChild extends Component
         $this->item->save();
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
-        $this->emitTo('wert', 'refresh');
+        $this->emitTo('table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
     }
 

@@ -21,12 +21,8 @@
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">school activities</p>
 
 {{-- start menu wrapper --}}
-        
 
-       
-
- 
-        
+<x-side-menu.div-link route="financial" title="financial" />
 
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Account</p>
 

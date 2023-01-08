@@ -37,15 +37,18 @@ Route::namespace('App\Http\Livewire')->group(function () {
         Route::prefix('/dashboard')->name('dashboard.')->group(function () {
 
             Route::get('/', Index::class)->name('index');
-            
+
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
-
-         
-
         });
 
+        //? Financial
+        Route::namespace('Financial')->group(function () {
+
+            Route::get('/financial', Table::class)->name('financial');
+        });
+        
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
