@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
 use App\Models\Financial;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Table extends Component
 {
-    use WithPagination;
+    use WithPagination,AuthorizesRequests;
 
     /**
      * @var array
@@ -45,6 +46,7 @@ class Table extends Component
 
     public function render(): View
     {
+        $this->authorize('ViewAny', [Financial::class]);
         $results = $this->query()
             ->with(['invoice'])
             ->when($this->q, function ($query) {
