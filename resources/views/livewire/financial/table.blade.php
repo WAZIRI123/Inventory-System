@@ -1,7 +1,9 @@
+<div class="h-full bg-gray-200 p-8">
+    <div class="mt-8 min-h-screen">
 <div class="mt-8 min-h-screen">
     <div class="flex justify-between">
         <div class="text-2xl">Financials</div>
-        <button type="submit" wire:click="$emitTo('create', 'showCreateForm');" class="text-blue-500">
+        <button type="submit" wire:click="$emitTo('financial.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
     </div>
@@ -48,10 +50,10 @@
                     <td class="px-3 py-2" >{{ $result->profit }}</td>
                     <td class="px-3 py-2" >{{ $result->invoice?->id }}</td>
                     <td class="px-3 py-2" >
-                        <button type="submit" wire:click="$emitTo('create', 'showEditForm', {{ $result->id}});" class="text-green-500">
+                        <button type="submit" wire:click="$emitTo('financial.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />
                         </button>
-                        <button type="submit" wire:click="$emitTo('create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
+                        <button type="submit" wire:click="$emitTo('financial.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
                             <x-tall-crud-icon-delete />
                         </button>
                     </td>
@@ -66,4 +68,6 @@
     </div>
     @livewire('financial.create')
     @livewire('livewire-toast')
+</div>
+    </div>
 </div>

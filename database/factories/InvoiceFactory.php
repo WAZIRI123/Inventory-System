@@ -18,6 +18,7 @@ class InvoiceFactory extends Factory
     {
         return [
             'invoice_date' => $this->faker->dateTime,
+            'sales_order_id' => $this->faker->randomDigit(),
             'total_amount' => $this->faker->randomFloat(2, 100, 10000),
         ];
     }
