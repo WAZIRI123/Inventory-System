@@ -17,9 +17,10 @@ class Create extends Component
      * @var array
      */
     protected $listeners = [
+        'showEditForm',
         'showDeleteForm',
         'showCreateForm',
-        'showEditForm',
+    
     ];
 
     /**
@@ -136,12 +137,20 @@ class Create extends Component
  
     public function showEditForm(Inventory $inventory): void
     {
-        
         $this->resetErrorBag();
         $this->item = $inventory;
         $this->confirmingItemEdit = true;
        
-        
+        $this->checkedPurchaseOrders = $inventory->purchaseOrders->pluck("id")->map(function ($i) {
+            return (string)$i;
+        })->toArray();
+        $this->purchaseOrders = PurchaseOrder::orderBy('vendor_id')->get();
+
+        $this->checkedSalesOrders = $inventory->salesOrders->pluck("id")->map(function ($i) {
+            return (string)$i;
+        })->toArray();
+        $this->salesOrders = SalesOrder::orderBy('customer_name')->get();
+
     }
 
     public function editItem(): void

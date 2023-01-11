@@ -40,7 +40,7 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
-            Route::get('/financial', Wert::class)->name('financials');
+            Route::get('/financial', Wertwert::class)->name('financials');
         });
 
         //? Financial

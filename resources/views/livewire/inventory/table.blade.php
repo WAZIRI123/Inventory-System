@@ -27,7 +27,6 @@
                     </div>
                 </td>
                 <td class="px-3 py-2" >Name</td>
-                <td class="px-3 py-2" >Description</td>
                 <td class="px-3 py-2" >Quantity</td>
                 <td class="px-3 py-2" >Unit</td>
                 <td class="px-3 py-2" >Location</td>
@@ -48,7 +47,7 @@
                     <td class="px-3 py-2" >{{ $result->salesOrders->implode('customer_name', ',') }}</td>
                     <td class="px-3 py-2" >
 
-                        <button type="submit" wire:click="$emitTo('inventory.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500" >
+                        <button type="submit" wire:click="$emitTo('inventory.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
                             <x-tall-crud-icon-delete />
                         </button>
 
