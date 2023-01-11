@@ -17,40 +17,39 @@ class FinancialTest extends TestCase
 {
     use FeatureTestTrait, AuthorizesRequests;
 
-         /** @test  */
-    
-         public function authorized_user_can_view_financials()
-         {
-             $this->withoutExceptionHandling();
+    /** @test  */
 
-             $invoice=Invoice::factory()->create();
+    public function authorized_user_can_view_financials()
+    {
+        $this->withoutExceptionHandling();
 
-             $financial=Financial::factory(5)->for($invoice)->create();
+        $invoice = Invoice::factory()->create();
 
-             $user = User::factory()->create();
-            
-             $user->assignRole('Admin');
- 
-             Livewire::actingAs($user)
-                 ->test(Table::class)->assertSee( $financial->first()->expenses);
-         }
+        $financial = Financial::factory(5)->for($invoice)->create();
 
-                  /** @test  */
-    
-                  public function unauthorized_user_can_not_view_financials()
-                  {
-                     
-         
-                      $invoice=Invoice::factory()->create();
-         
-                      $financial=Financial::factory(5)->for($invoice)->create();
-         
-                      $user = User::factory()->create();
-                     
-                      $user->assignRole('Employee');
-          
-                      Livewire::actingAs($user)
-                          ->test('financial.table')->assertStatus(Response::HTTP_FORBIDDEN);
-                  }
+        $user = User::factory()->create();
 
+        $user->assignRole('Admin');
+
+        Livewire::actingAs($user)
+            ->test(Table::class)->assertSee($financial->first()->expenses);
+    }
+
+    /** @test  */
+
+    public function unauthorized_user_can_not_view_financials()
+    {
+
+
+        $invoice = Invoice::factory()->create();
+
+        $financial = Financial::factory(5)->for($invoice)->create();
+
+        $user = User::factory()->create();
+
+        $user->assignRole('Employee');
+
+        Livewire::actingAs($user)
+            ->test('financial.table')->assertStatus(Response::HTTP_FORBIDDEN);
+    }
 }

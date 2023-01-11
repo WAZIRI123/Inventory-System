@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Wert;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,8 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             Route::get('/', Index::class)->name('index');
 
+            Route::get('/financial', Wert::class)->name('financials');
+
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
         });
@@ -46,6 +49,7 @@ Route::namespace('App\Http\Livewire')->group(function () {
         Route::namespace('Financial')->group(function () {
 
             Route::get('/financial', Table::class)->name('financial');
+            
         });
         
     });

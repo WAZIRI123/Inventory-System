@@ -23,7 +23,7 @@
 {{-- start menu wrapper --}}
 
  <!-- start::Menu link -->
-<x-side-menu.div-link route="financial" title="financial" />
+<x-side-menu.div-link route="financial" title="Financial" />
 <!-- end::Menu link -->
 
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Account</p>
