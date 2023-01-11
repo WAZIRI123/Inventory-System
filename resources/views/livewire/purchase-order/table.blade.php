@@ -1,8 +1,8 @@
 <div class="h-full bg-gray-200 p-8">
 <div class="mt-8 min-h-screen">
     <div class="flex justify-between">
-        <div class="text-2xl">Inventory</div>
-        <button type="submit" wire:click="$emitTo('inventory.create', 'showCreateForm');" class="text-blue-500">
+        <div class="text-2xl">Purchases</div>
+        <button type="submit" wire:click="$emitTo('purchase-order.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
     </div>
@@ -26,12 +26,16 @@
                         <x-tall-crud-sort-icon sortField="id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-                <td class="px-3 py-2" >Name</td>
-                <td class="px-3 py-2" >Quantity</td>
-                <td class="px-3 py-2" >Unit</td>
-                <td class="px-3 py-2" >Location</td>
-                <td class="px-3 py-2" >PurchaseOrders</td>
-                <td class="px-3 py-2" >SalesOrders</td>
+                <td class="px-3 py-2" >
+                    <div class="flex items-center">
+                        <button wire:click="sortBy('vendor_id')">Vendor Id</button>
+                        <x-tall-crud-sort-icon sortField="vendor_id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                    </div>
+                </td>
+                <td class="px-3 py-2" >Order Date</td>
+                <td class="px-3 py-2" >Delivery Date</td>
+                <td class="px-3 py-2" >Vendor</td>
+                <td class="px-3 py-2" >Items</td>
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
             </thead>
@@ -39,19 +43,16 @@
             @foreach($results as $result)
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
-                    <td class="px-3 py-2" >{{ $result->name }}</td>
-                    <td class="px-3 py-2" >{{ $result->quantity }}</td>
-                    <td class="px-3 py-2" >{{ $result->unit }}</td>
-                    <td class="px-3 py-2" >{{ $result->location }}</td>
-                    <td class="px-3 py-2" >{{ $result->purchaseOrders->implode('vendor_id', ',') }}</td>
-                    <td class="px-3 py-2" >{{ $result->salesOrders->implode('customer_name', ',') }}</td>
+                    <td class="px-3 py-2" >{{ $result->vendor_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->order_date }}</td>
+                    <td class="px-3 py-2" >{{ $result->delivery_date }}</td>
+                    <td class="px-3 py-2" >{{ $result->vendor?->name }}</td>
+                    <td class="px-3 py-2" >{{ $result->items->implode('name', ',') }}</td>
                     <td class="px-3 py-2" >
-
-                        <button type="submit" wire:click="$emitTo('inventory.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
+                        <button type="submit" wire:click="$emitTo('purchase-order.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />
                         </button>
-
-                        <button type="submit" wire:click="$emitTo('inventory.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
+                        <button type="submit" wire:click="$emitTo('purchase-order.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
                             <x-tall-crud-icon-delete />
                         </button>
                     </td>
@@ -64,6 +65,7 @@
     <div class="mt-4">
         {{ $results->links() }}
     </div>
-    @livewire('inventory.create')
+    @livewire('purchase-order.create')
     @livewire('livewire-toast')
+</div>
 </div>

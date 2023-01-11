@@ -12,7 +12,7 @@
     </div>
     <!-- end::Logo -->
 
-    <!-- start::Navigation -->
+    <!-- start::Navigation  -->
     <nav class="py-10 custom-scrollbar">
         <!-- start::Menu link -->
         <x-side-menu.div-link route="dashboard.index" title="Dashboard" />
@@ -30,6 +30,17 @@
  <x-side-menu.div-link route="inventory" title="Inventory" />
  <!-- end::Menu link -->
 
+  <!-- start::Menu link  -->
+  <x-side-menu.div-link route="purchase-order" title="Purchase Order" />
+  <!-- end::Menu link -->
+
+    <!-- start::Menu link  -->
+    <x-side-menu.div-link route="sales-order" title="Sales" />
+    <!-- end::Menu link -->
+
+        <!-- start::Menu link  -->
+        <x-side-menu.div-link route="vendor" title="vendor" />
+        <!-- end::Menu link -->
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Account</p>
 
         <!-- start::Menu link -->

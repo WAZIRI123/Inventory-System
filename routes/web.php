@@ -40,7 +40,6 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
-            Route::get('/financial', Wertwert::class)->name('financials');
         });
 
         //? Financial
@@ -55,6 +54,23 @@ Route::namespace('App\Http\Livewire')->group(function () {
             Route::get('/inventory', Table::class)->name('inventory');
         });
 
+        //PurchaseOrder
+        Route::namespace('PurchaseOrder')->group(function () {
+
+            Route::get('/purchase-order', Table::class)->name('purchase-order');
+        });
+
+        //SalesOrder
+        Route::namespace('SalesOrder')->group(function () {
+
+            Route::get('/sales-order', Table::class)->name('sales-order');
+        });
+
+        //Vendor
+        Route::namespace('Vendor')->group(function () {
+
+            Route::get('/vendor', Table::class)->name('vendor');
+        });
     });
 });
 

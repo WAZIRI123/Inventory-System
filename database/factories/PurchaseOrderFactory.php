@@ -17,6 +17,7 @@ class PurchaseOrderFactory extends Factory
     public function definition()
     {
         return [
+            'vendor_id'=>$this->faker->randomDigit(),
             'order_date' => $this->faker->dateTime,
             'delivery_date' => $this->faker->dateTime,
         ];

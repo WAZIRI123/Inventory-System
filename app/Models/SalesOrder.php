@@ -11,6 +11,13 @@ class SalesOrder extends Model
     use HasFactory;
     protected $table = 'sales';
 
+    protected $fillable = [
+        'customer_name',
+        'order_date',
+        'delivery_date',
+
+    ];
+
     public function invoice()
     {
         return $this->hasOne(Invoice::class);

@@ -11,6 +11,13 @@ class PurchaseOrder extends Model
     use HasFactory;
     protected $table = 'purchases';
 
+    protected $fillable = [
+        'vendor_id',
+        'order_date',
+        'delivery_date',
+
+    ];
+
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
