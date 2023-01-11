@@ -11,6 +11,14 @@ class Inventory extends Model
     
     protected $table = 'inventory';
 
+    protected $fillable = [
+        'name',
+        'description',
+        'quantity',
+        'unit',
+        'location',
+    ];
+
     public function purchaseOrders()
     {
         return $this->belongsToMany(PurchaseOrder::class);
