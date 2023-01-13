@@ -1,6 +1,6 @@
 <div class="h-full bg-gray-200 p-8">
-    <div class="mt-8 min-h-screen">
 <div class="mt-8 min-h-screen">
+    @livewire('livewire-toast')
     <div class="flex justify-between">
         <div class="text-2xl">Financials</div>
         <button type="submit" wire:click="$emitTo('financial.create', 'showCreateForm');" class="text-blue-500">
@@ -67,7 +67,7 @@
         {{ $results->links() }}
     </div>
     @livewire('financial.create')
-    @livewire('livewire-toast')
+ 
 </div>
     </div>
 </div>

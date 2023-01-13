@@ -85,7 +85,8 @@ class Create extends Component
         $this->confirmingItemDeletion = false;
         $this->primaryKey = '';
         $this->reset(['item']);
-        $this->emitTo('table', 'refresh');
+        $this->emitTo('financial.table', 'refresh');
+        $this->render();
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
     }
  
@@ -109,7 +110,7 @@ class Create extends Component
             'invoice_id' => $this->item['invoice_id'] ?? 0, 
         ]);
         $this->confirmingItemCreation = false;
-        $this->emitTo('table', 'refresh');
+        $this->emitTo('financial.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
     }
  
@@ -128,7 +129,7 @@ class Create extends Component
         $this->item->save();
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
-        $this->emitTo('table', 'refresh');
+        $this->emitTo('financial.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
     }
 

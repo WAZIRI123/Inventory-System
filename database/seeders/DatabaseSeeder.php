@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,9 +24,9 @@ class DatabaseSeeder extends Seeder
             SalesOrderSeeder::class,
             InvoiceSeeder::class,
             FinancialSeeder::class,
-            PurchaseOrderSeeder::class
-           
-       
+            PurchaseOrderSeeder::class,
+            EmployeeSeeder::class 
+          
         ]);
     }
 }

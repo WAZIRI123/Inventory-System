@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Wert;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,8 @@ Route::namespace('App\Http\Livewire')->group(function () {
         Route::prefix('/dashboard')->name('dashboard.')->group(function () {
 
             Route::get('/', Index::class)->name('index');
+
+            Route::get('/fina', Wert::class)->name('fina');
 
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');

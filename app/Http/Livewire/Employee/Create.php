@@ -6,11 +6,14 @@ use Livewire\Component;
 use \Illuminate\View\View;
 use App\Models\Employee;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use AuthorizesRequests, WithFileUploads;
 
     public $item;
 
@@ -98,6 +101,7 @@ class Create extends Component
  
     public function showCreateForm(): void
     {
+        $this->authorize('create', [Employee::class]);
         $this->confirmingItemCreation = true;
         $this->resetErrorBag();
         $this->reset(['item','profile_picture']);
@@ -107,6 +111,7 @@ class Create extends Component
 
     public function createItem(): void
     {
+        $this->authorize('create', [Employee::class]);
         if ($this->profile_picture) {
             $rule['profile_picture'] = 'image|mimes:jpeg,png';
         }
@@ -118,7 +123,6 @@ class Create extends Component
             'name' => $this->item['name'],
             'profile_picture' => $profile_picture?? auth()->user()->avatarUrl($this->item['email']) ,
             'email' => $this->item['email'],
-            'school_id' => auth()->user()->school->id,
         ]);
         $user->assignRole('Employee');
         Employee::create([

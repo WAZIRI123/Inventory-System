@@ -41,7 +41,9 @@ class EmployeePolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->hasRole("Admin")) {
+            return true;
+        }
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,9 @@ class EmployeeFactory extends Factory
      */
     public function definition()
     {
+        $users=User::factory()->create();
         return [
-            //
+            'user_id'=> $users->id,
         ];
     }
 }
