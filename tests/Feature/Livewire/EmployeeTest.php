@@ -41,15 +41,26 @@ class EmployeeTest extends TestCase
 
      // test 
      Livewire::test(Create::class)
-         ->set('item.name', 'waziri')
+         ->set('item.name', 'John Doe')
          ->set('profile_picture', $image)
-         ->set('item.email', 'waziriallyami@gmail.com')
-         ->call('createItem');
+         ->set('item.email', 'johndoe@example.com',)
+         ->call('createItem')->assertHasNoErrors();
 
      // test if data exist in database
-     $this->assertDatabaseHas('employees', [
-         'user_id' =>  2
-     ]);
+
+     $this->assertDatabaseHas('users', [
+        'name' => 'John Doe',
+        'email' => 'johndoe@example.com',
+    ]);
+    $user = User::whereEmail('johndoe@example.com')->first();
+    $this->assertTrue($user->hasRole('Employee'));
+
+    $this->assertDatabaseHas('employees', [
+        'user_id' => $user->id
+    ]);
+
+
+     Storage::disk('public')->assertExists("img/profile_picture/upload/".$imagename );
  }
 
   //test authorised users can edit employee
