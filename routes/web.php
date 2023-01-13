@@ -71,6 +71,12 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             Route::get('/vendor', Table::class)->name('vendor');
         });
+
+        //Employee
+        Route::namespace('Employee')->group(function () {
+
+            Route::get('/employee', Table::class)->name('employee');
+        });
     });
 });
 

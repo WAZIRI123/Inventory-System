@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_picture'
     ];
 
     /**
@@ -37,6 +38,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function avatarUrl($email=null){
+        return 'https://www.gravatar.com/avatar/'.md5(trim($email));
+    }
     /**
      * The attributes that should be cast.
      *

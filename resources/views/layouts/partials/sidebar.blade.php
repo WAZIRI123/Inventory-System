@@ -20,32 +20,38 @@
 
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">school activities</p>
 
-{{-- start menu wrapper --}}
+        {{-- start menu wrapper --}}
 
- <!-- start::Menu link -->
-<x-side-menu.div-link route="financial" title="Financial" />
-<!-- end::Menu link -->
+        <!-- start::Menu link -->
+        <x-side-menu.div-link route="financial" title="Financial" />
+        <!-- end::Menu link -->
 
- <!-- start::Menu link -->
- <x-side-menu.div-link route="inventory" title="Inventory" />
- <!-- end::Menu link -->
+        <!-- start::Menu link -->
+        <x-side-menu.div-link route="inventory" title="Inventory" />
+        <!-- end::Menu link -->
 
-  <!-- start::Menu link  -->
-  <x-side-menu.div-link route="purchase-order" title="Purchase Order" />
-  <!-- end::Menu link -->
+        <!-- start::Menu link  -->
+        <x-side-menu.div-link route="purchase-order" title="Purchase Order" />
+        <!-- end::Menu link -->
 
-    <!-- start::Menu link  -->
-    <x-side-menu.div-link route="sales-order" title="Sales" />
-    <!-- end::Menu link -->
+        <!-- start::Menu link  -->
+        <x-side-menu.div-link route="sales-order" title="Sales" />
+        <!-- end::Menu link -->
 
         <!-- start::Menu link  -->
         <x-side-menu.div-link route="vendor" title="vendor" />
         <!-- end::Menu link -->
+
+        <!-- start::Menu link  -->
+        <x-side-menu.div-link route="employee" title="Employee" />
+        <!-- end::Menu link -->
+
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Account</p>
 
         <!-- start::Menu link -->
         <a x-data="{ linkHover: false }" @mouseover="linkHover = true" @mouseleave="linkHover = false"
-            class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200" href="">
+            class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
+            href="">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200"
                 :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -57,19 +63,23 @@
         </a>
         <!-- end::Menu link  -->
 
-                    <!-- start::Menu link -->
-                    <form method="POST" action="{{ route('logout') }}" class="grid gap-2">
-                        @csrf
-                        <a x-data="{ linkHover: false }" @mouseover="linkHover = true" @mouseleave="linkHover = false" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"  class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span class="ml-3 transition duration-200" :class="linkHover ? 'text-gray-100' : ''">
-                                Logout
-                            </span>
-                        </a>
-                        </form>
-                        <!-- end::Menu link -->
+        <!-- start::Menu link -->
+        <form method="POST" action="{{ route('logout') }}" class="grid gap-2">
+            @csrf
+            <a x-data="{ linkHover: false }" @mouseover="linkHover = true" @mouseleave="linkHover = false"
+                href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200"
+                    :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span class="ml-3 transition duration-200" :class="linkHover ? 'text-gray-100' : ''">
+                    Logout
+                </span>
+            </a>
+        </form>
+        <!-- end::Menu link -->
 
     </nav>
     <!-- end::Navigation -->
