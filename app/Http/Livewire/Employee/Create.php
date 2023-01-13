@@ -82,6 +82,7 @@ class Create extends Component
 
     public function showDeleteForm(Employee $employee): void
     {
+        $this->authorize('delete', $employee);
         $this->confirmingItemDeletion = true;
 
         $this->employee = $employee;
@@ -89,7 +90,7 @@ class Create extends Component
 
     public function deleteItem(Employee $employee): void
     {
-    
+        $this->authorize('delete', $employee);
         User::find($this->employee->user_id)->delete();
         $this->employee->delete();
         $this->confirmingItemDeletion = false;
@@ -136,6 +137,7 @@ class Create extends Component
  
     public function showEditForm(Employee $employee): void
     {
+        $this->authorize('update', $employee);
         $this->resetErrorBag();
         $this->reset(['profile_picture']);
         $this->employee= $employee;
@@ -150,6 +152,7 @@ class Create extends Component
 
     public function editItem(Employee $employee): void
     {
+        $this->authorize('update', $employee);
         $this->validate();
         if ($this->profile_picture) {
             $profile_picture=$this->profile_picture->storeAs('img/profile_picture/upload',$this->profile_picture->getClientOriginalName(),'public');

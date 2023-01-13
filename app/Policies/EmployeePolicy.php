@@ -55,7 +55,9 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee)
     {
-        //
+        if ($user->hasRole("Admin")) {
+            return true;
+        }
     }
 
     /**
@@ -67,7 +69,9 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee)
     {
-        //
+        if ($user->hasRole("Admin")) {
+            return true;
+        }
     }
 
     /**
@@ -79,7 +83,9 @@ class EmployeePolicy
      */
     public function restore(User $user, Employee $employee)
     {
-        //
+        if ($user->hasRole("Admin")) {
+            return true;
+        }
     }
 
     /**
@@ -91,6 +97,8 @@ class EmployeePolicy
      */
     public function forceDelete(User $user, Employee $employee)
     {
-        //
+        if ($user->hasRole("Admin")) {
+            return true;
+        }
     }
 }

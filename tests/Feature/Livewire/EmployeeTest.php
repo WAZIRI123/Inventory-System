@@ -109,7 +109,9 @@ class EmployeeTest extends TestCase
 
  public function test_authorised_users_can_delete_employee()
  {
-     // make fake user && assign role && acting as that user
+     
+    $this->withoutExceptionHandling();
+    // make fake user && assign role && acting as that user
      $user = User::factory()->create();
      $user->assignRole('Admin');
    
