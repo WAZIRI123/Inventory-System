@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
 use App\Models\Product;
+use Carbon\Carbon;
 
 class Table extends Component
 {

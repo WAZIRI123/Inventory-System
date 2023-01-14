@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Employee;
 use Livewire\Component;
 use \Illuminate\View\View;
 use App\Models\Employee;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
@@ -87,9 +88,11 @@ class Create extends Component
 
         $this->employee = $employee;
     }
+    
 
     public function deleteItem(Employee $employee): void
     {
+
         $this->authorize('delete', $employee);
         User::find($this->employee->user_id)->delete();
         $this->employee->delete();

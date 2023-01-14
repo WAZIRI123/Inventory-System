@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
 use App\Models\Employee;
+use App\Models\Product;
 
 class Table extends Component
 {
@@ -37,6 +38,7 @@ class Table extends Component
     {
 
     }
+
 
     public function render(): View
     {

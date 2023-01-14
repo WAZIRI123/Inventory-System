@@ -2,7 +2,7 @@
 <div class="mt-8 min-h-screen">
     @livewire('livewire-toast')
     <div class="flex justify-between">
-        <div class="text-2xl">Employees</div>
+        <div class="text-2xl" >Employees</div>
         <button type="submit" wire:click="$emitTo('employee.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
