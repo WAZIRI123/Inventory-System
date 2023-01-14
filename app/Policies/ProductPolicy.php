@@ -18,7 +18,10 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
+    
     }
 
     /**
@@ -30,7 +33,9 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +46,9 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +60,9 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +74,9 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
     }
 
     /**
@@ -77,7 +88,9 @@ class ProductPolicy
      */
     public function restore(User $user, Product $product)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
     }
 
     /**
@@ -89,6 +102,8 @@ class ProductPolicy
      */
     public function forceDelete(User $user, Product $product)
     {
-        //
+        if ($user->hasRole('Admin')) {
+            return true;
+        }
     }
 }

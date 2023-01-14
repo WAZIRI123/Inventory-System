@@ -39,7 +39,7 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             Route::get('/', Index::class)->name('index');
 
-            Route::get('/fina', Wert::class)->name('fina');
+            
 
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
@@ -80,6 +80,14 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             Route::get('/employee', Table::class)->name('employee');
         });
+
+        
+        //Product
+        Route::namespace('Product')->group(function () {
+
+            Route::get('/product', Table::class)->name('product');
+        });
+
     });
 });
 

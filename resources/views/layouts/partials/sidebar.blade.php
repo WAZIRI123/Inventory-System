@@ -7,7 +7,7 @@
     <!-- start::Logo -->
     <div class="flex items-center justify-center bg-black bg-opacity-30 h-16">
         <h1 class="text-gray-100 text-lg font-bold uppercase tracking-widest">
-            Sms System
+            Inventory System
         </h1>
     </div>
     <!-- end::Logo -->
@@ -18,10 +18,14 @@
         <x-side-menu.div-link route="dashboard.index" title="Dashboard" />
         <!-- end::Menu link -->
 
-        <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">school activities</p>
+        <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Inventory activities</p>
 
         {{-- start menu wrapper --}}
 
+        
+                <!-- start::Menu link  -->
+                <x-side-menu.div-link route="product" title="product" />
+                <!-- end::Menu link -->
         <!-- start::Menu link -->
         <x-side-menu.div-link route="financial" title="Financial" />
         <!-- end::Menu link -->
