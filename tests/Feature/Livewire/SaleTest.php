@@ -4,6 +4,7 @@ namespace Tests\Feature\Livewire;
 
 use App\Http\Livewire\Sales\Create;
 use App\Models\Product;
+use App\Models\Sale;
 use App\Models\User;
 use App\Traits\FeatureTestTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -52,4 +53,27 @@ class SaleTest extends TestCase
 
      
       }
+
+      //test authorised users can edit Product
+
+public function test_authorised_users_can_delete_sale()
+{
+    
+   $this->withoutExceptionHandling();
+   // make fake user && assign role && acting as that user
+    $user = User::factory()->create();
+  
+    $sale = Sale::factory()->create();
+
+    // test
+    Livewire::actingAs($user)
+        ->test(Create::class, ['sale' => $sale])
+        ->call('showDeleteForm', $sale)
+        ->call('deleteItem',  $sale);
+
+    $this->assertEquals($sale->inStock(),0);
+    // test if data is softdeleted
+    $this->assertSoftDeleted( $sale);
+}
+
 }
