@@ -39,7 +39,7 @@
         <!-- end::Menu link -->
 
         <!-- start::Menu link  -->
-        <x-side-menu.div-link route="sales-order" title="Sales" />
+        <x-side-menu.div-link route="sales" title="Sales" />
         <!-- end::Menu link -->
 
         <!-- start::Menu link  -->

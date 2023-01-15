@@ -63,10 +63,10 @@ Route::namespace('App\Http\Livewire')->group(function () {
             Route::get('/purchase-order', Table::class)->name('purchase-order');
         });
 
-        //SalesOrder
-        Route::namespace('SalesOrder')->group(function () {
+        //Sales
+        Route::namespace('Sales')->group(function () {
 
-            Route::get('/sales-order', Table::class)->name('sales-order');
+            Route::get('/sales', Table::class)->name('sales');
         });
 
         //Vendor

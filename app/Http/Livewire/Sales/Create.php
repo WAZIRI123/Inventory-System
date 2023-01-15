@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\SalesOrder;
+namespace App\Http\Livewire\Sales;
 
 use Livewire\Component;
 use \Illuminate\View\View;
-use App\Models\SalesOrder;
-use App\Models\Inventory;
+use App\Models\Sale;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Exceptions\OutOfStockException;
 
 class Create extends Component
 {
@@ -24,28 +26,33 @@ class Create extends Component
     /**
      * @var array
      */
-    public $items = [];
+    public $products = [];
+
     /**
      * @var array
      */
-    public $checkedItems = [];
+    public $customers = [];
 
     /**
      * @var array
      */
     protected $rules = [
-        'item.customer_name' => '',
-        'item.order_date' => '',
-        'item.delivery_date' => '',
+        'item.product_id' => '',
+        'item.customer_id' => '',
+        'item.quantity' => '',
+        'item.product_id' => 'required',
+        'item.customer_id' => 'required',
     ];
 
     /**
      * @var array
      */
     protected $validationAttributes = [
-        'item.customer_name' => 'Customer Name',
-        'item.order_date' => 'Order Date',
-        'item.delivery_date' => 'Delivery Date',
+        'item.product_id' => 'Product Id',
+        'item.customer_id' => 'Customer Id',
+        'item.quantity' => 'Quantity',
+        'item.product_id' => 'Product',
+        'item.customer_id' => 'Customer',
     ];
 
     /**
@@ -70,7 +77,7 @@ class Create extends Component
 
     public function render(): View
     {
-        return view('livewire.sales-order.create');
+        return view('livewire.sales.create');
     }
 
     public function showDeleteForm(int $id): void
@@ -81,11 +88,11 @@ class Create extends Component
 
     public function deleteItem(): void
     {
-        SalesOrder::destroy($this->primaryKey);
+        Sale::destroy($this->primaryKey);
         $this->confirmingItemDeletion = false;
         $this->primaryKey = '';
         $this->reset(['item']);
-        $this->emitTo('sales-order.table', 'refresh');
+        $this->emitTo('sales-table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
     }
  
@@ -95,48 +102,56 @@ class Create extends Component
         $this->resetErrorBag();
         $this->reset(['item']);
 
-        $this->items = Inventory::orderBy('name')->get();
-        $this->checkedItems = [];
+        $this->products = Product::orderBy('name')->get();
+
+        $this->customers = Customer::orderBy('name')->get();
     }
 
     public function createItem(): void
     {
         $this->validate();
-        $item = SalesOrder::create([
-            'customer_name' => $this->item['customer_name'] ?? '', 
-            'order_date' => $this->item['order_date'] ?? '', 
-            'delivery_date' => $this->item['delivery_date'] ?? '', 
-        ]);
-        $item->items()->attach($this->checkedItems);
+        $product = Product::find($this->item['product_id']);
+        if (!$product->inStock($this->item['product_id'])) {
+            
+            throw new OutOfStockException('product is out of stock');
 
+            return;
+        }
+
+
+        $product ->decreaseStock($this->item['product_id']);
+ 
+
+        $item = Sale::create([
+            'product_id' => $this->item['product_id'] ?? '', 
+            'customer_id' => $this->item['customer_id'] ?? '', 
+            'quantity' => $this->item['quantity'] ?? '', 
+            'product_id' => $this->item['product_id'] ?? 0, 
+            'customer_id' => $this->item['customer_id'] ?? 0, 
+        ]);
         $this->confirmingItemCreation = false;
-        $this->emitTo('sales-order.table', 'refresh');
+        $this->emitTo('sales-table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
     }
  
-    public function showEditForm(SalesOrder $salesorder): void
+    public function showEditForm(Sale $sale): void
     {
         $this->resetErrorBag();
-        $this->item = $salesorder;
+        $this->item = $sale;
         $this->confirmingItemEdit = true;
 
-        $this->checkedItems = $salesorder->items->pluck("id")->map(function ($i) {
-            return (string)$i;
-        })->toArray();
-        $this->items = Inventory::orderBy('name')->get();
+        $this->products = Product::orderBy('name')->get();
 
+        $this->customers = Customer::orderBy('name')->get();
     }
 
     public function editItem(): void
     {
         $this->validate();
         $this->item->save();
-
-        $this->item->items()->sync($this->checkedItems);
-        $this->checkedItems = [];
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
-        $this->emitTo('sales-order.table', 'refresh');
+        $this->emitTo('sales-table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
     }
 

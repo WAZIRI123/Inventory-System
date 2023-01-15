@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\SalesOrder;
+namespace App\Http\Livewire\Sales;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
-use App\Models\SalesOrder;
+use App\Models\Sale;
 
 class Table extends Component
 {
@@ -41,11 +41,11 @@ class Table extends Component
     public function render(): View
     {
         $results = $this->query()
-            ->with(['items'])
+            ->with(['customer','product'])
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->paginate($this->per_page);
 
-        return view('livewire.sales-order.table', [
+        return view('livewire.sales.table', [
             'results' => $results
         ])->layoutData(['title' => 'Sales | School Management System']);
     }
@@ -65,6 +65,6 @@ class Table extends Component
 
     public function query(): Builder
     {
-        return SalesOrder::query();
+        return Sale::query();
     }
 }

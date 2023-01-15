@@ -22,9 +22,8 @@ class DatabaseSeeder extends Seeder
             userSeeder::class,
             VendorSeeder::class,
             InventorySeeder::class,
-            SalesOrderSeeder::class,
-            InvoiceSeeder::class,
-            FinancialSeeder::class,
+            SaleSeeder::class,
+            CustomerSeeder::class,
             PurchaseOrderSeeder::class,
             EmployeeSeeder::class ,
             ProductSeeder::class

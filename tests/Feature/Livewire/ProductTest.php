@@ -112,8 +112,6 @@ class ProductTest extends TestCase
     public function test_unauthorised_user_can_not_edit_product()
     {
       
-  
-   
         // make fake user && assign role && acting as that user
         $user1 = User::factory()->create();
       

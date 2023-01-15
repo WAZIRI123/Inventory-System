@@ -10,6 +10,7 @@
         "appstract/laravel-stock": "^1.2",
         "ascsoftw/tall-crud-generator": "^2.4",
         "barryvdh/laravel-dompdf": "^2.0",
+        "binary-cats/laravel-sku": "^0.5.0",
         "doctrine/dbal": "^3.4",
         "dompdf/dompdf": "^2.0",
         "dyrynda/laravel-cascade-soft-deletes": "^4.2",

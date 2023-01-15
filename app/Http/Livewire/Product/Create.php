@@ -36,7 +36,7 @@ use AuthorizesRequests;
         'item.description' => '',
         'item.purchase_price' => '',
         'item.sale_price' => '',
-        'item.quantity' => '',
+        'item.quantity' => 'required',
         'item.vendor_id' => 'required',
     ];
 
