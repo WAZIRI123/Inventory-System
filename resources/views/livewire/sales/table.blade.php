@@ -40,7 +40,7 @@
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
                     <td class="px-3 py-2" >{{ $result->product_id }}</td>
-                    <td class="px-3 py-2" >{{ $result->customer_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->employee_id }}</td>
                     <td class="px-3 py-2" >{{ $result->quantity }}</td>
                     <td class="px-3 py-2" >{{ $result->customer?->name }}</td>
                     <td class="px-3 py-2" >{{ $result->product?->name }}</td>

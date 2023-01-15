@@ -6,7 +6,7 @@ use Livewire\Component;
 use \Illuminate\View\View;
 use App\Models\Sale;
 use App\Models\Product;
-use App\Models\Customer;
+use App\Models\Employee;
 use App\Exceptions\OutOfStockException;
 
 class Create extends Component
@@ -31,17 +31,17 @@ class Create extends Component
     /**
      * @var array
      */
-    public $customers = [];
+    public $employees = [];
 
     /**
      * @var array
      */
     protected $rules = [
         'item.product_id' => '',
-        'item.customer_id' => '',
+        'item.employee_id' => '',
         'item.quantity' => '',
         'item.product_id' => 'required',
-        'item.customer_id' => 'required',
+        'item.employee_id' => 'required',
     ];
 
     /**
@@ -49,10 +49,10 @@ class Create extends Component
      */
     protected $validationAttributes = [
         'item.product_id' => 'Product Id',
-        'item.customer_id' => 'Customer Id',
+        'item.employee_id' => 'Employee Id',
         'item.quantity' => 'Quantity',
         'item.product_id' => 'Product',
-        'item.customer_id' => 'Customer',
+        'item.employee_id' => 'Employee',
     ];
 
     /**
@@ -104,14 +104,16 @@ class Create extends Component
 
         $this->products = Product::orderBy('name')->get();
 
-        $this->customers = Customer::orderBy('name')->get();
+        $this->employees = Employee::orderBy('name')->get();
     }
 
     public function createItem(): void
     {
         $this->validate();
         $product = Product::find($this->item['product_id']);
-        if (!$product->inStock($this->item['product_id'])) {
+
+        $product ->increaseStock($this->item['quantity']);
+        if (!$product->inStock($this->item['quantity'])) {
             
             throw new OutOfStockException('product is out of stock');
 
@@ -124,10 +126,10 @@ class Create extends Component
 
         $item = Sale::create([
             'product_id' => $this->item['product_id'] ?? '', 
-            'customer_id' => $this->item['customer_id'] ?? '', 
+            'employee_id' => $this->item['employee_id'] ?? '', 
             'quantity' => $this->item['quantity'] ?? '', 
             'product_id' => $this->item['product_id'] ?? 0, 
-            'customer_id' => $this->item['customer_id'] ?? 0, 
+            'employee_id' => $this->item['employee_id'] ?? 0, 
         ]);
         $this->confirmingItemCreation = false;
         $this->emitTo('sales-table', 'refresh');
@@ -142,7 +144,7 @@ class Create extends Component
 
         $this->products = Product::orderBy('name')->get();
 
-        $this->customers = Customer::orderBy('name')->get();
+        $this->employees = Employee::orderBy('name')->get();
     }
 
     public function editItem(): void

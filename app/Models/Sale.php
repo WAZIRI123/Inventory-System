@@ -10,7 +10,7 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable=[];
+    protected $fillable=['product_id','quantity','employee_id'];
 
     
     public function product():BelongsTo
@@ -18,8 +18,9 @@ class Sale extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function customer()
+    public function employee():BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Employee::class);
     }
+
 }

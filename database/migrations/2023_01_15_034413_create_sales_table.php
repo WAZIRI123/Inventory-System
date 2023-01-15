@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('employee_id');
             $table->integer('quantity');
             $table->timestamps();
             
             $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 

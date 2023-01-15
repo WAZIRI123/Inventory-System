@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,10 +20,10 @@ class SaleFactory extends Factory
     public function definition()
     {
         $product=Product::factory()->create();
-        $customer=Customer::factory()->create();
+        $employee=Employee::factory()->create();
         return [
             'product_id'=>$product->id,
-            'customer_id'=>$customer->id,
+            'employee_id'=>$employee->id,
             'quantity'=>$this->faker->numberBetween(1,10)
         ];
     }

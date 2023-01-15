@@ -41,7 +41,7 @@ class Table extends Component
     public function render(): View
     {
         $results = $this->query()
-            ->with(['customer','product'])
+            ->with(['employee','product'])
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->paginate($this->per_page);
 

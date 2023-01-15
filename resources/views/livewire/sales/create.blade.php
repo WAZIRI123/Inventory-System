@@ -28,9 +28,9 @@
                 @error('item.product_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
             <div class="mt-4">
-                <x-tall-crud-label>Customer Id</x-tall-crud-label>
-                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.customer_id" />
-                @error('item.customer_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                <x-tall-crud-label>Employee Id</x-tall-crud-label>
+                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.employee_id" />
+                @error('item.employee_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div></div><div class="grid grid-cols-2 gap-8">
             <div class="mt-4">
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
@@ -53,14 +53,14 @@
 
             <div class="grid grid-cols-3">
                 <div class="mt-4">
-                    <x-tall-crud-label>Customer</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.customer_id">
+                    <x-tall-crud-label>Employee</x-tall-crud-label>
+                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.employee_id">
                         <option value="">Please Select</option>
-                        @foreach($customers as $c)
+                        @foreach($employees as $c)
                         <option value="{{$c->id}}">{{$c->name}}</option>
                         @endforeach
                     </x-tall-crud-select>
-                    @error('item.customer_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                    @error('item.employee_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 </div>
             </div>
         </x-slot>
@@ -85,9 +85,9 @@
                 @error('item.product_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
             <div class="mt-4">
-                <x-tall-crud-label>Customer Id</x-tall-crud-label>
-                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.customer_id" />
-                @error('item.customer_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                <x-tall-crud-label>Employee Id</x-tall-crud-label>
+                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.employee_id" />
+                @error('item.employee_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div></div><div class="grid grid-cols-2 gap-8">
             <div class="mt-4">
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
@@ -110,14 +110,14 @@
 
             <div class="grid grid-cols-3">
                 <div class="mt-4">
-                    <x-tall-crud-label>Customer</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.customer_id">
+                    <x-tall-crud-label>Employee</x-tall-crud-label>
+                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.employee_id">
                         <option value="">Please Select</option>
-                        @foreach($customers as $c)
+                        @foreach($employees as $c)
                         <option value="{{$c->id}}">{{$c->name}}</option>
                         @endforeach
                     </x-tall-crud-select>
-                    @error('item.customer_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                    @error('item.employee_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 </div>
             </div>
         </x-slot>
