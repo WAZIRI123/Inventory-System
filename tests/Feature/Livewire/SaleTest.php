@@ -20,60 +20,97 @@ class SaleTest extends TestCase
     use RefreshDatabase;
     use FeatureTestTrait, AuthorizesRequests;
 
-      /** @test  */
+    /** @test  */
 
-      public function authorized_admin_can_create_product()
-      {
-        
-         $this->withoutExceptionHandling();
-     
-          // make fake user && assign permission && acting as that user
-     
-          $user = User::factory()->create();
-          $product = Product::factory()->create();
+    public function authorized_admin_can_create_sale()
+    {
 
-          /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
-          $this->actingAs($user);
-     
-          // test 
-          Livewire::test(Create::class)
-              ->set('item.quantity', 20)
-              ->set('item.product_id', $product->id)
-              ->set('item.employee_id', $user->id)
-              ->call('createItem')->assertHasNoErrors();
-     
-          // test if data exist in database
+        $this->withoutExceptionHandling();
 
-          $this->assertEquals($product->inStock(),20);
-     
-          $this->assertDatabaseHas('sales', [
-             'quantity' =>20,
-             'product_id' =>  $product->id,
-         ]);
+        // make fake user && assign permission && acting as that user
 
-     
-      }
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
 
-      //test authorised users can edit Product
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $this->actingAs($user);
 
-public function test_authorised_users_can_delete_sale()
-{
-    
-   $this->withoutExceptionHandling();
-   // make fake user && assign role && acting as that user
-    $user = User::factory()->create();
-  
-    $sale = Sale::factory()->create();
+        // test 
+        Livewire::test(Create::class)
+            ->set('item.quantity', 20)
+            ->set('item.product_id', $product->id)
+            ->set('item.employee_id', $user->id)
+            ->call('createItem')->assertHasNoErrors();
 
-    // test
-    Livewire::actingAs($user)
-        ->test(Create::class, ['sale' => $sale])
-        ->call('showDeleteForm', $sale)
-        ->call('deleteItem',  $sale);
+        // test if data exist in database
 
-    $this->assertEquals($sale->inStock(),0);
-    // test if data is softdeleted
-    $this->assertSoftDeleted( $sale);
-}
+        $this->assertEquals($product->inStock(), 20);
 
+        $this->assertDatabaseHas('sales', [
+            'quantity' => 20,
+            'product_id' =>  $product->id,
+        ]);
+    }
+
+    //test authorised users can edit Sale
+
+    public function test_authorised_users_can_delete_sale()
+    {
+
+        $this->withoutExceptionHandling();
+        // make fake user && assign role && acting as that user
+        $user = User::factory()->create();
+
+        $product = Product::factory()->create();
+
+        $sale = Sale::factory()->for($product)->create(['quantity' => 20]);
+
+        $product->increaseStock($sale->quantity);
+
+        // test
+        Livewire::actingAs($user)
+            ->test(Create::class, ['sale' => $sale])
+            ->call('showDeleteForm', $sale)
+            ->call('deleteItem',  $sale);
+
+        $product->decreaseStock($sale->quantity);
+
+        $this->assertEquals($product->Stock(), 0);
+        // test if data is softdeleted
+        $this->assertSoftDeleted($sale);
+    }
+
+    //test authorised users can edit Product
+    public function test_authorised_users_can_edit_sale()
+    {
+        $this->withoutExceptionHandling();
+
+
+        // make fake user && assign role && acting as that user
+        $user1 = User::factory()->create();
+
+        $product = Product::factory()->create();
+
+        $sale = Sale::factory()->for($product)->create(['quantity' => 20]);
+
+        $product->increaseStock($sale->quantity);
+
+        // test
+        Livewire::actingAs($user1)
+            ->test(Create::class, ['sale' => $sale])
+            ->call('showEditForm', $sale)
+
+            ->set('item.quantity', 10)
+
+            ->call('editItem', $sale);
+
+
+        $product->decreaseStock(10);
+
+        $this->assertEquals($product->Stock(), 10);
+
+        $this->assertDatabaseHas('sales', [
+            'quantity' => 10
+        ]);
+    }
 }

@@ -60,6 +60,7 @@ class Create extends Component
      */
     public $confirmingItemDeletion = false;
 
+    public $sale;
     /**
      * @var string | int
      */
@@ -80,17 +81,19 @@ class Create extends Component
         return view('livewire.sales.create');
     }
 
-    public function showDeleteForm(int $id): void
+    public function showDeleteForm(Sale $sale): void
     {
+       
         $this->confirmingItemDeletion = true;
-        $this->primaryKey = $id;
+
+        $this->sale = $sale;
     }
 
     public function deleteItem(): void
     {
-        Sale::destroy($this->primaryKey);
+        $this->sale->delete();
         $this->confirmingItemDeletion = false;
-        $this->primaryKey = '';
+        $this->sale = '';
         $this->reset(['item']);
         $this->emitTo('sales-table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
@@ -144,7 +147,7 @@ class Create extends Component
 
         $this->products = Product::orderBy('name')->get();
 
-        $this->employees = Employee::orderBy('name')->get();
+        $this->employees = Employee::orderBy('user_id')->get();
     }
 
     public function editItem(): void
