@@ -108,7 +108,7 @@ use AuthorizesRequests;
     {
         $this->authorize('create',[Product::class]);
         $this->validate();
-        $item = Product::create([
+        $product = Product::create([
             'name' => $this->item['name'] ?? '', 
             'vendor_id' => $this->item['vendor_id'] ?? '', 
             'description' => $this->item['description'] ?? '', 
@@ -117,6 +117,9 @@ use AuthorizesRequests;
             'quantity' => $this->item['quantity'] ?? '', 
             'vendor_id' => $this->item['vendor_id'] ?? 0, 
         ]);
+
+        $product->increaseStock($this->item['quantity']);
+
         $this->confirmingItemCreation = false;
         $this->emitTo('product.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
@@ -137,6 +140,7 @@ use AuthorizesRequests;
         $this->authorize('update',$product);
         $this->validate();
         $this->item->save();
+        $product->increaseStock($this->item['quantity']);
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
         $this->emitTo('product.table', 'refresh');

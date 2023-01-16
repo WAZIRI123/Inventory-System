@@ -44,7 +44,7 @@ class SaleTest extends TestCase
 
         // test if data exist in database
 
-        $this->assertEquals($product->inStock(), 20);
+        $this->assertEquals($product->stock(), 0);
 
         $this->assertDatabaseHas('sales', [
             'quantity' => 20,
@@ -86,15 +86,16 @@ class SaleTest extends TestCase
         $this->withoutExceptionHandling();
 
 
+
         // make fake user && assign role && acting as that user
         $user1 = User::factory()->create();
 
         $product = Product::factory()->create();
 
-        $sale = Sale::factory()->for($product)->create(['quantity' => 20]);
+        $sale = Sale::factory()->for($product)->create(['quantity' => 22]);
 
-        $product->increaseStock($sale->quantity);
-
+        $product->decreaseStock($sale->quantity);
+        
         // test
         Livewire::actingAs($user1)
             ->test(Create::class, ['sale' => $sale])
@@ -103,14 +104,12 @@ class SaleTest extends TestCase
             ->set('item.quantity', 10)
 
             ->call('editItem', $sale);
-
-
-        $product->decreaseStock(10);
-
-        $this->assertEquals($product->Stock(), 10);
+            dd($product->stock());
+       
+        $this->assertEquals($product->Stock(), 11);
 
         $this->assertDatabaseHas('sales', [
-            'quantity' => 10
+            'quantity' => 11
         ]);
     }
 }

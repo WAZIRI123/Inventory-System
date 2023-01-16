@@ -44,6 +44,9 @@ class ProductTest extends TestCase
          ->set('item.quantity', 2)
          ->call('createItem')->assertHasNoErrors();
 
+         $this->assertDatabaseHas('stock_mutations', [
+            'amount' =>2
+        ]);
      // test if data exist in database
 
      $this->assertDatabaseHas('products', [
@@ -77,9 +80,6 @@ class ProductTest extends TestCase
             ->set('item.sale_price', 50)
             ->set('item.quantity', 2)
             ->call('createItem')->assertForbidden();
-
-            
-
     }
 
   //test authorised users can edit Product

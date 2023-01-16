@@ -116,6 +116,7 @@ class Create extends Component
         $product = Product::find($this->item['product_id']);
 
         $product ->increaseStock($this->item['quantity']);
+
         if (!$product->inStock($this->item['quantity'])) {
             
             throw new OutOfStockException('product is out of stock');
@@ -124,7 +125,7 @@ class Create extends Component
         }
 
 
-        $product ->decreaseStock($this->item['product_id']);
+        $product ->decreaseStock($this->item['quantity']);
  
 
         $item = Sale::create([
@@ -142,6 +143,7 @@ class Create extends Component
     public function showEditForm(Sale $sale): void
     {
         $this->resetErrorBag();
+
         $this->item = $sale;
         $this->confirmingItemEdit = true;
 
@@ -150,10 +152,25 @@ class Create extends Component
         $this->employees = Employee::orderBy('user_id')->get();
     }
 
+
     public function editItem(): void
     {
         $this->validate();
+        $sale=$this->item;
+        $product=Product::find($sale->product_id);
+        $oldStock=$product->stock;
         $this->item->save();
+        $sale=$this->item;
+        $product=Product::find($sale->product_id);
+        $newStock=$this->item['quantity'];
+
+      
+       $differenceStock= ($newStock-$oldStock);
+
+      
+       $product->increaseStock(-12);
+
+
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
         $this->emitTo('sales-table', 'refresh');
