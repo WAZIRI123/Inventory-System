@@ -66,6 +66,7 @@ class Create extends Component
      */
     public $primaryKey;
 
+    public $oldQuantity;
     /**
      * @var bool
      */
@@ -145,6 +146,7 @@ class Create extends Component
         $this->resetErrorBag();
 
         $this->item = $sale;
+        $this->oldQuantity=$sale->quantity;
         $this->confirmingItemEdit = true;
 
         $this->products = Product::orderBy('name')->get();
@@ -156,19 +158,26 @@ class Create extends Component
     public function editItem(): void
     {
         $this->validate();
-        $sale=$this->item;
-        $product=Product::find($sale->product_id);
-        $oldStock=$product->stock;
+        $product = Product::find($this->item['product_id']);
+
+        $oldQuantity = $this->oldQuantity;
+        $newQuantity = $this->item['quantity'];
+        $difference = $newQuantity - $oldQuantity;
+
+
+        if($difference > 0) {
+            if (!$product->inStock($difference)) {
+                throw new OutOfStockException('product is out of stock');
+                return;
+            }
+
+            $product->decreaseStock($difference);
+        } elseif ($difference < 0) {
+            $product->increaseStock(abs($difference));
+
+        }
         $this->item->save();
-        $sale=$this->item;
-        $product=Product::find($sale->product_id);
-        $newStock=$this->item['quantity'];
 
-      
-       $differenceStock= ($newStock-$oldStock);
-
-      
-       $product->increaseStock(-12);
 
 
         $this->confirmingItemEdit = false;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Product;
 
+use App\Exceptions\OutOfStockException;
 use Livewire\Component;
 use \Illuminate\View\View;
 use App\Models\Product;
@@ -61,6 +62,7 @@ use AuthorizesRequests;
      * @var string | int
      */
     public $primaryKey;
+    public $oldQuantity;
 
     /**
      * @var bool
@@ -130,6 +132,7 @@ use AuthorizesRequests;
         $this->authorize('update',$product);
         $this->resetErrorBag();
         $this->item = $product;
+        $this->oldQuantity=$product->quantity;
         $this->confirmingItemEdit = true;
         $this->product = $product;
         $this->vendors = Vendor::orderBy('name')->get();
@@ -139,8 +142,19 @@ use AuthorizesRequests;
     {
         $this->authorize('update',$product);
         $this->validate();
+
+        $oldQuantity = $this->oldQuantity;
+        $newQuantity = $this->item['quantity'];
+        $difference = $newQuantity - $oldQuantity;
+
+        if($difference > 0) {
+            $product->decreaseStock($difference);
+        } elseif ($difference < 0) {
+            $product->increaseStock(abs($difference));
+
+        }
         $this->item->save();
-        $product->increaseStock($this->item['quantity']);
+    
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
         $this->emitTo('product.table', 'refresh');

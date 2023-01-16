@@ -80,20 +80,20 @@ class SaleTest extends TestCase
         $this->assertSoftDeleted($sale);
     }
 
-    //test authorised users can edit Product
     public function test_authorised_users_can_edit_sale()
     {
         $this->withoutExceptionHandling();
-
-
 
         // make fake user && assign role && acting as that user
         $user1 = User::factory()->create();
 
         $product = Product::factory()->create();
 
-        $sale = Sale::factory()->for($product)->create(['quantity' => 22]);
+        $product->increaseStock(40);
 
+        $sale = Sale::factory()->for($product)->create(['quantity' => 20]);
+
+        //decrease stock of product
         $product->decreaseStock($sale->quantity);
         
         // test
@@ -104,12 +104,10 @@ class SaleTest extends TestCase
             ->set('item.quantity', 10)
 
             ->call('editItem', $sale);
-            dd($product->stock());
-       
-        $this->assertEquals($product->Stock(), 11);
+        
 
-        $this->assertDatabaseHas('sales', [
-            'quantity' => 11
-        ]);
+        
+        // assert that the stock of the product is equal to the new quantity
+        $this->assertEquals($product->Stock(), 30);
     }
 }

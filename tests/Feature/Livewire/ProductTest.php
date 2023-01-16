@@ -61,8 +61,6 @@ class ProductTest extends TestCase
     public function unauthorized_admin_can_not_create_product()
     {
       
-     
-   
         // make fake user && assign permission && acting as that user
    
         $user = User::factory()->create();
@@ -91,17 +89,19 @@ class ProductTest extends TestCase
       // make fake user && assign role && acting as that user
       $user1 = User::factory()->create();
       $user1->assignRole('Admin');
-      $Product = Product::factory()->create();
- 
+      $Product = Product::factory()->create(['quantity'=>20]);
       // test
       Livewire::actingAs($user1)
           ->test(Create::class, ['item' => $Product])
           ->call('showEditForm', $Product)
- 
+
+          ->set('item.quantity', 10)
           ->set('item.name', 'John Doe')
  
           ->call('editItem', $Product);
- 
+         // assert that the stock of the product is equal to the new quantity
+         $this->assertEquals($Product->Stock(), 10);
+
       $this->assertDatabaseHas('products', [
           'name' => 'John Doe' 
       ]);
@@ -138,14 +138,14 @@ class ProductTest extends TestCase
      $user = User::factory()->create();
      $user->assignRole('Admin');
    
-     $Product = Product::factory()->create();
+     $Product = Product::factory()->create(['quantity'=>20]);
 
      // test
      Livewire::actingAs($user)
          ->test(Create::class, ['Product' => $Product])
          ->call('showDeleteForm', $Product)
          ->call('deleteItem',  $Product);
-
+         $this->assertEquals($Product->Stock(), 0);
      // test if data is softdeleted
      $this->assertSoftDeleted( $Product);
  }
