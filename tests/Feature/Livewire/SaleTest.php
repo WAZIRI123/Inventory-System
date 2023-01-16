@@ -3,6 +3,7 @@
 namespace Tests\Feature\Livewire;
 
 use App\Http\Livewire\Sales\Create;
+use App\Models\Employee;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\User;
@@ -31,6 +32,8 @@ class SaleTest extends TestCase
 
         $user = User::factory()->create();
         $product = Product::factory()->create();
+        $product ->increaseStock(20);
+        $employee = Employee::factory()->create();
 
         /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
         $this->actingAs($user);
@@ -39,7 +42,7 @@ class SaleTest extends TestCase
         Livewire::test(Create::class)
             ->set('item.quantity', 20)
             ->set('item.product_id', $product->id)
-            ->set('item.employee_id', $user->id)
+            ->set('item.employee_id',$employee->id)
             ->call('createItem')->assertHasNoErrors();
 
         // test if data exist in database

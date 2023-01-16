@@ -33,13 +33,13 @@ use AuthorizesRequests;
      * @var array
      */
     protected $rules = [
-        'item.name' => '',
-        'item.description' => '',
-        'item.purchase_price' => '',
-        'item.sale_price' => '',
-        'item.quantity' => 'required',
-        'item.vendor_id' => 'required',
-    ];
+        'item.name' => 'required|string',
+        'item.description' => 'nullable|string',
+        'item.purchase_price' => 'required|numeric',
+        'item.sale_price' => 'required|numeric',
+        'item.quantity' => 'required|numeric',
+        'item.vendor_id' => 'required|exists:vendors,id'
+        ];
 
     /**
      * @var array

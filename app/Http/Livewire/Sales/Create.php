@@ -37,12 +37,10 @@ class Create extends Component
      * @var array
      */
     protected $rules = [
-        'item.product_id' => '',
-        'item.employee_id' => '',
-        'item.quantity' => '',
-        'item.product_id' => 'required',
-        'item.employee_id' => 'required',
-    ];
+        'item.product_id' => 'required|exists:products,id',
+        'item.employee_id' => 'required|exists:employees,id',
+        'item.quantity' => 'required|numeric',
+        ];
 
     /**
      * @var array
@@ -115,8 +113,6 @@ class Create extends Component
     {
         $this->validate();
         $product = Product::find($this->item['product_id']);
-
-        $product ->increaseStock($this->item['quantity']);
 
         if (!$product->inStock($this->item['quantity'])) {
             

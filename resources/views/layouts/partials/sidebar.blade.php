@@ -24,30 +24,15 @@
 
         
                 <!-- start::Menu link  -->
-                <x-side-menu.div-link route="product" title="product" />
+                <x-side-menu.div-link route="product" title="products" />
                 <!-- end::Menu link -->
-        <!-- start::Menu link -->
-        <x-side-menu.div-link route="financial" title="Financial" />
-        <!-- end::Menu link -->
-
-        <!-- start::Menu link -->
-        <x-side-menu.div-link route="inventory" title="Inventory" />
-        <!-- end::Menu link -->
-
-        <!-- start::Menu link  -->
-        <x-side-menu.div-link route="purchase-order" title="Purchase Order" />
-        <!-- end::Menu link -->
 
         <!-- start::Menu link  -->
         <x-side-menu.div-link route="sales" title="Sales" />
         <!-- end::Menu link -->
 
         <!-- start::Menu link  -->
-        <x-side-menu.div-link route="vendor" title="vendor" />
-        <!-- end::Menu link -->
-
-        <!-- start::Menu link  -->
-        <x-side-menu.div-link route="employee" title="Employee" />
+        <x-side-menu.div-link route="employee" title="Employees" />
         <!-- end::Menu link -->
 
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Account</p>
