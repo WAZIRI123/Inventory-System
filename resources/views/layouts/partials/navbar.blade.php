@@ -24,14 +24,11 @@
             <div x-data="{ linkActive: false }" class="relative">
                
                 <div @click="linkActive = !linkActive" class="cursor-pointer">
-                 @if (auth()->user()->profile_picture)
+                    @if (auth()->user()->profile_picture)
 
-                {{-- {{ Storage::url(auth()->user()->profile_picture)}} 
-                {{auth()->user()->avatarUrl()}}
-                --}}
-                    <img src="" alt="profile photo" class="w-10 rounded-full">
+                    <img src="{{ Storage::url(auth()->user()->profile_picture)}}" alt="profile photo" class="w-10 rounded-full">
                 @else
-                    <img src="" alt="profile photo" class="w-10 rounded-full">
+                    <img src="{{auth()->user()->avatarUrl()}}" alt="profile photo" class="w-10 rounded-full">
                 @endif
                 </div>
                 <!-- start::Submenu -->
