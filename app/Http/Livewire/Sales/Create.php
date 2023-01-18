@@ -8,11 +8,14 @@ use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Employee;
 use App\Exceptions\OutOfStockException;
+use App\Rules\Instock;
 
 class Create extends Component
 {
 
     public $item;
+     
+    public $quantiy=null;
 
     /**
      * @var array
@@ -36,11 +39,12 @@ class Create extends Component
     /**
      * @var array
      */
-    protected $rules = [
-        'item.product_id' => 'required|exists:products,id',
-        'item.employee_id' => 'required|exists:employees,id',
-        'item.quantity' => 'required|numeric',
+    protected function rules()
+    {
+      return ['item.product_id' => 'required|exists:products,id',
+        'item.quantity' => ['required',new Instock($this->quantiy)],
         ];
+    }
 
     /**
      * @var array
@@ -48,9 +52,6 @@ class Create extends Component
     protected $validationAttributes = [
         'item.product_id' => 'Product Id',
         'item.employee_id' => 'Employee Id',
-        'item.quantity' => 'Quantity',
-        'item.product_id' => 'Product',
-        'item.employee_id' => 'Employee',
     ];
 
     /**
@@ -105,32 +106,21 @@ class Create extends Component
         $this->reset(['item']);
 
         $this->products = Product::orderBy('name')->get();
-
-        $this->employees = Employee::orderBy('name')->get();
     }
 
     public function createItem(): void
     {
         $this->validate();
         $product = Product::find($this->item['product_id']);
-
-        if (!$product->inStock($this->item['quantity'])) {
-            
-            throw new OutOfStockException('product is out of stock');
-
-            return;
-        }
-
-
+        
         $product ->decreaseStock($this->item['quantity']);
  
+        $this->item['employee_id']=auth()->user()->id;
 
         $item = Sale::create([
-            'product_id' => $this->item['product_id'] ?? '', 
-            'employee_id' => $this->item['employee_id'] ?? '', 
-            'quantity' => $this->item['quantity'] ?? '', 
-            'product_id' => $this->item['product_id'] ?? 0, 
-            'employee_id' => $this->item['employee_id'] ?? 0, 
+            'employee_id' => $this->item['employee_id'] , 
+            'quantity' => $this->item['quantity'] , 
+            'product_id' => $this->item['product_id'] , 
         ]);
         $this->confirmingItemCreation = false;
         $this->emitTo('sales-table', 'refresh');

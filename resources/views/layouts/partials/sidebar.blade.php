@@ -22,18 +22,19 @@
 
         {{-- start menu wrapper --}}
 
-        
-                <!-- start::Menu link  -->
-                <x-side-menu.div-link route="product" title="products" />
-                <!-- end::Menu link -->
-
         <!-- start::Menu link  -->
         <x-side-menu.div-link route="sales" title="Sales" />
         <!-- end::Menu link -->
 
-        <!-- start::Menu link  -->
+        @if (auth()->user()->hasRole('Admin'))
+                        <!-- start::Menu link  -->
+                        <x-side-menu.div-link route="product" title="products" />
+                        <!-- end::Menu link -->
+                    <!-- start::Menu link  -->
         <x-side-menu.div-link route="employee" title="Employees" />
         <!-- end::Menu link -->
+        @endif
+
 
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Account</p>
 

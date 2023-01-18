@@ -41,7 +41,7 @@ class SaleTest extends TestCase
         // test 
         Livewire::test(Create::class)
             ->set('item.quantity', 20)
-            ->set('item.product_id', $product->id)
+            ->set('item.product_id',$product->id)
             ->set('item.employee_id',$employee->id)
             ->call('createItem')->assertHasNoErrors();
 
