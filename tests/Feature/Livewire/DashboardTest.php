@@ -44,5 +44,6 @@ class DashboardTest extends TestCase
              ->assertSet('totalProducts', 3)
              ->assertSet('outOfStock', 3)
              ->assertSet('totalEmployees', 3);
+
      }
 }

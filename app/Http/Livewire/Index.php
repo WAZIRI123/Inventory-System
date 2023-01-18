@@ -27,12 +27,17 @@ class Index extends Component
 
     public $totalEmployees;
     
+    public $latestSales;
 
     public function render()
     {
         $totalRevenue = Sale::join('products', 'sales.product_id', '=', 'products.id')
         ->selectRaw('SUM(products.sale_price* sales.quantity) as total_revenue')
         ->first()->total_revenue;
+        $latestSales=Sale::with('product')->latest()->take(10)->get();
+
+        $this->latestSales= $latestSales;
+        
         $this->totalProducts = Product::count();
         $this->totalEmployees = Employee::count();
         $this->totalRevenue= $totalRevenue;

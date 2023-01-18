@@ -10,10 +10,7 @@
                
             </button>
         </div>
-        <div class="flex items-center"> <h1> Academic Year: 
-            <br>
-           Semester: 
-        </h1> 
+        <div class="flex items-center"> 
 
         </div>
         <!-- end::Mobile menu button 239-->
@@ -36,7 +33,7 @@
                     <!-- start::Submenu content -->
                     <div class="bg-white rounded">
                         <!-- start::Submenu link -->
-                        <a x-data="{ linkHover: false }" class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 bg-opacity-20" @mouseover="linkHover = true" @mouseleave="linkHover = false"  href="">
+                        <a x-data="{ linkHover: false }" class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 bg-opacity-20" @mouseover="linkHover = true" @mouseleave="linkHover = false"  href="{{ route('profile.update') }}">
                             <div class="flex items-center">
                                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
