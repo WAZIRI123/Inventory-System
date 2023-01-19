@@ -13,7 +13,7 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes,HasStock,HasSku;
 
-    protected $fillable=['name','vendor_id','description','purchase_price','sale_price','quantity'];
+    protected $fillable=['name','vendor_id','description','purchase_price','sale_price'];
     
     public function vendor():BelongsTo
     {

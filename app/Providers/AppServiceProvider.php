@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
             $product = Product::find($validator->getData()['item']['product_id']);
 
             
-            if ($value > $product->instock()) {
+            if ($value > $product->stock()) {
                 $validator->errors()->add($attribute, 'The provided quantity exceeds the stock quantity.');
                 return false;
             }

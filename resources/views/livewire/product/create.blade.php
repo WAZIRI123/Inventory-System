@@ -53,8 +53,8 @@
             </div>
             <div class="mt-4">
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
-                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity" />
-                @error('item.quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="quantity" />
+                @error('quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div></div><div class="grid grid-cols-2 gap-8">
         </x-slot>
 
@@ -102,8 +102,8 @@
             </div>
             <div class="mt-4">
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
-                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity" />
-                @error('item.quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="quantity" />
+                @error('quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div></div><div class="grid grid-cols-2 gap-8">
         </x-slot>
 

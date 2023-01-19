@@ -14,6 +14,8 @@ class Create extends Component
 use AuthorizesRequests;
     public $item;
 
+    public $quantity;
+
     /**
      * @var array
      */
@@ -37,7 +39,7 @@ use AuthorizesRequests;
         'item.description' => 'nullable|string',
         'item.purchase_price' => 'required|numeric',
         'item.sale_price' => 'required|numeric',
-        'item.quantity' => 'required|numeric',
+        'quantity' => 'required|numeric',
         'item.vendor_id' => 'required|exists:vendors,id'
         ];
 
@@ -49,7 +51,7 @@ use AuthorizesRequests;
         'item.description' => 'Description',
         'item.purchase_price' => 'Purchase Price',
         'item.sale_price' => 'Sale Price',
-        'item.quantity' => 'Quantity',
+        'quantity' => 'Quantity',
         'item.vendor_id' => 'Vendor',
     ];
 
@@ -90,6 +92,7 @@ use AuthorizesRequests;
     {
         $this->authorize('delete',$product);
         $this->product->delete();
+        $this->product->clearStock();
         $this->confirmingItemDeletion = false;
         $this->product = '';
         $this->reset(['item']);
@@ -111,16 +114,15 @@ use AuthorizesRequests;
         $this->authorize('create',[Product::class]);
         $this->validate();
         $product = Product::create([
-            'name' => $this->item['name'] ?? '', 
-            'vendor_id' => $this->item['vendor_id'] ?? '', 
-            'description' => $this->item['description'] ?? '', 
-            'purchase_price' => $this->item['purchase_price'] ?? '', 
-            'sale_price' => $this->item['sale_price'] ?? '', 
-            'quantity' => $this->item['quantity'] ?? '', 
-            'vendor_id' => $this->item['vendor_id'] ?? 0, 
+            'name' => $this->item['name'], 
+            'vendor_id' => $this->item['vendor_id'], 
+            'description' => $this->item['description'], 
+            'purchase_price' => $this->item['purchase_price'], 
+            'sale_price' => $this->item['sale_price'],  
+            'vendor_id' => $this->item['vendor_id'], 
         ]);
 
-        $product->increaseStock($this->item['quantity']);
+        $product->increaseStock($this->quantity);
 
         $this->confirmingItemCreation = false;
         $this->emitTo('product.table', 'refresh');
@@ -132,9 +134,7 @@ use AuthorizesRequests;
         $this->authorize('update',$product);
         $this->resetErrorBag();
         $this->item = $product;
-        $this->oldQuantity=$product->quantity;
         $this->confirmingItemEdit = true;
-        $this->product = $product;
         $this->vendors = Vendor::orderBy('name')->get();
     }
 
@@ -142,21 +142,9 @@ use AuthorizesRequests;
     {
         $this->authorize('update',$product);
         $this->validate();
-
-        $oldQuantity = $this->oldQuantity;
-        $newQuantity = $this->item['quantity'];
-        $difference = $newQuantity - $oldQuantity;
-
-        if($difference > 0) {
-            $product->decreaseStock($difference);
-        } elseif ($difference < 0) {
-            $product->increaseStock(abs($difference));
-
-        }
         $this->item->save();
-    
+        $this->item->setStock($this->quantity);
         $this->confirmingItemEdit = false;
-        $this->primaryKey = '';
         $this->emitTo('product.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
     }

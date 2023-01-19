@@ -15,7 +15,7 @@
             </div>
             <div class="flex">
 
-                <x-tall-crud-page-dropdown />
+                <x-tall-crud-page-dropdown/>
             </div>
         </div>
         <table class="w-full whitespace-no-wrap mt-4 shadow-2xl text-xs" wire:loading.class.delay="opacity-50">
@@ -51,7 +51,7 @@
                     <td class="px-3 py-2" >{{ $result->description }}</td>
                     <td class="px-3 py-2" >{{ $result->purchase_price }}</td>
                     <td class="px-3 py-2" >{{ $result->sale_price }}</td>
-                    <td class="px-3 py-2" >{{ $result->quantity }}</td>
+                    <td class="px-3 py-2" >{{ $result->stock() }}</td>
                     <td class="px-3 py-2" >{{ $result->vendor?->name }}</td>
                     <td class="px-3 py-2" >
                         <button type="submit" wire:click="$emitTo('product.create', 'showEditForm', {{ $result->id}});" class="text-green-500">

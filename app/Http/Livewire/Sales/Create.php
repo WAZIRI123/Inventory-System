@@ -42,7 +42,7 @@ class Create extends Component
     protected function rules()
     {
         return ['item.product_id' => 'required|exists:products,id',
-            'item.quantity' => ['required','numeric','stock'],
+            'item.quantity' => ['required','numeric'],
         ];
     }
 
@@ -88,55 +88,70 @@ class Create extends Component
         $this->confirmingItemDeletion = true;
 
         $this->sale = $sale;
+        $this->oldQuantity=$sale->quantity;
+       
     }
 
     public function deleteItem(): void
     {
+        $product = Product::find($this->sale->product_id);
         $this->sale->delete();
+        $product->increaseStock($this->oldQuantity);
         $this->confirmingItemDeletion = false;
         $this->sale = '';
         $this->reset(['item']);
-        $this->emitTo('sales-table', 'refresh');
+        $this->emitTo('sales.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
     }
  
     public function showCreateForm(): void
+
     {
         $this->confirmingItemCreation = true;
         $this->resetErrorBag();
         $this->reset(['item']);
 
-        $this->products = Product::orderBy('name')->get();
+        $this->products= Product::orderBy('id')->get();
     }
 
     public function createItem(): void
     {
         $this->validate();
         $product = Product::find($this->item['product_id']);
-        
-        $product ->decreaseStock($this->item['quantity']);
- 
-        $this->item['employee_id']=auth()->user()->id;
 
-        $item = Sale::create([
-            'employee_id' => $this->item['employee_id'] , 
-            'quantity' => $this->item['quantity'] , 
-            'product_id' => $this->item['product_id'] , 
-        ]);
-        $this->confirmingItemCreation = false;
-        $this->emitTo('sales-table', 'refresh');
-        $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
+        if (!$product->inStock($this->item['quantity'])) {
+
+
+          session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
+
+           
+        }else{
+            $product ->decreaseStock($this->item['quantity']);
+ 
+            $this->item['employee_id']=auth()->user()->id;
+    
+    
+            $item = Sale::create([
+                'employee_id' => $this->item['employee_id'] , 
+                'quantity' => $this->item['quantity'] , 
+                'product_id' => $this->item['product_id'] , 
+            ]);
+            $this->confirmingItemCreation = false;
+            $this->emitTo('sales.table', 'refresh');
+            $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
+        }
+        
+
     }
  
     public function showEditForm(Sale $sale): void
     {
         $this->resetErrorBag();
-
-        $this->item = $sale;
         $this->oldQuantity=$sale->quantity;
+        $this->item = $sale;
         $this->confirmingItemEdit = true;
 
-        $this->products = Product::orderBy('name')->get();
+        $this->products = Product::orderBy('id')->get();
 
         $this->employees = Employee::orderBy('user_id')->get();
     }
@@ -146,31 +161,26 @@ class Create extends Component
     {
         $this->validate();
         $product = Product::find($this->item['product_id']);
+         
+         $product->increaseStock($this->oldQuantity);
+    
+        if (!$product->inStock($this->item['quantity'])) {
+           
+            $product->decreaseStock($this->oldQuantity);
 
-        $oldQuantity = $this->oldQuantity;
-        $newQuantity = $this->item['quantity'];
-        $difference = $newQuantity - $oldQuantity;
-
-
-        if($difference > 0) {
-            if (!$product->inStock($difference)) {
-                throw new OutOfStockException('product is out of stock');
-                return;
-            }
-
-            $product->decreaseStock($difference);
-        } elseif ($difference < 0) {
-            $product->increaseStock(abs($difference));
+          session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
+           
 
         }
-        $this->item->save();
-
-
-
-        $this->confirmingItemEdit = false;
-        $this->primaryKey = '';
-        $this->emitTo('sales-table', 'refresh');
-        $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
+        else {
+            $product->decreaseStock($this->item['quantity']);
+            $this->item->save();
+            $this->confirmingItemEdit = false;
+            $this->primaryKey = '';
+            $this->emitTo('sales.table', 'refresh');
+            $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
+        }
+       
     }
 
 }

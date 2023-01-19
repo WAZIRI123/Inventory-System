@@ -26,6 +26,7 @@
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity" />
                 @error('item.quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                @if (session()->has('error'))<x-tall-crud-error-message>{{ Session('error') }}</x-tall-crud-error-message> @endif
             </div>
 
                 <div class="mt-4">
@@ -61,6 +62,7 @@
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity" />
                 @error('item.quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                @if (session()->has('error'))<x-tall-crud-error-message>{{ Session('error') }}</x-tall-crud-error-message> @endif
             </div>
 
                 <div class="mt-4">
@@ -72,6 +74,8 @@
                         @endforeach
                     </x-tall-crud-select>
                     @error('item.product_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+
+
                 </div>
           </div>
             

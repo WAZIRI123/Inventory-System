@@ -47,7 +47,7 @@ class Table extends Component
     public function render(): View
     {
         $results = $this->query()
-            ->with(['vendor'])
+            ->with(['vendor','stockMutations',])
             ->when($this->q, function ($query) {
                 return $query->where(function ($query) {
                     $query->where('name', 'like', '%' . $this->q . '%');

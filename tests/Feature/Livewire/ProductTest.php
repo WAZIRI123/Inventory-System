@@ -40,14 +40,14 @@ class ProductTest extends TestCase
          ->set('item.vendor_id', $vendor->id)
          ->set('item.description', 'product test')
          ->set('item.purchase_price', 20)
+         ->set('quantity', 20)
          ->set('item.sale_price', 50)
-         ->set('item.quantity', 2)
          ->call('createItem')->assertHasNoErrors();
 
          $this->assertDatabaseHas('stock_mutations', [
-            'amount' =>2
+            'amount' =>20
         ]);
-     // test if data exist in database
+     // test if data exist in database!
 
      $this->assertDatabaseHas('products', [
         'name' => 'John Doe',
@@ -76,7 +76,7 @@ class ProductTest extends TestCase
             ->set('item.description', 'product test')
             ->set('item.purchase_price', 20)
             ->set('item.sale_price', 50)
-            ->set('item.quantity', 2)
+            ->set('quantity', 2)
             ->call('createItem')->assertForbidden();
     }
 
@@ -89,13 +89,15 @@ class ProductTest extends TestCase
       // make fake user && assign role && acting as that user
       $user1 = User::factory()->create();
       $user1->assignRole('Admin');
-      $Product = Product::factory()->create(['quantity'=>20]);
+      $Product = Product::factory()->create();
+
+      $Product->increaseStock(20);
       // test
       Livewire::actingAs($user1)
           ->test(Create::class, ['item' => $Product])
           ->call('showEditForm', $Product)
 
-          ->set('item.quantity', 10)
+          ->set('quantity', 10)
           ->set('item.name', 'John Doe')
  
           ->call('editItem', $Product);
@@ -105,7 +107,8 @@ class ProductTest extends TestCase
       $this->assertDatabaseHas('products', [
           'name' => 'John Doe' 
       ]);
- 
+
+
   }
 
     //test authorised users can edit Product
@@ -138,7 +141,9 @@ class ProductTest extends TestCase
      $user = User::factory()->create();
      $user->assignRole('Admin');
    
-     $Product = Product::factory()->create(['quantity'=>20]);
+     $Product = Product::factory()->create();
+
+     $Product->increaseStock(10);
 
      // test
      Livewire::actingAs($user)
