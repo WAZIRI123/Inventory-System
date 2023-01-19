@@ -66,9 +66,11 @@ class SaleTest extends TestCase
 
         $product = Product::factory()->create();
 
+        $product->increaseStock(40);
+
         $sale = Sale::factory()->for($product)->create(['quantity' => 20]);
 
-        $product->increaseStock($sale->quantity);
+        $product->decreaseStock($sale->quantity);
 
         // test
         Livewire::actingAs($user)
@@ -76,9 +78,8 @@ class SaleTest extends TestCase
             ->call('showDeleteForm', $sale)
             ->call('deleteItem',  $sale);
 
-        $product->decreaseStock($sale->quantity);
 
-        $this->assertEquals($product->Stock(), 0);
+        $this->assertEquals($product->Stock(), 40);
         // test if data is softdeleted
         $this->assertSoftDeleted($sale);
     }
