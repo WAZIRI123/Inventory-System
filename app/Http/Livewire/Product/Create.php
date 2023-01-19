@@ -134,6 +134,7 @@ use AuthorizesRequests;
         $this->authorize('update',$product);
         $this->resetErrorBag();
         $this->item = $product;
+        $this->quantity=$product->stock();
         $this->confirmingItemEdit = true;
         $this->vendors = Vendor::orderBy('name')->get();
     }

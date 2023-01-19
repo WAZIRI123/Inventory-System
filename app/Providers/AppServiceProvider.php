@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
@@ -34,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
         });
-
+        Model::preventLazyLoading();
         Validator::extend('stock', function ($attribute, $value, $parameters, $validator) {
             $product = Product::find($validator->getData()['item']['product_id']);
 
