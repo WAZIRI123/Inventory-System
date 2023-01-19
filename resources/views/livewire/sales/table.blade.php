@@ -27,10 +27,9 @@
                         <x-tall-crud-sort-icon sortField="id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-                <td class="px-3 py-2" >Product Id</td>
-                <td class="px-3 py-2" >Customer Id</td>
-                <td class="px-3 py-2" >Quantity</td>
+                <td class="px-3 py-2" >Product</td>
                 <td class="px-3 py-2" >Customer</td>
+                <td class="px-3 py-2" >Quantity</td>
                 <td class="px-3 py-2" >Product</td>
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
@@ -40,9 +39,8 @@
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
                     <td class="px-3 py-2" >{{ $result->product_id }}</td>
-                    <td class="px-3 py-2" >{{ $result->employee_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->employee->user?->name }}</td>
                     <td class="px-3 py-2" >{{ $result->quantity }}</td>
-                    <td class="px-3 py-2" >{{ $result->customer?->name }}</td>
                     <td class="px-3 py-2" >{{ $result->product?->name }}</td>
                     <td class="px-3 py-2" >
                         <button type="submit" wire:click="$emitTo('sales.create', 'showEditForm', {{ $result->id}});" class="text-green-500">

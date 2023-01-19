@@ -98,7 +98,7 @@
                 <table class="w-full my-8 whitespace-nowrap">
                     <thead class="bg-secondary text-gray-100 font-bold">
                         <tr>
-                            <td></td>
+                           
                             <td class="py-2 pl-2">Order ID</td>
                             <td class="py-2 pl-2">Product Name</td>
                             <td class="py-2 pl-2">Quantity</td>
@@ -110,10 +110,7 @@
                     <tbody class="text-sm">
                         @foreach($latestSales as $sale)
                             <tr class="bg-gray-100 hover:bg-primary hover:bg-opacity-20 transition duration-200">
-                                <td class="py-3 pl-2">
-                                    <input type="checkbox" class="rounded focus:ring-0 checked:bg-red-500 ml-2">
-                                </td>
-                                <td class="py-3 pl-2">#{{$sale->id}}</td>
+                                <td class="py-3 pl-2">#{{$loop->iteration}}</td>
                                 <td class="py-3 pl-2 capitalize">{{$sale->product->name}}</td>
                                 <td class="py-3 pl-2">{{$sale->quantity}}</td>
                                 <td class="py-3 pl-2">Tsh {{$sale->product->sale_price}}</td>
