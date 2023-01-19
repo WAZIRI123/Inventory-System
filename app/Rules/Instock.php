@@ -8,12 +8,12 @@ use Illuminate\Contracts\Validation\InvokableRule;
 class Instock implements InvokableRule
 {
 
-protected $quantity;
+    protected $data;
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
 
-public function __construct($quantity)
-{
-    $this->$quantity=$quantity;
-}
 
     /**
      * Run the validation rule.
@@ -26,12 +26,11 @@ public function __construct($quantity)
     public function __invoke($attribute, $value, $fail)
     {
      
+        $product_id = $this->data['item']['product_id'];
+        $product = Product::find($product_id);
     
-        $product=Product::find($value);
 
-            dd($product->inStock($this->quantity));
-
-        if (!$product->inStock($this->quantity)) {
+        if (!$product->inStock($value)) {
             
             $fail('The :attribute product is out of stock.');
 

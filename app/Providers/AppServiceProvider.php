@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,17 @@ class AppServiceProvider extends ServiceProvider
             if ($user->hasRole('super-admin')) {
                 return true;
             }
+        });
+
+        Validator::extend('stock', function ($attribute, $value, $parameters, $validator) {
+            $product = Product::find($validator->getData()['item']['product_id']);
+
+            
+            if ($value > $product->instock()) {
+                $validator->errors()->add($attribute, 'The provided quantity exceeds the stock quantity.');
+                return false;
+            }
+            return true;
         });
     }
 }

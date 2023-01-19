@@ -41,8 +41,8 @@ class Create extends Component
      */
     protected function rules()
     {
-      return ['item.product_id' => 'required|exists:products,id',
-        'item.quantity' => ['required',new Instock($this->quantiy)],
+        return ['item.product_id' => 'required|exists:products,id',
+            'item.quantity' => ['required','numeric','stock'],
         ];
     }
 
@@ -52,6 +52,7 @@ class Create extends Component
     protected $validationAttributes = [
         'item.product_id' => 'Product Id',
         'item.employee_id' => 'Employee Id',
+        'validation.stock' => 'The provided quantity exceeds the stock quantity.'
     ];
 
     /**
