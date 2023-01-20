@@ -13,6 +13,7 @@ use App\Rules\Instock;
 class Create extends Component
 {
 
+    public $itemCount = 1;
     public $item;
      
     public $quantiy=null;
@@ -36,24 +37,7 @@ class Create extends Component
      */
     public $employees = [];
 
-    /**
-     * @var array
-     */
-    protected function rules()
-    {
-        return ['item.product_id' => 'required|exists:products,id',
-            'item.quantity' => ['required','numeric'],
-        ];
-    }
 
-    /**
-     * @var array
-     */
-    protected $validationAttributes = [
-        'item.product_id' => 'Product Id',
-        'item.employee_id' => 'Employee Id',
-        'validation.stock' => 'The provided quantity exceeds the stock quantity.'
-    ];
 
     /**
      * @var bool
@@ -81,7 +65,16 @@ class Create extends Component
     {
         return view('livewire.sales.create');
     }
+    public function incrementItemCount()
+    {
+        $this->itemCount++;
+    }
 
+    public function decreamentItemCount()
+    {
+        $this->itemCount--;
+    }
+    
     public function showDeleteForm(Sale $sale): void
     {
        
@@ -108,6 +101,7 @@ class Create extends Component
 
     {
         $this->confirmingItemCreation = true;
+        $this->reset('itemCount');
         $this->resetErrorBag();
         $this->reset(['item']);
 
@@ -116,26 +110,33 @@ class Create extends Component
 
     public function createItem(): void
     {
-        $this->validate();
-        $product = Product::find($this->item['product_id']);
+        for ($i = 1; $i <= $this->itemCount; $i++) {
 
-        if (!$product->inStock($this->item['quantity'])) {
+        $this->validate([
+            " item.{$i}.product_id" => 'required',
+            "item.{$i}.quantity" => 'required|numeric|min:1',
+        ]);
+        $product = Product::find($this->item[$i]['product_id']);
+
+        if (!$product->inStock($this->item[$i]['quantity'])) {
 
 
           session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
 
-           
+          return;
+
         }else{
-            $product ->decreaseStock($this->item['quantity']);
+            $product->decreaseStock($this->item[$i]['quantity']);
  
-            $this->item['employee_id']=auth()->user()->id;
+            $this->item[$i]['employee_id'] = auth()->user()->id;
     
     
-            $item = Sale::create([
-                'employee_id' => $this->item['employee_id'] , 
-                'quantity' => $this->item['quantity'] , 
-                'product_id' => $this->item['product_id'] , 
+            Sale::create([
+                'employee_id' => $this->item[$i]['employee_id'] , 
+                'quantity' => $this->item[$i]['quantity'] , 
+                'product_id' => $this->item[$i]['product_id'] , 
             ]);
+        }
             $this->confirmingItemCreation = false;
             $this->emitTo('sales.table', 'refresh');
             $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
@@ -159,7 +160,7 @@ class Create extends Component
 
     public function editItem(): void
     {
-        $this->validate();
+     
         $product = Product::find($this->item['product_id']);
          
          $product->increaseStock($this->oldQuantity);
