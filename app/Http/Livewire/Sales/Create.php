@@ -60,7 +60,7 @@ class Create extends Component
      * @var bool
      */
     public $confirmingItemEdit = false;
-
+    
     public function render(): View
     {
         return view('livewire.sales.create');
@@ -69,12 +69,11 @@ class Create extends Component
     {
         $this->itemCount++;
     }
-
-    public function decreamentItemCount()
+    
+    public function decrementItemCount()
     {
         $this->itemCount--;
     }
-    
     public function showDeleteForm(Sale $sale): void
     {
        
@@ -101,7 +100,6 @@ class Create extends Component
 
     {
         $this->confirmingItemCreation = true;
-        $this->reset('itemCount');
         $this->resetErrorBag();
         $this->reset(['item']);
 
@@ -110,31 +108,31 @@ class Create extends Component
 
     public function createItem(): void
     {
+        $this->validate([
+            "item.product_id.*" => 'required',
+            "item.quantity.*" => 'required|numeric|min:1',
+        ]);
+
         for ($i = 1; $i <= $this->itemCount; $i++) {
 
-        $this->validate([
-            " item.{$i}.product_id" => 'required',
-            "item.{$i}.quantity" => 'required|numeric|min:1',
-        ]);
-        $product = Product::find($this->item[$i]['product_id']);
+        $product = Product::find($this->item['product_id'][$i]);
 
-        if (!$product->inStock($this->item[$i]['quantity'])) {
-
+     
+        if (!$product->inStock($this->item['quantity'][$i])) {
 
           session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
-
           return;
 
         }else{
-            $product->decreaseStock($this->item[$i]['quantity']);
+            $product->decreaseStock($this->item['quantity'][$i]);
  
-            $this->item[$i]['employee_id'] = auth()->user()->id;
+            $this->item['employee_id'][$i] = auth()->user()->id;
     
     
             Sale::create([
-                'employee_id' => $this->item[$i]['employee_id'] , 
-                'quantity' => $this->item[$i]['quantity'] , 
-                'product_id' => $this->item[$i]['product_id'] , 
+                'employee_id' => $this->item['employee_id'][$i] , 
+                'quantity' => $this->item['quantity'][$i] , 
+                'product_id' => $this->item['product_id'][$i] , 
             ]);
         }
             $this->confirmingItemCreation = false;
