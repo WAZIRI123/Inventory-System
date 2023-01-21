@@ -18,7 +18,7 @@
 
     <x-tall-crud-dialog-modal wire:model="confirmingItemCreation">
         <x-slot name="title" >
-            Add Recor
+            Add Record
         </x-slot>
      
         <x-slot name="content"><div class="grid grid-cols-2 gap-8">
