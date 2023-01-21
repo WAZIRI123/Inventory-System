@@ -102,45 +102,45 @@ class Create extends Component
         $this->confirmingItemCreation = true;
         $this->resetErrorBag();
         $this->reset(['item']);
-
+        $this->reset(['itemCount']);
         $this->products= Product::orderBy('id')->get();
     }
 
     public function createItem(): void
     {
-        $this->validate([
-            "item.product_id.*" => 'required',
-            "item.quantity.*" => 'required|numeric|min:1',
-        ]);
 
         for ($i = 1; $i <= $this->itemCount; $i++) {
+        $this->validate([
+          
+            'item.'.$i.'.quantity' => 'required|numeric|min:1',
+            'item.'.$i.'.product_id' => 'required|exists:products,id',
+        ]);
+        $product = Product::find($this->item [$i]['product_id']);
 
-        $product = Product::find($this->item['product_id'][$i]);
+        if (!$product->inStock($this->item[$i]['quantity'])) {
 
-     
-        if (!$product->inStock($this->item['quantity'][$i])) {
+          session()->flash('error.'.$i, 'The provided quantity exceeds the stock quantity.');  
 
-          session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
           return;
 
         }else{
-            $product->decreaseStock($this->item['quantity'][$i]);
+            $product->decreaseStock($this->item[$i]['quantity']);
  
-            $this->item['employee_id'][$i] = auth()->user()->id;
+            $this->item[$i]['employee_id'] = auth()->user()->id;
     
     
             Sale::create([
-                'employee_id' => $this->item['employee_id'][$i] , 
-                'quantity' => $this->item['quantity'][$i] , 
-                'product_id' => $this->item['product_id'][$i] , 
+                'employee_id' => $this->item[$i]['employee_id'] , 
+                'quantity' => $this->item[$i]['quantity'] , 
+                'product_id' => $this->item[$i]['product_id'] , 
             ]);
         }
-            $this->confirmingItemCreation = false;
-            $this->emitTo('sales.table', 'refresh');
-            $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
+
         }
         
-
+        $this->confirmingItemCreation = false;
+        $this->emitTo('sales.table', 'refresh');
+        $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
     }
  
     public function showEditForm(Sale $sale): void

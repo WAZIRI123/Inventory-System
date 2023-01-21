@@ -25,22 +25,24 @@
             @for ($i = 1; $i <= $itemCount; $i++)
             <div class="mt-4">
                 <x-tall-crud-label>Quantity</x-tall-crud-label>
-                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity.{{ $i }}"  name="item[{{$i}}][quantity]" wire:key="item[quantity][{{$i}}]"  />
-                @error('item.quantity.'.$i)
+                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.{{ $i }}.quantity"  name="item[{{$i}}][quantity]" wire:key="item[quantity][{{$i}}]"  />
+                @error('item.'.$i.'.quantity')
                 <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message>
                 @enderror
-                @if (session()->has('error.{{  }}$i}'))<x-tall-crud-error-message>{{ Session('error') }}</x-tall-crud-error-message> @endif
+    @if (session()->has('error.'.$i))
+    <x-tall-crud-error-message>{{ session()->get('error.'.$i) }}</x-tall-crud-error-message>
+    @endif
             </div>
 
                 <div class="mt-4">
                     <x-tall-crud-label>Product</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.product_id.{{ $i }}" name="item[product_id][{{$i}}]" wire:key="item[product_id][{{$i}}]">
+                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.{{ $i }}.product_id" name="item[product_id][{{$i}}]" wire:key="item[product_id][{{$i}}]">
                         <option value="">Please Select</option>
                         @foreach($products as $c)
                         <option value="{{$c->id}}">{{$c->name}}</option>
                         @endforeach
                     </x-tall-crud-select>
-                    @error('item.product_id.'.$i) <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+                    @error('item.'.$i.'.product_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 </div>
                 @endfor
             <div class="grid grid-cols-2 gap-8">
