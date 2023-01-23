@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Livewire\Wert;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,28 +37,10 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             Route::get('/', Index::class)->name('index');
 
-            
+
 
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
-        });
-
-        //? Financial
-        Route::namespace('Financial')->group(function () {
-
-            Route::get('/financial', Table::class)->name('financial');
-        });
-
-        //? Inventory
-        Route::namespace('Inventory')->group(function () {
-
-            Route::get('/inventory', Table::class)->name('inventory');
-        });
-
-        //PurchaseOrder
-        Route::namespace('PurchaseOrder')->group(function () {
-
-            Route::get('/purchase-order', Table::class)->name('purchase-order');
         });
 
         //Sales
@@ -79,13 +61,18 @@ Route::namespace('App\Http\Livewire')->group(function () {
             Route::get('/employee', Table::class)->name('employee');
         });
 
-        
+
         //Product
         Route::namespace('Product')->group(function () {
 
             Route::get('/product', Table::class)->name('product');
         });
 
+        //Product
+        Route::namespace('Reports')->prefix('report')->group(function () {
+
+            Route::get('/sale-report', SaleReport::class)->name('sale-report');
+        });
     });
 });
 
