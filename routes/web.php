@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-
+use App\Services\Print\PrintService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboards', function () {
+    $results=session()->get('results');
+
+    return PrintService::createPdfFromView('result.pdf', 'livewire.reports.sales-pdf', ['results' => $results]);
+
+})->middleware(['auth'])->name('sale-reports');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -70,7 +75,7 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
         //Product
         Route::namespace('Reports')->prefix('report')->group(function () {
-
+            
             Route::get('/sale-report', SaleReport::class)->name('sale-report');
         });
     });

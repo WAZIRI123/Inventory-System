@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
 use App\Models\Sale;
+use App\Services\Print\PrintService;
 
 class SaleReport extends Component
 {
@@ -27,19 +28,32 @@ class SaleReport extends Component
     {
 
     }
+    public function getSalesProperty(){
+        return $this->query()
+        ->with(['employee','product','employee.user'])
+        ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
+        ->get();
+    }
+
 
     public function render(): View
     {
-        $results = $this->query()
-            ->with(['employee','product','employee.user'])
-            ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
-            ->get();
-
+        $results = $this->sales;
         return view('livewire.reports.sale-report', [
             'results' => $results
         ])->layoutData(['title' => 'Sales-Report | School Management System']);
     }
 
+    public function print(){
+    
+        $results=$this->sales;
+       
+        session()->put('results',$results);
+
+        
+        return redirect()->route('sale-reports');
+
+    }
     public function sortBy(string $field): void
     {
         if ($field == $this->sortBy) {

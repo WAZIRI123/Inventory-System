@@ -15,7 +15,7 @@
                 </div>
                 <div class="mt-4">
                 <x-tall-crud-label>Print</x-tall-crud-label>
-                <x-tall-crud-button mode="add" wire:loading.attr="disabled" wire:click="createItem()">Report</x-tall-crud-button>
+                <x-tall-crud-button mode="add" wire:loading.attr="disabled" wire:click="print">Report</x-tall-crud-button>
             </div>
             </div>
            </div>
