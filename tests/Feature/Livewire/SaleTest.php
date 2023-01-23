@@ -40,9 +40,9 @@ class SaleTest extends TestCase
 
         // test 
         Livewire::test(Create::class)
-            ->set('item.quantity', 20)
-            ->set('item.product_id',$product->id)
-            ->set('item.employee_id',$employee->id)
+            ->set('itemCount', 1)
+            ->set('item.1.quantity',20)
+            ->set('item.1.product_id', $product->id)
             ->call('createItem')->assertHasNoErrors();
 
         // test if data exist in database
@@ -107,7 +107,7 @@ class SaleTest extends TestCase
 
             ->set('item.quantity', 10)
 
-            ->call('editItem', $sale);
+            ->call('editItem', $sale)->assertHasNoErrors();
         
 
         

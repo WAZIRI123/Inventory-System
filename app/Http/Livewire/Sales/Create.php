@@ -60,7 +60,14 @@ class Create extends Component
      * @var bool
      */
     public $confirmingItemEdit = false;
-    
+
+    protected function rules()
+    {
+        return [
+        'item.quantity' => 'required|numeric|min:1',
+        'item.product_id' => 'required',
+    ];
+}
     public function render(): View
     {
         return view('livewire.sales.create');
@@ -158,6 +165,7 @@ class Create extends Component
 
     public function editItem(): void
     {
+        $this->validate();
      
         $product = Product::find($this->item['product_id']);
          
