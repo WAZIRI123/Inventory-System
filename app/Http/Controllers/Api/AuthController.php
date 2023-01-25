@@ -5,7 +5,7 @@
  * Time: 3:49 PM
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 
 use App\Models\User;
