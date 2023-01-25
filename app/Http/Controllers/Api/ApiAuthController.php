@@ -92,7 +92,7 @@ class ApiAuthController extends Controller
      */
     public function throttleKey($request): string
     {
-        return Str::transliterate(Str::lower($request->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
 
     }
     
@@ -104,7 +104,8 @@ class ApiAuthController extends Controller
         $user->currentAccessToken()->delete();
 
         return response([
-            'success' => true
+            'success' => true,
+            'wa'=>'good'
         ]);
     }
 
