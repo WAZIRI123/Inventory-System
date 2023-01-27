@@ -1,20 +1,10 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import NavBar from "./components/NavBar.vue";
-import SideBar from "./components/SideBar.vue";
+
 </script>
 
 <template>
-<div class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden hidden"></div>
-    <SideBar/>
-<div class="lg:pl-64 w-full flex flex-col">
-        <NavBar/>
-
-
-    <RouterView />
-</div>
+  <router-view></router-view>
 </template>
 
-<style scoped>
-
+<style>
 </style>
