@@ -1,28 +1,36 @@
 
 <script setup>
 import CustomInput from '../components/CustomInput.vue';
+import GuestLayout from '../components/GuestLayout.vue';
+
+import CustomButton from '../components/CustomButton.vue';
 
 </script>
 <template>
-    <div class="h-full bg-gray-200 p-8">
-        <!-- start::Default Inputs -->
-        <div class="bg-white p-4 rounded-lg shadow-xl space-y-4 py-8">
-            <h4 class="text-xl capitalize">Default Inputs</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+   <GuestLayout title="login">
+                <form method="POST" @submit.prevent="login">
+                <div class="mt-4">
                 <!-- start::Default Input -->
                <CustomInput/>
                 <!-- end::Default Input -->
+                </div>
 
+                <div class="mt-4">
                 <!-- start::Default Input -->
-                <CustomInput/>
+               <CustomInput/>
                 <!-- end::Default Input -->
+                </div>
+                <div class="mt-4">
+                <!-- start::Default Input -->
+               <CustomInput type="checkbox"/>
+                <!-- end::Default Input -->
+                </div >
 
-                <!-- start::Default Input -->
-                <CustomInput/>
-                <!-- end::Default Input -->
-            </div>
-        </div>
-        <!-- end::Default Inputs -->
-    </div>
+                <div class="mt-4">
+                 <CustomButton title="login"/>
+                </div>
+            </form>
+        </GuestLayout>
 
 </template>
+
