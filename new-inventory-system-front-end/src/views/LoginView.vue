@@ -11,18 +11,18 @@ import CustomButton from '../components/CustomButton.vue';
                 <form method="POST" @submit.prevent="login">
                 <div class="mt-4">
                 <!-- start::Default Input -->
-               <CustomInput/>
+               <CustomInput label="email"/>
                 <!-- end::Default Input -->
                 </div>
 
                 <div class="mt-4">
                 <!-- start::Default Input -->
-               <CustomInput/>
+               <CustomInput label="password"/>
                 <!-- end::Default Input -->
                 </div>
-                <div class="mt-4">
+                <div class="mt-4" >
                 <!-- start::Default Input -->
-               <CustomInput type="checkbox"/>
+               <CustomInput type="checkbox" label="remember"/>
                 <!-- end::Default Input -->
                 </div >
 
