@@ -61,7 +61,7 @@
   import {computed, ref} from "vue";
   
   const props = defineProps({
-    modelValue: [String, Number, File],
+    modelValue: [String, Number, File,Boolean],
     label: String,
     type: {
       type: String,
