@@ -42,7 +42,7 @@ class ApiAuthController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required|email|string|exists:users,email',
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string',Password::min(8)->mixedCase()->numbers()->symbols()],
             'remember' => 'boolean'
         ]);
         $remember = $credentials['remember'] ?? false;

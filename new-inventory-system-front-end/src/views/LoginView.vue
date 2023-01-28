@@ -6,17 +6,21 @@
                 <!-- start::Default Input -->
                <CustomInput label="email" v-model="user.email" />
                 <!-- end::Default Input -->
+     
+                <InputError :messages="errorMsg.email?errorMsg.email[0]:errorMsg.email"/>
                 </div>
 
                 <div class="mt-4">
                 <!-- start::Default Input -->
                <CustomInput label="password" v-model="user.password" />
                 <!-- end::Default Input -->
+                <InputError :messages="errorMsg.password?errorMsg.password[0]:errorMsg.password"/>
                 </div>
                 <div class="mt-4" >
                 <!-- start::Default Input -->
                <CustomInput type="checkbox" label="remember" v-model="user.remember"/>
                 <!-- end::Default Input -->
+                <InputError/>
                 </div >
 
                 <div class="mt-4">
@@ -36,7 +40,9 @@ import CustomButton from '../components/CustomButton.vue';
 import {ref} from 'vue'
 import store from "../store";
 import router from "../router";
+import InputError from '../components/InputError.vue';
 let errorMsg = ref("");
+
 const user ={
   email: '',
   password: '',
@@ -51,7 +57,7 @@ function login() {
       router.push({name: 'dashboard'})
     })
     .catch(({response}) => {
-      console.log(response)
+       errorMsg.value =response.data.errors;
     })
 }
 

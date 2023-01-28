@@ -1,3 +1,5 @@
+
+
 <template>
 
 <div class="flex flex-col">
@@ -14,7 +16,7 @@
                 </button>
             </div>
             <!-- end::Mobile menu button -->
-
+            <button @click="logout()">logout</button>
             <!-- start::Right side top menu -->
             <div class="flex items-center">
                 <!-- start::Search input -->
@@ -55,7 +57,7 @@
                         <!-- start::Submenu content -->
                         <div class="bg-white rounded max-h-96 overflow-y-scroll custom-scrollbar">
                             <!-- start::Submenu header -->
-                            <div class="flex items-center justify-between px-4 py-2">
+                            <div class="flex items-center justify-between px-4 py-2" >
                                 <span class="font-bold">Notifications</span>
                                 <span class="text-xs px-1.5 py-0.5 bg-red-600 text-gray-100 rounded">
                                     4 new
@@ -337,7 +339,17 @@
 </template>
 
 <script setup>
+import router from "../router";
+import store from "../store";
 
+
+function logout() {
+    store.dispatch("logout").then(() => {
+        router.push({
+          name: "login",
+        });
+      });
+    }
 </script>
 
 <style scoped>
