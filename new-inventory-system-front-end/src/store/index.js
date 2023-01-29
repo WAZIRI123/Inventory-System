@@ -30,11 +30,10 @@ const store = createStore({
     getters: {},
     actions: {
 
-        register({ commit }, user) {
-            return axiosClient.post('/register', user)
+        saveUser({ commit }, user) {
+            return axiosClient.put('/update', user)
                 .then(({ data }) => {
                     commit('setUser', data.user);
-                    commit('setToken', data.token)
                     return data;
                 })
         },
@@ -42,10 +41,8 @@ const store = createStore({
 
             return axiosClient.post('/login', user)
 
-
-
             .then(({ data }) => {
-               commit('setUser', data.user);
+                commit('setUser', data.user);
                 commit('setToken', data.token);
                 return data;
             })
@@ -57,11 +54,11 @@ const store = createStore({
                     return response;
                 })
         },
-        getUser({ commit }) {
-            return axiosClient.get('/user')
+        getUser({ commit }, id) {
+            return axiosClient.get(`/profile/${id}`)
                 .then(res => {
-                    console.log(res);
-                    commit('setUser', res.data)
+                    commit('setUser', res.data.user)
+
                 })
         },
         getDashboardData({ commit }) {
@@ -153,7 +150,9 @@ const store = createStore({
         },
 
         setUser: (state, user) => {
+
             state.user.data = user;
+
         },
         setToken: (state, token) => {
             state.user.token = token;

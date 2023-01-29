@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiAuthController;
+use App\Http\Controllers\Api\Auth\ApiProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthController::class, 'logout']);
+    Route::get('/profile/{user}',[ApiProfileController::class,'show']);
+    Route::put('/update',[ApiProfileController::class,'update']);
 });
 Route::post('/login', [ApiAuthController::class, 'login']);
