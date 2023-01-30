@@ -7,6 +7,12 @@ const store = createStore({
             data: {},
             token: sessionStorage.getItem("TOKEN"),
         },
+
+        toast: {
+            show: false,
+            message: '',
+            delay: 5000
+        },
         dashboard: {
             loading: false,
             data: {}
@@ -147,6 +153,15 @@ const store = createStore({
             state.user.token = null;
             state.user.data = {};
             sessionStorage.removeItem("TOKEN");
+        },
+
+        hideToast: (state) => {
+            state.toast.show = false;
+            state.toast.message = '';
+        },
+        showToast: (state, message) => {
+            state.toast.show = true;
+            state.toast.message = message;
         },
 
         setUser: (state, user) => {
