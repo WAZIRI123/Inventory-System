@@ -16,7 +16,6 @@
                 </button>
             </div>
             <!-- end::Mobile menu button -->
-            <button @click="logout()">logout</button>
             <!-- start::Right side top menu -->
             <div class="flex items-center">
                 <!-- start::Search input -->
