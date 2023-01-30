@@ -126,7 +126,7 @@
             </div>
             <!-- end::Menu link -->
 
-          <SingleSideLink path="/dashboard" name="home"/>
+          <SingleSideLink path="/dashboard" name="home" />
 
                   <!-- start::Menu link -->
                   <a x-data="{ linkHover: false }" @mouseover="linkHover = true" @mouseleave="linkHover = false"
