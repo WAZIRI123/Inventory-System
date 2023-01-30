@@ -4,7 +4,7 @@
         <!-- start::Logo -->
         <div class="flex items-center justify-center bg-black bg-opacity-30 h-16">
             <h1 class="text-gray-100 text-lg font-bold uppercase tracking-widest">
-                Template
+                Inventory System
             </h1>
         </div>
         <!-- end::Logo -->
@@ -73,10 +73,10 @@
             <div x-data="{ linkHover: false, linkActive: false }">
                 <div @mouseover="linkHover = true" @mouseleave="linkHover = false" @click="linkActive = !linkActive"
                     class="flex items-center justify-between text-gray-400 hover:text-gray-100 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
-                    :class=" linkActive ? 'bg-black bg-opacity-30 text-gray-100' : ''">
+                    :class="linkActive ? 'bg-black bg-opacity-30 text-gray-100' : ''">
                     <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200"
-                            :class=" linkHover || linkActive ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24"
+                            :class="linkHover || linkActive ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
@@ -126,11 +126,13 @@
             </div>
             <!-- end::Menu link -->
 
-          <SingleSideLink path="/dashboard" name="home" />
+            <SingleSideLink path="/dashboard" name="home">
+                <HomeIcon />
+            </SingleSideLink>
 
-                  <!-- start::Menu link -->
-                  <a x-data="{ linkHover: false }" @mouseover="linkHover = true" @mouseleave="linkHover = false"
-                href="#" @click="logout()"
+            <!-- start::Menu link -->
+            <a x-data="{ linkHover: false }" @mouseover="linkHover = true" @mouseleave="linkHover = false" href="#"
+                @click="logout()"
                 class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200"
                     :class="linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -155,15 +157,16 @@
 import router from "../router";
 import store from "../store";
 import SingleSideLink from './Resusables/SingleSideLink.vue';
+import HomeIcon from "./SvgsIcons/HomeIcon.vue";
 
 
 function logout() {
-      store.dispatch("logout").then(() => {
+    store.dispatch("logout").then(() => {
         router.push({
-          name: "login",
+            name: "login",
         });
-      });
-    }
+    });
+}
 </script>
 
 
