@@ -81,6 +81,7 @@ const store = createStore({
                 })
 
         },
+
         getSurveys({ commit }, { url = null } = {}) {
             commit('setSurveysLoading', true)
             url = url || "/survey";
@@ -167,8 +168,8 @@ const store = createStore({
         setUser: (state, user) => {
 
             state.user.data = user;
-
         },
+
         setToken: (state, token) => {
             state.user.token = token;
             sessionStorage.setItem('TOKEN', token);

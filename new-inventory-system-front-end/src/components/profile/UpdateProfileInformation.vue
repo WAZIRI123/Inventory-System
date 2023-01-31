@@ -55,6 +55,7 @@ let user =ref({
 });
 
 if (route.params.id) {
+
 store.dispatch("getUser", route.params.id);
 
 }

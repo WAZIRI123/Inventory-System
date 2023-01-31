@@ -126,7 +126,11 @@
             </div>
             <!-- end::Menu link -->
 
-            <SingleSideLink path="/dashboard" name="home">
+            <SingleSideLink title="home" name="dashboard">
+                <HomeIcon />
+            </SingleSideLink>
+
+            <SingleSideLink  name="profile" title="profile"  :id=userId>
                 <HomeIcon />
             </SingleSideLink>
 
@@ -159,6 +163,15 @@ import store from "../store";
 import SingleSideLink from './Resusables/SingleSideLink.vue';
 import HomeIcon from "./SvgsIcons/HomeIcon.vue";
 
+const userId=sessionStorage.getItem('Auth')
+function loggedUser() {
+    store.dispatch("getLoggedUser").then((user) => {
+        router.push({
+            name: "profile",
+            params:{id:userId}
+        });
+    });
+}
 
 function logout() {
     store.dispatch("logout").then(() => {

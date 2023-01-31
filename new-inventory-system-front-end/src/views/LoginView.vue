@@ -53,7 +53,8 @@ function login() {
 
   store.dispatch('login', user)
 
-    .then(() => {
+    .then((res) => {
+      sessionStorage.setItem('Auth',res.user.id)
       router.push({name: 'dashboard'})
     })
     .catch(({response}) => {
