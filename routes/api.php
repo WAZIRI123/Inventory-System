@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\Auth\ApiProfileController;
+use App\Http\Controllers\Api\Auth\ApiPasswordResetLinkController;
 use App\Http\Controllers\Api\Auth\NewPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/{user}',[ApiProfileController::class,'show']);
     Route::put('/update',[ApiProfileController::class,'update']);
     Route::patch('/password-reset',[NewPasswordController::class,'store']);
+    Route::post('/password-reset-link',[ApiPasswordResetLinkController::class,'sendPasswordResetLink']);
 });
 Route::post('/login', [ApiAuthController::class, 'login']);
