@@ -35,9 +35,17 @@ const store = createStore({
     },
     getters: {},
     actions: {
-
+        //password-update
         saveUser({ commit }, user) {
             return axiosClient.put('/update', user)
+                .then(({ data }) => {
+                    commit('setUser', data.user);
+                    return data;
+                })
+        },
+
+        updatePassword({ commit }, user) {
+            return axiosClient.put('/password-update', user)
                 .then(({ data }) => {
                     commit('setUser', data.user);
                     return data;
