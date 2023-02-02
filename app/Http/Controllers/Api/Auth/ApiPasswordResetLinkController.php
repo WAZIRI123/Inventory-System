@@ -15,8 +15,9 @@ class ApiPasswordResetLinkController extends Controller
         ]);
     
         $resetData = Password::sendResetLink(
-            $validatedData
+            
         );
+        dd($resetData);
     
         if ($resetData['status'] == Password::RESET_LINK_SENT) {
             return response()->json([

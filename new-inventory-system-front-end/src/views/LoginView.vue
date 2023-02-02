@@ -23,7 +23,9 @@
                 <InputError/>
                 </div >
 
-                <div class="mt-4">
+                <div class="flex items-center justify-end mt-4">
+                  <router-link to="/reset-link-view" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Forgot your password?</router-link>
+
                  <CustomButton title="login" type="submit"/>
                 </div>
             </form>
@@ -41,6 +43,7 @@ import {ref} from 'vue'
 import store from "../store";
 import router from "../router";
 import InputError from '../components/InputError.vue';
+import { RouterLink } from 'vue-router';
 let errorMsg = ref("");
 
 const user ={

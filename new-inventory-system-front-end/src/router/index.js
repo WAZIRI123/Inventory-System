@@ -42,7 +42,13 @@ const router = createRouter({
                 },
             ]
 
+        },
 
+        {
+            path: '/reset-link-view',
+            name: 'ResetLinkView',
+            component: () =>
+                import ("../views/ResetLinkView.vue"),
         },
 
         {

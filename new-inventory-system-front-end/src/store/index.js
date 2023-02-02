@@ -51,6 +51,15 @@ const store = createStore({
                     return data;
                 })
         },
+        sendResetPasswordLinkAction({ commit }, user) {
+
+            return axiosClient.post('/password-reset-link', user)
+
+            .then(({ data }) => {
+                return data;
+            })
+        },
+
         login({ commit }, user) {
 
             return axiosClient.post('/login', user)
