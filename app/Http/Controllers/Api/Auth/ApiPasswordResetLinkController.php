@@ -15,20 +15,26 @@ class ApiPasswordResetLinkController extends Controller
         ]);
     
         $resetData = Password::sendResetLink(
-            
+            ['email' => $validatedData['email']]
         );
-        dd($resetData);
-    
-        if ($resetData['status'] == Password::RESET_LINK_SENT) {
-            return response()->json([
-                'message' => __($resetData['status']),
-                'token'   => $resetData['token'],         
-             ], 200);
-        } else {
-            return response()->json([
-                'message' => __($resetData['status']),
-            ], 400);
-        }
+if (is_array($resetData)) {
+    if ($resetData['status'] == Password::RESET_LINK_SENT) {
+        return response()->json([
+            'message' => __($resetData['status']),
+            'token'   => $resetData['token'],         
+         ], 200);
+    } else {
+        return response()->json([
+            'message' => __($resetData['status']),
+        ], 400);
+    }
+}else {
+    return response()->json([
+        'throttled' =>'Too many password reset attempts. Please try again later.',
+    ]);
+}
+
+
     }
     
 }

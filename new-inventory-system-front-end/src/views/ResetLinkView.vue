@@ -2,8 +2,9 @@
 <template>
     <GuestLayout title="Reset Link">
                  <form method="POST" @submit.prevent="sendPasswordResetLink">
+                  <InputError :messages="throttledMsg?throttledMsg:throttledMsg"/>
                  <div class="mt-4">
-                 <!-- start::Default Input -->
+                 <!-- start::Default Input throttledMsg-->
                 <CustomInput label="email" v-model="user.email" />
                  <!-- end::Default Input -->
       
@@ -30,7 +31,7 @@
  import InputError from '../components/InputError.vue';
  import { RouterLink } from 'vue-router';
  let errorMsg = ref("");
- 
+ let throttledMsg = ref("");
  const user ={ 
     email:'',
  };
@@ -40,10 +41,20 @@
    store.dispatch('sendResetPasswordLinkAction', user)
  
      .then((res) => {
-  console.log(res)
+      if (!res.throttled) 
+      {
+         console.log(res)
+         
+      }
+      else{
+         
+         throttledMsg.value = response.throttled;
+      }
      })
      .catch(({response}) => {
-        errorMsg.value =response.data.errors;
+
+      errorMsg.value =response.data.errors;
+
      })
  }
  

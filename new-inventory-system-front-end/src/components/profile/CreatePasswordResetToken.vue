@@ -11,7 +11,7 @@
         </header>
     
         <form method="post"  class="mt-6 space-y-6" @submit.prevent="createToken">
-
+          <InputError :messages="throttledMsg?throttledMsg.value:'waz'"/>
             <div class="mt-4">
                 <!-- start::Default Input -->
                <CustomInput label="email" v-model="user.email" />
@@ -37,6 +37,7 @@ import InputError from '../InputError.vue';
 import Toast from '../Toast.vue';
 
 let errorMsg = ref("");
+let throttledMsg = ref("");
 const router = useRouter();
 
 const route = useRoute();
@@ -67,7 +68,14 @@ function saveUser() {
     store.commit('showToast', `Profile has been updated successfully`)
 
   }).catch(({response}) => {
-       errorMsg.value =response.data.errors;
+    if (response.data.errors) {
+      errorMsg.value =response.data.errors;
+    }
+    else{
+
+      throttledMsg.value=response.data.throttled
+    }
+       
     });
 
 }

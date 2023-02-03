@@ -61,7 +61,7 @@ function login() {
       router.push({name: 'dashboard'})
     })
     .catch(({response}) => {
-       errorMsg.value =response.data.errors;
+      errorMsg.value=response.data.errors
     })
 }
 
