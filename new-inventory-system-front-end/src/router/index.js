@@ -52,6 +52,13 @@ const router = createRouter({
         },
 
         {
+            path: '/reset-password',
+            name: 'NewPassword',
+            component: () =>
+                import ("../views/NewPasswordView.vue"),
+        },
+
+        {
             path: '/:pathMatch(.*)',
             name: 'NotFound',
             component: () =>

@@ -2,6 +2,7 @@
 <template>
    <GuestLayout title="login">
                 <form method="POST" @submit.prevent="login">
+                  <InputError :messages="errorCredential?errorCredential:errorCredential"/>
                 <div class="mt-4">
                 <!-- start::Default Input -->
                <CustomInput label="email" v-model="user.email" />
@@ -46,6 +47,8 @@ import InputError from '../components/InputError.vue';
 import { RouterLink } from 'vue-router';
 let errorMsg = ref("");
 
+let errorCredential = ref("");
+
 const user ={
   email: '',
   password: '',
@@ -61,8 +64,15 @@ function login() {
       router.push({name: 'dashboard'})
     })
     .catch(({response}) => {
-      errorMsg.value=response.data.errors
+      if (response.data.errors) {
+        
+        errorMsg.value =response.data.errors;
+    } else {
+        errorCredential.value=response.data.error
+    }
+      
     })
+    
 }
 
 </script>

@@ -43,12 +43,14 @@
      .then((res) => {
       if (!res.throttled) 
       {
-         console.log(res)
-         
+         sessionStorage.setItem('token',res.token)
+         sessionStorage.setItem('email',user.email)
+         router.push({name: 'NewPassword'})
+
       }
       else{
          
-         throttledMsg.value = response.throttled;
+         throttledMsg.value = res.throttled;
       }
      })
      .catch(({response}) => {
