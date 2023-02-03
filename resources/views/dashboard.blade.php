@@ -4,6 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <h1>waziri</h1>
 <h2>test</h2>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
