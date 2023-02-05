@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Product;
+namespace App\Http\Livewire\Purchase;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
-use App\Models\Product;
-use Carbon\Carbon;
+use App\Models\Purchase;
 
 class Table extends Component
 {
@@ -29,11 +28,6 @@ class Table extends Component
     public $sortAsc = true;
 
     /**
-     * @var string
-     */
-    public $q;
-
-    /**
      * @var int
      */
     public $per_page = 15;
@@ -47,18 +41,13 @@ class Table extends Component
     public function render(): View
     {
         $results = $this->query()
-            ->with(['stockMutations',])
-            ->when($this->q, function ($query) {
-                return $query->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->q . '%');
-                });
-            })
+            ->with(['product'])
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->paginate($this->per_page);
 
-        return view('livewire.product.table', [
+        return view('livewire.purchase.table', [
             'results' => $results
-        ])->layoutData(['title' => 'product | School Management System']);
+        ])->layoutData(['title' => 'Manunuzi | School Management System']);
     }
 
     public function sortBy(string $field): void
@@ -69,11 +58,6 @@ class Table extends Component
         $this->sortBy = $field;
     }
 
-    public function updatingQ(): void
-    {
-        $this->resetPage();
-    }
-
     public function updatingPerPage(): void
     {
         $this->resetPage();
@@ -81,6 +65,6 @@ class Table extends Component
 
     public function query(): Builder
     {
-        return Product::query();
+        return Purchase::query();
     }
 }

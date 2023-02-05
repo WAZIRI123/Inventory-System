@@ -21,7 +21,10 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             userSeeder::class,
             EmployeeSeeder::class ,
-            VendorSeeder::class,
+            ProductSeeder::class,
+            ProductTypeSeeder::class,
+            PurchaseSeeder::class,
+            SaleSeeder::class
         ]);
     }
 }

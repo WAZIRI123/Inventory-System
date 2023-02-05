@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Vendor;
+use App\Models\Purchase;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class VendorSeeder extends Seeder
+class PurchaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class VendorSeeder extends Seeder
      */
     public function run()
     {
-        Vendor::factory()->count(10)->create();
+        Purchase::factory(5)->create();
     }
 }

@@ -2,15 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Customer;
-use App\Models\Employee;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sale>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductType>
  */
-class SaleFactory extends Factory
+class ProductTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,8 +19,7 @@ class SaleFactory extends Factory
     {
         return [
             'product_id' =>Product::inRandomOrder()->first()->id,
-            'employee_id' =>2,
-            'quantity'=>$this->faker->numberBetween(1,10)
+            'name' => $this->faker->word,
         ];
     }
 }

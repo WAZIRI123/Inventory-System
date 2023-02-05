@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendors', function (Blueprint $table) {
+        Schema::create('purchases', function (Blueprint $table) 
+        {
             $table->id();
-            $table->string('name');
-            $table->string('contact_name');
-            $table->string('contact_email');
-            $table->string('contact_phone');
-            $table->string('payment_terms');
+            $table->decimal('purchase_price', 8, 2);
+            $table->foreignId('product_id')->constrained();
+            $table->unsignedInteger('quantity');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendors');
+        Schema::dropIfExists('purchases');
     }
 };

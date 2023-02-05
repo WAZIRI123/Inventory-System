@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('employee_id');
-            $table->integer('quantity');
+            $table->unsignedInteger('quantity');
+            $table->foreignId('product_id')->constrained();
+            $table->foreignId('employee_id')->constrained();
             $table->timestamps();
-            
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('employee_id')->references('id')->on('employees');
-
             $table->softDeletes();
         });
     }

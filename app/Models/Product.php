@@ -13,16 +13,14 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes,HasStock,HasSku;
 
-    protected $fillable=['name','vendor_id','description','purchase_price','sale_price'];
-    
-    public function vendor():BelongsTo
-    {
-        return $this->belongsTo(Vendor::class);
-    }
+    protected $fillable = [
+        'name',
+        'sku',
+        'plates_quantity',
+        'sale_price'
+    ];
 
-    
-    public function sales()
-    {
-        return $this->hasMany(Sale::class);
-    }
+    protected $casts = [
+        'plates_quantity' => 'integer',
+    ];
 }

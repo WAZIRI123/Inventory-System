@@ -11,17 +11,22 @@ class Sale extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable=['product_id','quantity','employee_id'];
+    protected $fillable = [
+        'quantity',
+        'product_id',
+        'employee_id',
+    ];
 
-    
-    public function product():BelongsTo
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function employee():BelongsTo
+    public function employee()
     {
         return $this->belongsTo(Employee::class);
     }
+
+
 
 }

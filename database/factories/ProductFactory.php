@@ -17,13 +17,11 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-       $vendor=Vendor::factory()->create();
         return [
-            'name' => $this->faker->name,
-            'vendor_id' => $vendor->id,
-            'description' => $this->faker->sentence,
-            'purchase_price' => $this->faker->randomFloat(2, 0, 100),
-            'sale_price' => $this->faker->randomFloat(2, 0, 100),
+        'name' => $this->faker->name,
+        'sku' => $this->faker->uuid,
+        'plates_quantity' => $this->faker->randomNumber(),
+        'sale_price' => $this->faker->randomFloat(2, 0, 999),
             
         ];
     }

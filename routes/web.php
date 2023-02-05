@@ -20,10 +20,9 @@ Route::redirect('/', '/login');
 
 
 Route::get('/dashboards', function () {
-    $results=session()->get('results');
+    $results = session()->get('results');
 
     return PrintService::createPdfFromView('result.pdf', 'livewire.reports.sales-pdf', ['results' => $results]);
-
 })->middleware(['auth'])->name('sale-reports');
 
 Route::middleware('auth')->group(function () {
@@ -42,8 +41,6 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
             Route::get('/', Index::class)->name('index');
 
-
-
             // livewire crud-generator Tall
             Route::get('/tall-crud-generator', TallCrud::class)->name('tall-crud-generator');
         });
@@ -52,6 +49,12 @@ Route::namespace('App\Http\Livewire')->group(function () {
         Route::namespace('Sales')->group(function () {
 
             Route::get('/sales', Table::class)->name('sales');
+        });
+
+        //Sales
+        Route::namespace('Purchase')->group(function () {
+
+            Route::get('/purchases', Table::class)->name('purchases');
         });
 
         //Vendor
@@ -75,7 +78,7 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
         //Product
         Route::namespace('Reports')->prefix('report')->group(function () {
-            
+
             Route::get('/sale-report', SaleReport::class)->name('sale-report');
         });
     });

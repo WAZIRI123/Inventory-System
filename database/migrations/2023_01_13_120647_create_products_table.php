@@ -17,9 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('sku');
-            $table->foreignId('vendor_id')->constrained()->onDelete('cascade');
-            $table->string('description');
-            $table->decimal('purchase_price', 8, 2);
+            $table->unsignedInteger('plates_quantity')->default(0);
             $table->decimal('sale_price', 8, 2);
             $table->softDeletes();
             $table->timestamps();
