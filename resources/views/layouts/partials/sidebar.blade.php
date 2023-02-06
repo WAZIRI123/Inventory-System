@@ -32,6 +32,9 @@
                <!-- start::Menu link  -->
                <x-side-menu.div-link route="stock-transaction" title="toaKwaMpishi" />
                <!-- end::Menu link -->
+                              <!-- start::Menu link  -->
+               <x-side-menu.div-link route="product-produced" title="Bidhaa Zilizozalishwa" />
+               <!-- end::Menu link -->
 
         @if (auth()->user()->hasRole('Admin'))
         <!-- start::Menu link  -->

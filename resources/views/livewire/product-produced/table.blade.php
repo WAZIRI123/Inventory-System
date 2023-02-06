@@ -2,8 +2,8 @@
     <div class="mt-8 min-h-screen">
         @livewire('livewire-toast')
     <div class="flex justify-between">
-        <div class="text-2xl">Stock_Transactions</div>
-        <button type="submit" wire:click="$emitTo('stock-transaction.create', 'showCreateForm');" class="text-blue-500">
+        <div class="text-2xl">Bidhaa Zilizozalishwa</div>
+        <button type="submit" wire:click="$emitTo('product-produced.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
     </div>
@@ -27,9 +27,13 @@
                         <x-tall-crud-sort-icon sortField="id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-                <td class="px-3 py-2" >Quantity</td>
+                <td class="px-3 py-2" >Quantity Produced</td>
+                <td class="px-3 py-2" >User Id</td>
+                <td class="px-3 py-2" >Product Id</td>
+                <td class="px-3 py-2" >Stock Transaction Id</td>
                 <td class="px-3 py-2" >Product</td>
-                <td class="px-3 py-2" >Employee</td>
+                <td class="px-3 py-2" >User</td>
+                <td class="px-3 py-2" >StockTransaction</td>
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
             </thead>
@@ -37,12 +41,19 @@
             @foreach($results as $result)
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
-                    <td class="px-3 py-2" >{{ $result->quantity }}</td>
+                    <td class="px-3 py-2" >{{ $result->quantity_produced }}</td>
+                    <td class="px-3 py-2" >{{ $result->user_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->product_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->stock_transaction_id }}</td>
                     <td class="px-3 py-2" >{{ $result->product?->name }}</td>
-                    <td class="px-3 py-2" >{{ $result->employee?->user?->name }}</td>
+                    <td class="px-3 py-2" >{{ $result->user?->name }}</td>
+                    <td class="px-3 py-2" >{{ $result->stockTransaction?->id }}</td>
                     <td class="px-3 py-2" >
-                        <button type="submit" wire:click="$emitTo('stock-transaction.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
+                        <button type="submit" wire:click="$emitTo('product-produced.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />
+                        </button>
+                        <button type="submit" wire:click="$emitTo('product-produced.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
+                            <x-tall-crud-icon-delete />
                         </button>
                     </td>
                </tr>
@@ -54,6 +65,6 @@
     <div class="mt-4">
         {{ $results->links() }}
     </div>
-    @livewire('stock-transaction.create')
+    @livewire('product-produced.create')
 </div>
 </div>

@@ -62,6 +62,11 @@ Route::namespace('App\Http\Livewire')->group(function () {
 
                     Route::get('/stock-transaction', Table::class)->name('stock-transaction');
                 });
+                //ProductProduced
+                Route::namespace('ProductProduced')->group(function () {
+
+                    Route::get('/product-produced', Table::class)->name('product-produced');
+                });
 
 
         //Employee

@@ -48,7 +48,7 @@
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.employee_id">
                         <option value="">Please Select</option>
                         @foreach($employees as $c)
-                        <option value="{{$c->id}}">{{$c->user_id}}</option>
+                        <option value="{{$c->id}}">{{$c->user?->name}}</option>
                         @endforeach
                     </x-tall-crud-select>
                     @error('item.employee_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
@@ -97,7 +97,7 @@
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.employee_id">
                         <option value="">Please Select</option>
                         @foreach($employees as $c)
-                        <option value="{{$c->id}}">{{$c->user_id}}</option>
+                        <option value="{{$c->id}}">{{$c->user?->name}}</option>
                         @endforeach
                     </x-tall-crud-select>
                     @error('item.employee_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
