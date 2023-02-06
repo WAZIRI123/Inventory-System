@@ -15,6 +15,7 @@ class Create extends Component
 
     public $item;
     public $quantity;
+    public $oldQuantity ;
 
     /**
      * @var array
@@ -133,21 +134,22 @@ class Create extends Component
         $this->resetErrorBag();
         $this->item = $purchase;
         $this->confirmingItemEdit = true;
-
+        $this->oldQuantity = (int)$this->item->quantity;
+        
         $this->products = Product::orderBy('name')->get();
     }
 
     public function editItem(): void
     {
         $this->validate();
-        $oldQuantity = $this->item->quantity;
-
         $this->item->save();
         $product=Product::find($this->item->product_id);
-        $newQuantity = &$this->item->quantity;
-        $difference = $newQuantity - $oldQuantity;
-        dd($difference);
-        $product->increaseStock($this->item->quantity - $oldQuantity);
+        $newQuantity = (int)$this->item->quantity;
+    
+        $difference = $newQuantity - $this->oldQuantity;
+ 
+        $product->increaseStock($difference);
+
         
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';

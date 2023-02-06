@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ProductTypeSeeder::class,
             PurchaseSeeder::class,
-            SaleSeeder::class
+            SaleSeeder::class,
+            StockTransactionSeeder::class
         ]);
     }
 }

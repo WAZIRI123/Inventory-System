@@ -42,7 +42,7 @@ class Index extends Component
         $this->totalEmployees = Employee::count();
         $this->totalRevenue= $totalRevenue;
         $this->outOfStock   =Product::whereOutOfStock()->get()->count();
-        return view('livewire.index')->layoutData(['title' => 'Admin Dashboard | School Management System']);
+        return view('livewire.index')->layoutData(['title' => 'Admin Dashboard | Inventory Management System']);
     }
 
 }

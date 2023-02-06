@@ -41,7 +41,7 @@ class SaleReport extends Component
         $results = $this->sales;
         return view('livewire.reports.sale-report', [
             'results' => $results
-        ])->layoutData(['title' => 'Sales-Report | School Management System']);
+        ])->layoutData(['title' => 'Sales-Report | Inventory Management System']);
     }
 
     public function print(){

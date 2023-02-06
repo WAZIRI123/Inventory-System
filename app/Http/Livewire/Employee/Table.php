@@ -49,7 +49,7 @@ class Table extends Component
 
         return view('livewire.employee.table', [
             'results' => $results
-        ])->layoutData(['title' => 'Employee | School Management System']);
+        ])->layoutData(['title' => 'Inventory | School Management System']);
     }
 
     public function sortBy(string $field): void

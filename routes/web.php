@@ -57,11 +57,12 @@ Route::namespace('App\Http\Livewire')->group(function () {
             Route::get('/purchases', Table::class)->name('purchases');
         });
 
-        //Vendor
-        Route::namespace('Vendor')->group(function () {
+                //StockTransaction
+                Route::namespace('StockTransaction')->group(function () {
 
-            Route::get('/vendor', Table::class)->name('vendor');
-        });
+                    Route::get('/stock-transaction', Table::class)->name('stock-transaction');
+                });
+
 
         //Employee
         Route::namespace('Employee')->group(function () {

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Vendor;
+namespace App\Http\Livewire\StockTransaction;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
-use App\Models\Vendor;
+use App\Models\StockTransaction;
 
 class Table extends Component
 {
@@ -28,11 +28,6 @@ class Table extends Component
     public $sortAsc = true;
 
     /**
-     * @var string
-     */
-    public $q;
-
-    /**
      * @var int
      */
     public $per_page = 15;
@@ -46,18 +41,13 @@ class Table extends Component
     public function render(): View
     {
         $results = $this->query()
-            ->with(['purchaseOrders'])
-            ->when($this->q, function ($query) {
-                return $query->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->q . '%');
-                });
-            })
+            ->with(['product','employee.user'])
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->paginate($this->per_page);
 
-        return view('livewire.vendor.table', [
+        return view('livewire.stock-transaction.table', [
             'results' => $results
-        ])->layoutData(['title' => 'Vendor | School Management System']);
+        ])->layoutData(['title' => 'toaKwaMpishi | Inventory Management System']);
     }
 
     public function sortBy(string $field): void
@@ -68,11 +58,6 @@ class Table extends Component
         $this->sortBy = $field;
     }
 
-    public function updatingQ(): void
-    {
-        $this->resetPage();
-    }
-
     public function updatingPerPage(): void
     {
         $this->resetPage();
@@ -80,6 +65,6 @@ class Table extends Component
 
     public function query(): Builder
     {
-        return Vendor::query();
+        return StockTransaction::query();
     }
 }

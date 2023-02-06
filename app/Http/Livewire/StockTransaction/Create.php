@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Vendor;
+namespace App\Http\Livewire\StockTransaction;
 
 use Livewire\Component;
 use \Illuminate\View\View;
-use App\Models\Vendor;
+use App\Models\StockTransaction;
+use App\Models\Product;
+use App\Models\Employee;
 
 class Create extends Component
 {
@@ -23,23 +25,29 @@ class Create extends Component
     /**
      * @var array
      */
+    public $products = [];
+
+    /**
+     * @var array
+     */
+    public $employees = [];
+
+    /**
+     * @var array
+     */
     protected $rules = [
-        'item.name' => '',
-        'item.contact_name' => '',
-        'item.contact_email' => '',
-        'item.contact_phone' => '',
-        'item.payment_terms' => '',
+        'item.product_id' => 'required|integer|exists:products,id',
+        'item.employee_id' => 'required|integer|exists:employees,id',
+        'item.quantity' => 'required|integer|min:1',
     ];
 
     /**
      * @var array
      */
     protected $validationAttributes = [
-        'item.name' => 'Name',
-        'item.contact_name' => 'Contact Name',
-        'item.contact_email' => 'Contact Email',
-        'item.contact_phone' => 'Contact Phone',
-        'item.payment_terms' => 'Payment Terms',
+        'item.product_id' => 'Product',
+        'item.employee_id' => 'Employee',
+        'item.quantity' => 'Quantity',
     ];
 
     /**
@@ -64,7 +72,7 @@ class Create extends Component
 
     public function render(): View
     {
-        return view('livewire.vendor.create');
+        return view('livewire.stock-transaction.create');
     }
 
     public function showDeleteForm(int $id): void
@@ -75,11 +83,11 @@ class Create extends Component
 
     public function deleteItem(): void
     {
-        Vendor::destroy($this->primaryKey);
+        StockTransaction::destroy($this->primaryKey);
         $this->confirmingItemDeletion = false;
         $this->primaryKey = '';
         $this->reset(['item']);
-        $this->emitTo('vendor.table', 'refresh');
+        $this->emitTo('stock-transaction.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
     }
  
@@ -88,28 +96,50 @@ class Create extends Component
         $this->confirmingItemCreation = true;
         $this->resetErrorBag();
         $this->reset(['item']);
+
+        $this->products = Product::orderBy('name')->get();
+
+        $this->employees = Employee::orderBy('user_id')->get();
     }
 
     public function createItem(): void
     {
         $this->validate();
-        $item = Vendor::create([
-            'name' => $this->item['name'] ?? '', 
-            'contact_name' => $this->item['contact_name'] ?? '', 
-            'contact_email' => $this->item['contact_email'] ?? '', 
-            'contact_phone' => $this->item['contact_phone'] ?? '', 
-            'payment_terms' => $this->item['payment_terms'] ?? '', 
+        $item = StockTransaction::create([
+            'quantity' => $this->item['quantity'] , 
+            'product_id' => $this->item['product_id'] , 
+            'employee_id' => $this->item['employee_id'] , 
         ]);
+        if($item){
+            $product=Product::find($this->item['product_id']);
+
+           if($product->inStock($this->item['quantity'])){
+
+            $product->decreaseStock($this->item['quantity']);
+
+           }
+           else{
+            
+            session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
+
+            return;
+  
+           }
+        }
         $this->confirmingItemCreation = false;
-        $this->emitTo('vendor.table', 'refresh');
+        $this->emitTo('stock-transaction.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
     }
  
-    public function showEditForm(Vendor $vendor): void
+    public function showEditForm(StockTransaction $stocktransaction): void
     {
         $this->resetErrorBag();
-        $this->item = $vendor;
+        $this->item = $stocktransaction;
         $this->confirmingItemEdit = true;
+
+        $this->products = Product::orderBy('name')->get();
+
+        $this->employees = Employee::orderBy('user_id')->get();
     }
 
     public function editItem(): void
@@ -118,7 +148,7 @@ class Create extends Component
         $this->item->save();
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
-        $this->emitTo('vendor.table', 'refresh');
+        $this->emitTo('stock-transaction.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
     }
 

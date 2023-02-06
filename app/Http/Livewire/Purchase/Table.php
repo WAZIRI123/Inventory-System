@@ -47,7 +47,7 @@ class Table extends Component
 
         return view('livewire.purchase.table', [
             'results' => $results
-        ])->layoutData(['title' => 'Manunuzi | School Management System']);
+        ])->layoutData(['title' => 'Inventory | School Management System']);
     }
 
     public function sortBy(string $field): void
