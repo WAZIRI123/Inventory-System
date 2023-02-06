@@ -140,9 +140,15 @@ class Create extends Component
     public function editItem(): void
     {
         $this->validate();
+        $oldQuantity = $this->item->quantity;
+
         $this->item->save();
         $product=Product::find($this->item->product_id);
-        $product->setStock($this->item->quantity);
+        $newQuantity = &$this->item->quantity;
+        $difference = $newQuantity - $oldQuantity;
+        dd($difference);
+        $product->increaseStock($this->item->quantity - $oldQuantity);
+        
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
         $this->emitTo('purchase.table', 'refresh');

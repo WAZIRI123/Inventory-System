@@ -112,8 +112,6 @@ use AuthorizesRequests;
     
         ]);
 
-    
-
         $this->confirmingItemCreation = false;
         $this->emitTo('product.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
