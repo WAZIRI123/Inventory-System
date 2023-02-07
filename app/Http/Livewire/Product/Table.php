@@ -58,7 +58,7 @@ class Table extends Component
 
         return view('livewire.product.table', [
             'results' => $results
-        ])->layoutData(['title' => 'product | Inventory Management System']);
+        ])->layoutData(['title' => 'Bidhaa | Inventory Management System']);
     }
 
     public function sortBy(string $field): void
