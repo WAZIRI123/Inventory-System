@@ -23,7 +23,7 @@
         <x-slot name="content">
             <div class="grid grid-cols-2 gap-8">
             <div class="mt-4">
-                <x-tall-crud-label>Quantity</x-tall-crud-label>
+                <x-tall-crud-label>Kiasi</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity" />
                 @error('item.quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 @if (session()->has('error'))
@@ -32,7 +32,7 @@
             </div>
 
                 <div class="mt-4">
-                    <x-tall-crud-label>Product</x-tall-crud-label>
+                    <x-tall-crud-label>Bidhaa</x-tall-crud-label>
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.product_id">
                         <option value="">Please Select</option>
                         @foreach($products as $c)
@@ -44,7 +44,7 @@
          </div>
          <div class="grid grid-cols-2 gap-8">
                 <div class="mt-4">
-                    <x-tall-crud-label>Employee</x-tall-crud-label>
+                    <x-tall-crud-label>Mfanyakazi</x-tall-crud-label>
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.employee_id">
                         <option value="">Please Select</option>
                         @foreach($employees as $c)
@@ -70,7 +70,7 @@
         <x-slot name="content">
             <div class="grid grid-cols-2 gap-8">
             <div class="mt-4">
-                <x-tall-crud-label>Quantity</x-tall-crud-label>
+                <x-tall-crud-label>Kiasi</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity" />
                 @error('item.quantity') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 @if (session()->has('error'))
@@ -79,7 +79,7 @@
             </div>
 
                 <div class="mt-4">
-                    <x-tall-crud-label>Product</x-tall-crud-label>
+                    <x-tall-crud-label>Bidhaa</x-tall-crud-label>
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.product_id">
                         <option value="">Please Select</option>
                         @foreach($products as $c)
@@ -93,7 +93,7 @@
             <div class="grid grid-cols-2 gap-8">
 
                 <div class="mt-4">
-                    <x-tall-crud-label>Employee</x-tall-crud-label>
+                    <x-tall-crud-label>Mfanyakazi</x-tall-crud-label>
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.employee_id">
                         <option value="">Please Select</option>
                         @foreach($employees as $c)

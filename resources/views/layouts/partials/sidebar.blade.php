@@ -30,7 +30,7 @@
         <!-- end::Menu link -->
 
                <!-- start::Menu link  -->
-               <x-side-menu.div-link route="stock-transaction" title="toaKwaMpishi" />
+               <x-side-menu.div-link route="stock-transaction" title="ToaKwaMpishi" />
                <!-- end::Menu link -->
                               <!-- start::Menu link  -->
                <x-side-menu.div-link route="product-produced" title="Bidhaa Zilizozalishwa" />

@@ -45,7 +45,6 @@ class Create extends Component
     protected $rules = [
         'item.product_id' => 'required|exists:products,id',
         'item.quantity_produced' => 'required|numeric|min:1',
-        'item.stock_transaction_id' => 'required|exists:stock_transactions,id',
     ];
 
     /**
@@ -54,7 +53,6 @@ class Create extends Component
     protected $validationAttributes = [
         'item.quantity_produced' => 'Quantity Produced',
         'item.product_id' => 'Product',
-        'item.stock_transaction_id' => 'StockTransaction',
     ];
 
     /**
@@ -91,9 +89,7 @@ class Create extends Component
 
         $this->products = Product::orderBy('name')->get();
 
-        $this->users = User::orderBy('name')->get();
 
-        $this->stockTransactions = StockTransaction::orderBy('id')->get();
     }
 
     public function createItem(): void
@@ -103,7 +99,6 @@ class Create extends Component
             'quantity_produced' => $this->item['quantity_produced'] , 
             'user_id' => auth()->user()->id , 
             'product_id' => $this->item['product_id'], 
-            'stock_transaction_id' => $this->item['stock_transaction_id'], 
         ]);
         $product->increaseStock($this->item['quantity_produced']);
         $this->confirmingItemCreation = false;

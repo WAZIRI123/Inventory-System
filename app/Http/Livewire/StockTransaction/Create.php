@@ -7,6 +7,7 @@ use \Illuminate\View\View;
 use App\Models\StockTransaction;
 use App\Models\Product;
 use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 
 class Create extends Component
 {
@@ -146,17 +147,34 @@ class Create extends Component
     public function editItem(): void
     {
         $this->validate();
+        DB::transaction(
+            function () {
         $this->item->save();
         $product=Product::find($this->item->product_id);
         $newQuantity = (int)$this->item->quantity;
     
         $difference = $newQuantity - $this->oldQuantity;
 
-        $product->increaseStock($difference);
+        
+                if ($this->item['quantity'] > $this->oldQuantity) {
+                    $difference = $this->item['quantity'] - $this->oldQuantity;
+
+                    if (!$product->inStock($difference)) {
+                        session()->flash('error', 'The provided quantity exceeds the stock quantity.');
+                        return;
+                    } else {
+                        $product->decreaseStock($difference);
+                    }
+                } elseif ($this->item['quantity'] < $this->oldQuantity) {
+                    $difference = $this->oldQuantity - $this->item['quantity'];
+                    $product->increaseStock($difference);
+                }
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
         $this->emitTo('stock-transaction.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
+    }
+);
     }
 
 }

@@ -2,7 +2,7 @@
     <div class="mt-8 min-h-screen">
         @livewire('livewire-toast')
     <div class="flex justify-between">
-        <div class="text-2xl">Purchases</div>
+        <div class="text-2xl">Manunuzi</div>
         <button type="submit" wire:click="$emitTo('purchase.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
@@ -29,13 +29,12 @@
                 </td>
                 <td class="px-3 py-2" >
                     <div class="flex items-center">
-                        <button wire:click="sortBy('purchase_price')">Purchase Price</button>
+                        <button wire:click="sortBy('purchase_price')">Bei ya Kununulia(Tsh)</button>
                         <x-tall-crud-sort-icon sortField="purchase_price" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-                <td class="px-3 py-2" >Quantity</td>
-                <td class="px-3 py-2" >Product</td>
-                <td class="px-3 py-2" >ProductType</td>
+                <td class="px-3 py-2" >Kilo(kg)</td>
+                <td class="px-3 py-2" >Bidhaa</td>
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
             </thead>
@@ -46,7 +45,6 @@
                     <td class="px-3 py-2" >{{ $result->purchase_price }}</td>
                     <td class="px-3 py-2" >{{ $result->quantity }}</td>
                     <td class="px-3 py-2" >{{ $result->product?->name }}</td>
-                    <td class="px-3 py-2" >{{ $result->productType?->name }}</td>
                     <td class="px-3 py-2" >
                         <button type="submit" wire:click="$emitTo('purchase.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />

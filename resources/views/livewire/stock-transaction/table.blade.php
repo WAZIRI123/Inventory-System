@@ -2,7 +2,7 @@
     <div class="mt-8 min-h-screen">
         @livewire('livewire-toast')
     <div class="flex justify-between">
-        <div class="text-2xl">Stock_Transactions</div>
+        <div class="text-2xl">ToaKwaMpishi</div>
         <button type="submit" wire:click="$emitTo('stock-transaction.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
@@ -27,9 +27,9 @@
                         <x-tall-crud-sort-icon sortField="id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-                <td class="px-3 py-2" >Quantity</td>
-                <td class="px-3 py-2" >Product</td>
-                <td class="px-3 py-2" >Employee</td>
+                <td class="px-3 py-2" >Kilo(Kg)</td>
+                <td class="px-3 py-2" >Bidhaa</td>
+                <td class="px-3 py-2" >Mfanyakazi</td>
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
             </thead>

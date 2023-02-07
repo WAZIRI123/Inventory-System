@@ -7,9 +7,6 @@ use \Illuminate\View\View;
 use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Employee;
-use App\Exceptions\OutOfStockException;
-use App\Models\ProductProduced;
-use App\Rules\Instock;
 use Illuminate\Support\Facades\DB;
 
 class Create extends Component
@@ -170,6 +167,7 @@ class Create extends Component
     public function editItem(): void
     {
         $this->validate();
+
         DB::transaction(
             function () {
                 $product = Product::with('ProductProduced')->find($this->item['product_id'])->productProduced()->get()->first();

@@ -23,13 +23,13 @@
         <x-slot name="content">
             <div class="grid grid-cols-2 gap-8">
             <div class="mt-4">
-                <x-tall-crud-label>Name</x-tall-crud-label>
+                <x-tall-crud-label>Jina</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.name" />
                 @error('item.name') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
 
             <div class="mt-4">
-                <x-tall-crud-label>Bei ya Kuuzia</x-tall-crud-label>
+                <x-tall-crud-label>Bei ya Kuuzia(Tsh)</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.sale_price" />
                 @error('item.sale_price') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
@@ -51,13 +51,13 @@
         <x-slot name="content">
         <div class="grid grid-cols-2 gap-8">
             <div class="mt-4">
-                <x-tall-crud-label>Name</x-tall-crud-label>
+                <x-tall-crud-label>Jina</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.name" />
                 @error('item.name') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
 
             <div class="mt-4">
-                <x-tall-crud-label>Sale Price</x-tall-crud-label>
+                <x-tall-crud-label>Bei ya Kuuzia(Tsh)</x-tall-crud-label>
                 <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.sale_price" />
                 @error('item.sale_price') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>

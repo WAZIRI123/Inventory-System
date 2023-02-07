@@ -27,10 +27,10 @@
                         <x-tall-crud-sort-icon sortField="id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-                <td class="px-3 py-2" >Quantity Produced</td>
-                <td class="px-3 py-2" >Product</td>
+                <td class="px-3 py-2" >Bidhaa</td>
+                <td class="px-3 py-2" >Kiasi Kilichotoka</td>
                 <td class="px-3 py-2" >User</td>
-                <td class="px-3 py-2" >StockTransaction</td>
+
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
             </thead>
@@ -38,10 +38,9 @@
             @foreach($results as $result)
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
-                    <td class="px-3 py-2" >{{ $result->stock() }}</td>
                     <td class="px-3 py-2" >{{ $result->product?->name }}</td>
+                    <td class="px-3 py-2" >{{ $result->stock() }}</td>
                     <td class="px-3 py-2" >{{ $result->user?->name }}</td>
-                    <td class="px-3 py-2" >{{ $result->stockTransaction?->id }}</td>
                     <td class="px-3 py-2" >
                         <button type="submit" wire:click="$emitTo('product-produced.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />

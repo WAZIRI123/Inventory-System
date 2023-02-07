@@ -22,15 +22,9 @@
 
         <x-slot name="content">
             <div class="grid grid-cols-2 gap-8">
+
             <div class="mt-4">
-                <x-tall-crud-label>Quantity Produced</x-tall-crud-label>
-                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity_produced" />
-                @error('item.quantity_produced') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
-            </div>
- 
-            
-            <div class="mt-4">
-                <x-tall-crud-label>Product</x-tall-crud-label>
+                <x-tall-crud-label>Bidhaa</x-tall-crud-label>
                 <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.product_id">
                     <option value="">Please Select</option>
                     @foreach($products as $c)
@@ -39,19 +33,14 @@
                 </x-tall-crud-select>
                 @error('item.product_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
+
+            <div class="mt-4">
+                <x-tall-crud-label>Kiasi Kilichotoka</x-tall-crud-label>
+                <x-tall-crud-input class="block mt-1 w-full" type="text" wire:model.defer="item.quantity_produced" />
+                @error('item.quantity_produced') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
             </div>
-            <div class="grid grid-cols-2 gap-8">
-                <div class="mt-4">
-                    <x-tall-crud-label>StockTransaction</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.stock_transaction_id">
-                        <option value="">Please Select</option>
-                        @foreach($stockTransactions as $c)
-                        <option value="{{$c->id}}">{{$c->id}}</option>
-                        @endforeach
-                    </x-tall-crud-select>
-                    @error('item.stock_transaction_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
-                </div>
             </div>
+
         </x-slot>
 
         <x-slot name="footer">
@@ -84,19 +73,7 @@
                     @error('item.product_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-8">
 
-                <div class="mt-4">
-                    <x-tall-crud-label>StockTransaction</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.stock_transaction_id">
-                        <option value="">Please Select</option>
-                        @foreach($stockTransactions as $c)
-                        <option value="{{$c->id}}">{{$c->id}}</option>
-                        @endforeach
-                    </x-tall-crud-select>
-                    @error('item.stock_transaction_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
-                </div>
-            </div>
         </x-slot>
 
         <x-slot name="footer">

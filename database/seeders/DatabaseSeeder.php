@@ -21,11 +21,7 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             userSeeder::class,
             EmployeeSeeder::class ,
-            ProductSeeder::class,
-            ProductTypeSeeder::class,
-            PurchaseSeeder::class,
-    
-            StockTransactionSeeder::class,
+
            
         ]);
     }
