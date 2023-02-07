@@ -42,17 +42,6 @@
             </div>
             <div class="grid grid-cols-2 gap-8">
                 <div class="mt-4">
-                    <x-tall-crud-label>User</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.user_id">
-                        <option value="">Please Select</option>
-                        @foreach($users as $c)
-                        <option value="{{$c->id}}">{{$c->name}}</option>
-                        @endforeach
-                    </x-tall-crud-select>
-                    @error('item.user_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
-                </div>
-
-                <div class="mt-4">
                     <x-tall-crud-label>StockTransaction</x-tall-crud-label>
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.stock_transaction_id">
                         <option value="">Please Select</option>
@@ -96,16 +85,6 @@
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-8">
-                <div class="mt-4">
-                    <x-tall-crud-label>User</x-tall-crud-label>
-                    <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.user_id">
-                        <option value="">Please Select</option>
-                        @foreach($users as $c)
-                        <option value="{{$c->id}}">{{$c->name}}</option>
-                        @endforeach
-                    </x-tall-crud-select>
-                    @error('item.user_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
-                </div>
 
                 <div class="mt-4">
                     <x-tall-crud-label>StockTransaction</x-tall-crud-label>

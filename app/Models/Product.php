@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Appstract\Stock\HasStock;
 use BinaryCats\Sku\HasSku;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -23,4 +24,9 @@ class Product extends Model
     protected $casts = [
         'plates_quantity' => 'integer',
     ];
+
+    public function productProduced():HasOne
+    {
+        return $this->hasOne(ProductProduced::class);
+    }
 }

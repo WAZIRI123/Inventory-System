@@ -13,6 +13,7 @@ class Create extends Component
 {
 
     public $item;
+    public $oldQuantity ;
 
     /**
      * @var array
@@ -42,13 +43,9 @@ class Create extends Component
      * @var array
      */
     protected $rules = [
-        'item.quantity_produced' => '',
-        'item.user_id' => '',
-        'item.product_id' => '',
-        'item.stock_transaction_id' => '',
-        'item.product_id' => 'required',
-        'item.user_id' => 'required',
-        'item.stock_transaction_id' => 'required',
+        'item.product_id' => 'required|exists:products,id',
+        'item.quantity_produced' => 'required|numeric|min:1',
+        'item.stock_transaction_id' => 'required|exists:stock_transactions,id',
     ];
 
     /**
@@ -56,11 +53,7 @@ class Create extends Component
      */
     protected $validationAttributes = [
         'item.quantity_produced' => 'Quantity Produced',
-        'item.user_id' => 'User Id',
-        'item.product_id' => 'Product Id',
-        'item.stock_transaction_id' => 'Stock Transaction Id',
         'item.product_id' => 'Product',
-        'item.user_id' => 'User',
         'item.stock_transaction_id' => 'StockTransaction',
     ];
 
@@ -89,21 +82,6 @@ class Create extends Component
         return view('livewire.product-produced.create');
     }
 
-    public function showDeleteForm(int $id): void
-    {
-        $this->confirmingItemDeletion = true;
-        $this->primaryKey = $id;
-    }
-
-    public function deleteItem(): void
-    {
-        ProductProduced::destroy($this->primaryKey);
-        $this->confirmingItemDeletion = false;
-        $this->primaryKey = '';
-        $this->reset(['item']);
-        $this->emitTo('product-produced.table', 'refresh');
-        $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
-    }
  
     public function showCreateForm(): void
     {
@@ -121,15 +99,13 @@ class Create extends Component
     public function createItem(): void
     {
         $this->validate();
-        $item = ProductProduced::create([
-            'quantity_produced' => $this->item['quantity_produced'] ?? '', 
-            'user_id' => $this->item['user_id'] ?? '', 
-            'product_id' => $this->item['product_id'] ?? '', 
-            'stock_transaction_id' => $this->item['stock_transaction_id'] ?? '', 
-            'product_id' => $this->item['product_id'] ?? 0, 
-            'user_id' => $this->item['user_id'] ?? 0, 
-            'stock_transaction_id' => $this->item['stock_transaction_id'] ?? 0, 
+        $product = ProductProduced::create([
+            'quantity_produced' => $this->item['quantity_produced'] , 
+            'user_id' => auth()->user()->id , 
+            'product_id' => $this->item['product_id'], 
+            'stock_transaction_id' => $this->item['stock_transaction_id'], 
         ]);
+        $product->increaseStock($this->item['quantity_produced']);
         $this->confirmingItemCreation = false;
         $this->emitTo('product-produced.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
@@ -140,7 +116,7 @@ class Create extends Component
         $this->resetErrorBag();
         $this->item = $productproduced;
         $this->confirmingItemEdit = true;
-
+        $this->oldQuantity=$productproduced->quantity_produced;
         $this->products = Product::orderBy('name')->get();
 
         $this->users = User::orderBy('name')->get();
@@ -152,6 +128,9 @@ class Create extends Component
     {
         $this->validate();
         $this->item->save();
+        $newQuantity = (int)$this->item->quantity_produced;
+        $difference = $newQuantity - $this->oldQuantity;
+        $this->item->increaseStock($difference);
         $this->confirmingItemEdit = false;
         $this->primaryKey = '';
         $this->emitTo('product-produced.table', 'refresh');

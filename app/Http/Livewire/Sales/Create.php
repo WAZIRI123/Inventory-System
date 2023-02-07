@@ -8,13 +8,16 @@ use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Employee;
 use App\Exceptions\OutOfStockException;
+use App\Models\ProductProduced;
 use App\Rules\Instock;
+use Illuminate\Support\Facades\DB;
 
 class Create extends Component
 {
 
     public $itemCount = 1;
     public $item;
+
      
     public $quantiy=null;
 
@@ -122,7 +125,7 @@ class Create extends Component
             'item.'.$i.'.quantity' => 'required|numeric|min:1',
             'item.'.$i.'.product_id' => 'required|exists:products,id',
         ]);
-        $product = Product::find($this->item [$i]['product_id']);
+        $product = Product::with('ProductProduced')->find($this->item [$i]['product_id'])->productProduced()->get()->first();
 
         if (!$product->inStock($this->item[$i]['quantity'])) {
 
@@ -156,7 +159,6 @@ class Create extends Component
         $this->oldQuantity=$sale->quantity;
         $this->item = $sale;
         $this->confirmingItemEdit = true;
-
         $this->products = Product::orderBy('id')->get();
 
         $this->employees = Employee::orderBy('user_id')->get();
@@ -166,22 +168,21 @@ class Create extends Component
     public function editItem(): void
     {
         $this->validate();
-     
-        $product = Product::find($this->item['product_id']);
-         
-         $product->increaseStock($this->oldQuantity);
+        DB::transaction(function () {
+        $product = Product::with('ProductProduced')->find($this->item['product_id'])->productProduced()->get()->first();
+        $newQuantity = (int)$this->item->quantity;
     
-        if (!$product->inStock($this->item['quantity'])) {
-           
-            $product->decreaseStock($this->oldQuantity);
+        $difference = $newQuantity - $this->oldQuantity;
+
+    
+        if (!$product->inStock($difference)) {
 
           session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
-           
 
         }
         else {
-            $product->decreaseStock($this->item['quantity']);
             $this->item->save();
+            $product->decreaseStock($difference);
             $this->confirmingItemEdit = false;
             $this->primaryKey = '';
             $this->emitTo('sales.table', 'refresh');
@@ -189,5 +190,6 @@ class Create extends Component
         }
        
     }
+);}
 
 }
