@@ -87,7 +87,7 @@ class Create extends Component
         $this->resetErrorBag();
         $this->reset(['item']);
 
-        $this->products = Product::orderBy('name')->get();
+        $this->products = StockTransaction::orderBy('name')->get();
 
 
     }

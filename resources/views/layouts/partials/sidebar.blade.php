@@ -14,36 +14,38 @@
 
     <!-- start::Navigation  -->
     <nav class="py-10 custom-scrollbar">
-        <!-- start::Menu link -->
-        <x-side-menu.div-link route="dashboard.index" title="Dashboard" />
-        <!-- end::Menu link -->
-
+        
         <p class="text-xs text-gray-600 mt-10 mb-2 px-6 uppercase">Inventory activities</p>
-
+        
         {{-- start menu wrapper --}}
-
+        @if (auth()->user()->hasRole('Muuzaji'))
         <!-- start::Menu link  -->
         <x-side-menu.div-link route="sales" title="Mauzo" />
         <!-- end::Menu link -->
+        @endif
+        @if (auth()->user()->hasRole('Mpishi'))
         <!-- start::Menu link  -->
-        <x-side-menu.div-link route="purchases" title="Manunuzi" />
+        <x-side-menu.div-link route="product-produced" title="Bidhaa Zilizozalishwa" />
         <!-- end::Menu link -->
-
-               <!-- start::Menu link  -->
-               <x-side-menu.div-link route="stock-transaction" title="ToaKwaMpishi" />
-               <!-- end::Menu link -->
-                              <!-- start::Menu link  -->
-               <x-side-menu.div-link route="product-produced" title="Bidhaa Zilizozalishwa" />
-               <!-- end::Menu link -->
-
+        @endif
+        
         @if (auth()->user()->hasRole('Admin'))
+        <!-- start::Menu link -->
+        <x-side-menu.div-link route="dashboard.index" title="Dashboard" />
+        <!-- end::Menu link -->
         <!-- start::Menu link  -->
         <x-side-menu.div-link route="product" title="Bidhaa" />
         <!-- end::Menu link -->
         <!-- start::Menu link  -->
+        <x-side-menu.div-link route="purchases" title="Manunuzi" />
+        <!-- end::Menu link -->
+        <!-- start::Menu link  -->
+        <x-side-menu.div-link route="stock-transaction" title="ToaKwaMpishi" />
+        <!-- end::Menu link -->
+        <!-- start::Menu link  -->
         <x-side-menu.div-link route="employee" title="Wafanyakazi" />
         <!-- end::Menu link -->
-
+        
         {{-- start menu wrapper --}}
         <div x-data="{ linkHover: false, linkActive: false }">
             <div @mouseover="linkHover = true" @mouseleave="linkHover = false" @click="linkActive = !linkActive"

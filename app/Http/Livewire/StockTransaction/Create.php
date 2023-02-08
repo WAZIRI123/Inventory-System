@@ -92,7 +92,7 @@ class Create extends Component
         $this->emitTo('stock-transaction.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Deleted Successfully');
     }
- 
+
     public function showCreateForm(): void
     {
         $this->confirmingItemCreation = true;
@@ -107,32 +107,29 @@ class Create extends Component
     public function createItem(): void
     {
         $this->validate();
-        $item = StockTransaction::create([
-            'quantity' => $this->item['quantity'] , 
-            'product_id' => $this->item['product_id'] , 
-            'employee_id' => $this->item['employee_id'] , 
-        ]);
-        if($item){
-            $product=Product::find($this->item['product_id']);
 
-           if($product->inStock($this->item['quantity'])){
+        if ($this->item['product_id']) {
+            $product = Product::find($this->item['product_id']);
 
-            $product->decreaseStock($this->item['quantity']);
+            if ($product->inStock($this->item['quantity'])) {
+                 StockTransaction::create([
+                    'quantity' => $this->item['quantity'],
+                    'product_id' => $this->item['product_id'],
+                    'employee_id' => $this->item['employee_id'],
+                ]);
+                $product->decreaseStock($this->item['quantity']);
+            } else {
 
-           }
-           else{
+                session()->flash('error', 'The provided quantity exceeds the stock quantity.');
 
-            session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
-
-            return;
-  
-           }
+                return;
+            }
         }
         $this->confirmingItemCreation = false;
         $this->emitTo('stock-transaction.table', 'refresh');
         $this->emitTo('livewire-toast', 'show', 'Record Added Successfully');
     }
- 
+
     public function showEditForm(StockTransaction $stocktransaction): void
     {
         $this->resetErrorBag();
@@ -147,34 +144,31 @@ class Create extends Component
     public function editItem(): void
     {
         $this->validate();
-        DB::transaction(
-            function () {
-        $this->item->save();
-        $product=Product::find($this->item->product_id);
-        $newQuantity = (int)$this->item->quantity;
-    
-        $difference = $newQuantity - $this->oldQuantity;
-
+        DB::transaction(function () {
+            $product = Product::find($this->item->product_id);
+            $newQuantity = (int)$this->item->quantity;
+            $difference = $newQuantity - $this->oldQuantity;
         
-                if ($this->item['quantity'] > $this->oldQuantity) {
-                    $difference = $this->item['quantity'] - $this->oldQuantity;
-
-                    if (!$product->inStock($difference)) {
-                        session()->flash('error', 'The provided quantity exceeds the stock quantity.');
-                        return;
-                    } else {
-                        $product->decreaseStock($difference);
-                    }
-                } elseif ($this->item['quantity'] < $this->oldQuantity) {
-                    $difference = $this->oldQuantity - $this->item['quantity'];
-                    $product->increaseStock($difference);
+            if ($this->item['quantity'] > $this->oldQuantity) {
+                $difference = $this->item['quantity'] - $this->oldQuantity;
+        
+                if (!$product->inStock($difference)) {
+                    session()->flash('error', 'The provided quantity exceeds the stock quantity.');
+                    return;
+                } else {
+                    $product->decreaseStock($difference);
+                    $this->item->save();
                 }
-        $this->confirmingItemEdit = false;
-        $this->primaryKey = '';
-        $this->emitTo('stock-transaction.table', 'refresh');
-        $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
+            } elseif ($this->item['quantity'] < $this->oldQuantity) {
+                $difference = $this->oldQuantity - $this->item['quantity'];
+                $product->increaseStock($difference);
+                $this->item->save();
+            }
+            $this->confirmingItemEdit = false;
+            $this->primaryKey = '';
+            $this->emitTo('stock-transaction.table', 'refresh');
+            $this->emitTo('livewire-toast', 'show', 'Record Updated Successfully');
+        });
+        
     }
-);
-    }
-
 }

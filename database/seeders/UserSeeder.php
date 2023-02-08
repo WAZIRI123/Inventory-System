@@ -35,13 +35,22 @@ class UserSeeder extends Seeder
         $user->assignRole('admin');
 
         $user2 = User::create([
-            'name'          => 'Employee',
-            'email'         => 'employee@demo.com',
+            'name'          => 'Mpishi',
+            'email'         => 'mpishi@demo.com',
             'email_verified_at' => now(),
             'password'      => bcrypt('12345678'),
             'created_at'    => date("Y-m-d H:i:s")
         ]);
-        $user2->assignRole('Employee');
+        $user2->assignRole('Mpishi');
+
+        $user3 = User::create([
+            'name'          => 'muuzaji',
+            'email'         => 'muuzaji@demo.com',
+            'email_verified_at' => now(),
+            'password'      => bcrypt('12345678'),
+            'created_at'    => date("Y-m-d H:i:s")
+        ]);
+        $user3->assignRole('Muuzaji');
 
     }
 }

@@ -24,7 +24,7 @@ class Index extends Component
     public $totalProducts;
 
     public $outOfStock;
-
+    public $totalRevenueAsMchele;
     public $totalEmployees;
     
     public $latestSales;
@@ -36,11 +36,18 @@ class Index extends Component
         ->first()->total_revenue;
         $latestSales=Sale::with('product')->latest()->take(10)->get();
 
+        $totalRevenueAsMchele = Sale::join('products', 'sales.product_id', '=', 'products.id')
+        ->where('products.id',1)
+        ->selectRaw('SUM(products.sale_price* sales.quantity) as totalRevenueAsMchele')
+        ->first()->totalRevenueAsMchele;
+        $latestSales=Sale::with('product')->latest()->take(10)->get();
+
         $this->latestSales= $latestSales;
         
         $this->totalProducts = Product::count();
         $this->totalEmployees = Employee::count();
         $this->totalRevenue= $totalRevenue;
+        $this->totalRevenueAsMchele=$totalRevenueAsMchele;
         $this->outOfStock   =Product::whereOutOfStock()->get()->count();
         return view('livewire.index')->layoutData(['title' => 'Admin Dashboard | Inventory Management System']);
     }
