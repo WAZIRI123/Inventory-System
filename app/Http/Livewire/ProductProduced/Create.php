@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ProductProduced;
 
+use App\Enums\StockTransactionStatus;
 use Livewire\Component;
 use \Illuminate\View\View;
 use App\Models\ProductProduced;
@@ -14,6 +15,8 @@ class Create extends Component
 
     public $item;
     public $oldQuantity ;
+
+    public $StockTransaction;
 
     /**
      * @var array
@@ -43,7 +46,7 @@ class Create extends Component
      * @var array
      */
     protected $rules = [
-        'item.product_id' => 'required|exists:products,id',
+        'item.StockTransaction_id' => 'required|exists:stock_transactions,id',
         'item.quantity_produced' => 'required|numeric|min:1',
     ];
 
@@ -52,7 +55,7 @@ class Create extends Component
      */
     protected $validationAttributes = [
         'item.quantity_produced' => 'Quantity Produced',
-        'item.product_id' => 'Product',
+        'item.StockTransaction_id' => 'stock',
     ];
 
     /**
@@ -87,8 +90,7 @@ class Create extends Component
         $this->resetErrorBag();
         $this->reset(['item']);
 
-        $this->products = StockTransaction::orderBy('name')->get();
-
+        $this->StockTransaction= StockTransaction::with('product')->where('employee_id',auth()->user()->id)->where('active',StockTransactionStatus::Active->value)->get();
 
     }
 
@@ -98,8 +100,11 @@ class Create extends Component
         $product = ProductProduced::create([
             'quantity_produced' => $this->item['quantity_produced'] , 
             'user_id' => auth()->user()->id , 
-            'product_id' => $this->item['product_id'], 
+            'StockTransaction_id' => $this->item['StockTransaction_id'], 
         ]);
+        $StockTransaction=StockTransaction::find($this->item['StockTransaction_id']);
+        $StockTransaction->status=StockTransactionStatus::Inactive->value;
+        $StockTransaction->save();
         $product->increaseStock($this->item['quantity_produced']);
         $this->confirmingItemCreation = false;
         $this->emitTo('product-produced.table', 'refresh');
@@ -115,8 +120,6 @@ class Create extends Component
         $this->products = Product::orderBy('name')->get();
 
         $this->users = User::orderBy('name')->get();
-
-        $this->stockTransactions = StockTransaction::orderBy('id')->get();
     }
 
     public function editItem(): void

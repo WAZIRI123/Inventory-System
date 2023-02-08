@@ -21,7 +21,6 @@ class ProductProducedFactory extends Factory
     {
         return [
           'quantity_produced' => $this->faker->randomNumber(),
-           'product_id' =>Product::inRandomOrder()->first()->id,
            'user_id' =>User::inRandomOrder()->first()->id,
            'stock_transaction_id' =>StockTransaction::inRandomOrder()->first()->id,
         ];

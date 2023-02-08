@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 
 class Create extends Component
 {
@@ -33,7 +34,9 @@ class Create extends Component
     public $users = [];
     public  $user;
     public $profile_picture;
+   
     public $oldImage;
+    public $roles=[];
     /**
      * @var array
      */
@@ -41,6 +44,7 @@ class Create extends Component
     {
         return [
         'item.name' => 'required',
+        'item.role'=>'required|exists:roles,name',
         'item.email' =>['required','email',Rule::unique('users','email')->ignore($this->user->id)->whereNull('deleted_at')],
     ];
 }
@@ -51,6 +55,7 @@ class Create extends Component
     protected $validationAttributes = [
         'item.name' => 'name',
         'item.email' => 'Email',
+        'item.role' => 'Role',
     ];
 
     /**
@@ -111,6 +116,7 @@ class Create extends Component
         $this->reset(['item','profile_picture']);
 
         $this->users = User::orderBy('name')->get();
+        $this->roles=Role::whereIn('name',['Muuzaji','Mpishi'])->get();
     }
 
     public function createItem(): void
@@ -128,7 +134,12 @@ class Create extends Component
             'profile_picture' => $profile_picture?? auth()->user()->avatarUrl($this->item['email']) ,
             'email' => $this->item['email'],
         ]);
-        $user->assignRole('Employee');
+        
+     
+
+            $user->assignRole($this->item['role']);
+    
+       
         Employee::create([
             'user_id' => $user->id
         ]);

@@ -12,7 +12,7 @@ class ProductProduced extends Model
     use HasFactory,HasStock;
 
     protected $fillable = [
-        'product_id', 'quantity_produced', 'user_id', 'stock_transaction_id'
+        'quantity_produced', 'user_id', 'stock_transaction_id'
     ];
 
     public function product(): BelongsTo

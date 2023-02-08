@@ -33,6 +33,18 @@
                     @error('item.email') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
                 </div>
             </div>
+            <div class="grid grid-cols-2 gap-8">
+            <div class="mt-4">
+                <x-tall-crud-label>Role</x-tall-crud-label>
+                <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.role">
+                    <option value="">Please Select</option>
+                    @foreach($roles as $c)
+                    <option value="{{$c->name}}">{{$c->name}}</option>
+                    @endforeach
+                </x-tall-crud-select>
+                @error('item.role') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror
+            </div>
+            </div>
         </x-slot>
 
         <x-slot name="footer">
