@@ -22,6 +22,12 @@ class Sale extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function user($employeeId)
+    {
+        return User::where('id',$employeeId)->get()->first()->name;
+    }
+
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);

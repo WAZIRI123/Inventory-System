@@ -7,6 +7,7 @@ use \Illuminate\View\View;
 use App\Models\Sale;
 use App\Models\Product;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Create extends Component
@@ -93,7 +94,7 @@ class Create extends Component
     public function deleteItem(): void
     {
         DB::transaction(function () {
-            $product = Product::with('ProductProduced')->find($this->sale->product_id)->productProduced()->get()->first();
+            $product = Product::with('stockTransaction.productProduced')->find($this->sale->product_id)->stockTransaction()->first()->productProduced()->get()->first();
             $this->sale->delete();
             $product->increaseStock($this->oldQuantity);
             $this->confirmingItemDeletion = false;
@@ -123,7 +124,7 @@ class Create extends Component
                         'item.' . $i . '.quantity' => 'required|numeric|min:1',
                         'item.' . $i . '.product_id' => 'required|exists:products,id',
                     ]);
-                    $product = Product::with('ProductProduced')->find($this->item[$i]['product_id'])->productProduced()->get()->first();
+                    $product = Product::with('stockTransaction.productProduced')->find($this->item[$i]['product_id'])->stockTransaction()->first()->productProduced()->get()->first();
 
                     if (!$product->inStock($this->item[$i]['quantity'])) {
 
@@ -135,9 +136,8 @@ class Create extends Component
 
                         $this->item[$i]['employee_id'] = auth()->user()->id;
 
-
                         Sale::create([
-                            'employee_id' => $this->item[$i]['employee_id'],
+                            'employee_id' => Auth()->user()->id,
                             'quantity' => $this->item[$i]['quantity'],
                             'product_id' => $this->item[$i]['product_id'],
                         ]);
@@ -169,7 +169,8 @@ class Create extends Component
 
         DB::transaction(
             function () {
-                $product = Product::with('ProductProduced')->find($this->item['product_id'])->productProduced()->get()->first();
+                $product = Product::with('stockTransaction.productProduced')->find($this->item['product_id'])->stockTransaction()->first()->productProduced()->get()->first();
+
                 $newQuantity = (int)$this->item->quantity;
 
                 $difference = $newQuantity - $this->oldQuantity;

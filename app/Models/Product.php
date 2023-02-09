@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Appstract\Stock\HasStock;
 use BinaryCats\Sku\HasSku;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
@@ -25,7 +26,7 @@ class Product extends Model
         'plates_quantity' => 'integer',
     ];
 
-    public function stockTransaction():HasOne
+    public function stockTransaction()
     {
         return $this->hasOne(StockTransaction::class);
     }

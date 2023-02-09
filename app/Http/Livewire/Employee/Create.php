@@ -131,7 +131,7 @@ class Create extends Component
          }
          $user = User::create([
             'name' => $this->item['name'],
-            'profile_picture' => $profile_picture?? auth()->user()->avatarUrl($this->item['email']) ,
+            'profile_picture' => $profile_picture?? null ,
             'email' => $this->item['email'],
         ]);
         

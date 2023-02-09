@@ -20,4 +20,11 @@ class StockTransaction extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function productProduced()
+    {
+        return $this->hasOne(ProductProduced::class,'StockTransaction_id');
+    }
+
+
 }
