@@ -27,8 +27,8 @@
                 <x-tall-crud-label>Bidhaa</x-tall-crud-label>
                 <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.StockTransaction_id">
                     <option value="">Please Select</option>
-                    @foreach($stockTransactions as $c)
-                    <option value="{{$c->id}}">{{$c->product()?->name}}</option>
+                    @foreach($StockTransaction as $c)
+                    <option value="{{$c->id}}">{{$c->product?->name}}</option>
                     @endforeach
                 </x-tall-crud-select>
                 @error('item.StockTransaction_id') <x-tall-crud-error-message>{{$message}}</x-tall-crud-error-message> @enderror

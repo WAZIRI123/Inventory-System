@@ -25,8 +25,8 @@ class Product extends Model
         'plates_quantity' => 'integer',
     ];
 
-    public function productProduced():HasOne
+    public function stockTransaction():HasOne
     {
-        return $this->hasOne(ProductProduced::class);
+        return $this->hasOne(StockTransaction::class);
     }
 }

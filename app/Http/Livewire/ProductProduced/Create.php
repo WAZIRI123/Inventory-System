@@ -89,19 +89,20 @@ class Create extends Component
         $this->confirmingItemCreation = true;
         $this->resetErrorBag();
         $this->reset(['item']);
+        $employeeId=auth()->user()->employee()->get()->first()->id;
 
-        $this->StockTransaction= StockTransaction::with('product')->where('employee_id',auth()->user()->id)->where('active',StockTransactionStatus::Active->value)->get();
-
+        $this->StockTransaction= StockTransaction::with('product')->where('employee_id',$employeeId)->where('status',StockTransactionStatus::Active->value)->get();
     }
 
     public function createItem(): void
     {
         $this->validate();
         $product = ProductProduced::create([
-            'quantity_produced' => $this->item['quantity_produced'] , 
-            'user_id' => auth()->user()->id , 
-            'StockTransaction_id' => $this->item['StockTransaction_id'], 
+            'StockTransaction_id' => $this->item['StockTransaction_id'],
+            'quantity_produced' => $this->item['quantity_produced'], 
+            'user_id' => auth()->user()->id, 
         ]);
+
         $StockTransaction=StockTransaction::find($this->item['StockTransaction_id']);
         $StockTransaction->status=StockTransactionStatus::Inactive->value;
         $StockTransaction->save();

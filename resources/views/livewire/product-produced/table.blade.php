@@ -38,7 +38,7 @@
             @foreach($results as $result)
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
-                    <td class="px-3 py-2" >{{ $result->product?->name }}</td>
+                    <td class="px-3 py-2" >{{ $result->stockTransaction?->product?->name}}</td>
                     <td class="px-3 py-2" >{{ $result->stock() }}</td>
                     <td class="px-3 py-2" >{{ $result->user?->name }}</td>
                     <td class="px-3 py-2" >

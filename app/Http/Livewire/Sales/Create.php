@@ -120,7 +120,6 @@ class Create extends Component
             function () {
                 for ($i = 1; $i <= $this->itemCount; $i++) {
                     $this->validate([
-
                         'item.' . $i . '.quantity' => 'required|numeric|min:1',
                         'item.' . $i . '.product_id' => 'required|exists:products,id',
                     ]);
