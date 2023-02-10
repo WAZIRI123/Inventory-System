@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
-    use HasFactory,SoftDeletes,HasStock,HasSku;
+    use HasFactory, SoftDeletes, HasStock, HasSku;
 
     protected $fillable = [
         'name',
@@ -26,6 +26,15 @@ class Product extends Model
         'plates_quantity' => 'integer',
     ];
 
+    public function totalRevenue($productId)
+    {
+
+        return Sale::join('products', 'sales.product_id', '=', 'products.id')
+            ->where('products.id', $productId)
+            ->selectRaw('SUM(products.sale_price* sales.quantity) as totalRevenueAsMchele')
+            ->first()->totalRevenueAsMchele;
+    
+    }
     public function stockTransaction()
     {
         return $this->hasOne(StockTransaction::class);

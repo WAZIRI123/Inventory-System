@@ -35,7 +35,11 @@
                 </td>
 
                 <td class="px-3 py-2" >Kilo</td>
+                <td class="px-3 py-2" >Sahani</td>
+                <td class="px-3 py-2" >Sahani Zilizobaki</td>
                 <td class="px-3 py-2" >Bei ya Kuuzia(Tsh)</td>
+
+                <td class="px-3 py-2" >Mapato(Tsh)</td>
 
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
@@ -46,7 +50,10 @@
                     <td class="px-3 py-2" >{{ $result->id }}</td>
                     <td class="px-3 py-2" >{{ $result->name }}</td>
                     <td class="px-3 py-2" >{{ $result->stock() }}</td>
+                    <td class="px-3 py-2" >{{ $result->stockTransaction?->productProduced?->quantity_produced }}</td>
+                    <td class="px-3 py-2" >{{ $result->stockTransaction?->productProduced?->stock() }}</td>
                     <td class="px-3 py-2" >{{ $result->sale_price }}</td>
+                    <td class="px-3 py-2" >{{ $result->totalRevenue($result->id) }}</td>
                     <td class="px-3 py-2" >
                         <button type="submit" wire:click="$emitTo('product.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />
