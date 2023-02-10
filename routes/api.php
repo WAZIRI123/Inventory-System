@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthController::class, 'logout']);
     Route::get('/profile/{user}',[ApiProfileController::class,'show']);
     Route::put('/update',[ApiProfileController::class,'update']);
+    Route::apiResource('posts', 'ApiEmployeeController');
+
     Route::put('/password-update',[ApiPasswordController::class,'updatePassword']);
 });
 Route::post('/login', [ApiAuthController::class, 'login']);
