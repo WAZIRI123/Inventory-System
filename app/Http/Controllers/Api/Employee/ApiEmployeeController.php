@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,17 @@ class ApiEmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $sortBy = $request->query('sortBy', 'id');
+        $sortAsc = $request->query('sortAsc', true);
+        $perPage = $request->query('perPage', 15);
+
+        $employees = Employee::with(['user'])
+            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
+            ->paginate($perPage);
+
+        return EmployeeResource::collection($employees);
     }
 
     /**
