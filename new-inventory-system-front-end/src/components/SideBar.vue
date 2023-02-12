@@ -114,6 +114,13 @@
                 </ul>
                 <!-- end::Submenu -->
             </div>
+                    <!-- end::Menu link -->
+
+                    <SingleSideLink  name="employee" title="employee">
+                        <HomeIcon />
+                    </SingleSideLink>
+        
+                    <!-- start::Menu link -->
             <!-- end::Menu link -->
 
             <SingleSideLink  name="profile" title="profile"  :id=userId>

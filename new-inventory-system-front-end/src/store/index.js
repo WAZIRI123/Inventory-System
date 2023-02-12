@@ -7,6 +7,10 @@ const store = createStore({
             data: {},
             token: sessionStorage.getItem("TOKEN"),
         },
+        employees: {
+            data: [],
+            meta: {}
+        },
 
         toast: {
             show: false,
@@ -43,7 +47,16 @@ const store = createStore({
                     return data;
                 })
         },
+        fetchEmployees({ commit }, page = 1) {
+            return axiosClient.get(`employees?page=${page}`)
+                .then(({ data }) => {
 
+                    commit('setEmployees', data);
+
+                    return data;
+                })
+
+        },
         updatePassword({ commit }, user) {
             return axiosClient.put('/password-update', user)
                 .then(({ data }) => {
@@ -171,6 +184,10 @@ const store = createStore({
             state.user.token = null;
             state.user.data = {};
             sessionStorage.removeItem("TOKEN");
+        },
+        setEmployees: (state, data) => {
+            state.employees.data = data.data;
+            state.employees.meta = data.meta;
         },
 
         hideToast: (state) => {

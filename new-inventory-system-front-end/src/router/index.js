@@ -29,6 +29,15 @@ const router = createRouter({
                     component: () =>
                         import ("../views/HomeView.vue"),
                 },
+                {
+                    path: '/employee',
+                    name: 'employee',
+                    meta: {
+                        requiresAuth: true
+                    },
+                    component: () =>
+                        import ("../views/EmployeeView.vue"),
+                },
 
 
                 {
@@ -50,6 +59,7 @@ const router = createRouter({
             component: () =>
                 import ("../views/ResetLinkView.vue"),
         },
+
 
         {
             path: '/reset-password',
