@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@alpinejs/collapse": "^3.10.5",
+        "@headlessui/vue": "^1.7.9",
         "@hotwired/turbo": "^7.2.4"
     }
 }
