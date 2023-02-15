@@ -36,7 +36,7 @@ const router = createRouter({
                         requiresAuth: true
                     },
                     component: () =>
-                        import ("../views/EmployeeView.vue"),
+                        import ("../views/Employee/TableView.vue"),
                 },
 
 

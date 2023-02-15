@@ -3,7 +3,7 @@
       <div class="flex justify-between border-b-2 pb-3">
         <div class="flex items-center">
           <span class="whitespace-nowrap mr-3">Per Page</span>
-          <select @change="getCustomers(null)" v-model="perPage"
+          <select @change="getemployees(null)" v-model="perPage"
                   class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -11,12 +11,12 @@
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <span class="ml-3">Found {{customers.total}} customers</span>
+          <span class="ml-3">Found {{employees.total}} employees</span>
         </div>
         <div>
-          <input v-model="search" @change="getCustomers(null)"
+          <input v-model="search" @change="getemployees(null)"
                  class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                 placeholder="Type to Search customers">
+                 placeholder="Type to Search employees">
         </div>
       </div>
   
@@ -24,62 +24,43 @@
         <thead>
         <tr>
           <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection"
-                           @click="sortCustomers('id')">
+                           @click="sortemployees('id')">
             ID
           </TableHeaderCell>
           <TableHeaderCell field="name" :sort-field="sortField" :sort-direction="sortDirection"
-                           @click="sortCustomers('name')">
+                           @click="sortemployees('name')">
             Name
           </TableHeaderCell>
           <TableHeaderCell field="email" :sort-field="sortField" :sort-direction="sortDirection"
-                           @click="sortCustomers('email')">
+                           @click="sortemployees('email')">
             Email
           </TableHeaderCell>
-          <TableHeaderCell field="phone" :sort-field="sortField" :sort-direction="sortDirection"
-                           @click="sortCustomers('phone')">
-            Phone
-          </TableHeaderCell>
-          <TableHeaderCell field="status" :sort-field="sortField" :sort-direction="sortDirection"
-                           @click="sortCustomers('status')">
-            Status
-          </TableHeaderCell>
-          <TableHeaderCell field="created_at" :sort-field="sortField" :sort-direction="sortDirection"
-                           @click="sortCustomers('created_at')">
-            Register Date
-          </TableHeaderCell>
+
           <TableHeaderCell field="actions">
             Actions
           </TableHeaderCell>
         </tr>
         </thead>
-        <tbody v-if="customers.loading || !customers.data.length">
+        <tbody v-if="employees.loading || !employees.data.length">
         <tr>
           <td colspan="7">
-            <Spinner v-if="customers.loading"/>
+            <Spinner v-if="employees.loading"/>
             <p v-else class="text-center py-8 text-gray-700">
-              There are no customers
+              There are no employees
             </p>
           </td>
         </tr>
         </tbody>
         <tbody v-else>
-        <tr v-for="(customer, index) of customers.data">
-          <td class="border-b p-2 ">{{ customer.id }}</td>
+        <tr v-for="(employee, index) of employees.data" :key="index">
+          <td class="border-b p-2 ">{{ employee.id }}</td>
           <td class="border-b p-2 ">
-           {{ customer.first_name }} {{ customer.last_name }}
+           {{ employee.name }} 
           </td>
           <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
-            {{ customer.email }}
+            {{ employee.email }}
           </td>
-          <td class="border-b p-2">
-            {{ customer.phone }}
-          </td>
-          <td class="border-b p-2">
-            {{ customer.status }}
-          </td>
-          <td class="border-b p-2">
-            {{ customer.created_at }}
-          </td>
+  
           <td class="border-b p-2 ">
             <Menu as="div" class="relative inline-block text-left">
               <div>
@@ -106,7 +87,7 @@
                   <div class="px-1 py-1">
                     <MenuItem v-slot="{ active }">
                       <router-link
-                        :to="{name: 'app.customers.view', params: {id: customer.id}}"
+                        :to="{name: 'app.employees.view', params: {id: employee.id}}"
                         :class="[
                           active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -126,7 +107,7 @@
                           active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                         ]"
-                        @click="deleteCustomer(customer)"
+                        @click="deleteemployee(employee)"
                       >
                         <TrashIcon
                           :active="active"
@@ -145,18 +126,18 @@
         </tbody>
       </table>
   
-      <div v-if="!customers.loading" class="flex justify-between items-center mt-5">
-        <div v-if="customers.data.length">
-          Showing from {{ customers.from }} to {{ customers.to }}
+      <div v-if="!employees.loading" class="flex justify-between items-center mt-5">
+        <div v-if="employees.data.length">
+          Showing from {{ employees.from }} to {{ employees.to }}
         </div>
         <nav
-          v-if="customers.total > customers.limit"
+          v-if="employees.total > employees.limit"
           class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
           aria-label="Pagination"
         >
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
           <a
-            v-for="(link, i) of customers.links"
+            v-for="(link, i) of employees.links"
             :key="i"
             :disabled="!link.url"
             href="#"
@@ -168,7 +149,7 @@
                   ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
                   : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
                 i === 0 ? 'rounded-l-md' : '',
-                i === customers.links.length - 1 ? 'rounded-r-md' : '',
+                i === employees.links.length - 1 ? 'rounded-r-md' : '',
                 !link.url ? ' bg-gray-100 text-gray-700': ''
               ]"
             v-html="link.label"
@@ -182,26 +163,28 @@
   <script setup>
   import {computed, onMounted, ref} from "vue";
   import store from "../../store";
-  import Spinner from "../../components/core/Spinner.vue";
-  import {CUSTOMERS_PER_PAGE} from "../../constants";
-  import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
+
+  import {EMPLOYEES_PER_PAGE} from "../../constants";
+  import TableHeaderCell from "../../components/Core/TableHeaderCell.vue";
   import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
   import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
-  
-  const perPage = ref(CUSTOMERS_PER_PAGE);
+
+import Spinner from "../../components/Core/Spinner.vue";
+  `
+  const perPage = ref(EMPLOYEES_PER_PAGE);
   const search = ref('');
-  const customers = computed(() => store.state.customers);
+  const employees = computed(() => store.state.employees);
   const sortField = ref('updated_at');
   const sortDirection = ref('desc')
   
-  const customer = ref({})
-  const showCustomerModal = ref(false);
+  const employee = ref({})
+  const showemployeeModal = ref(false);
   
   const emit = defineEmits(['clickEdit'])
   
   onMounted(() => {
-    getCustomers();
-  })
+    getemployees();
+  }) 
   
   function getForPage(ev, link) {
     ev.preventDefault();
@@ -209,11 +192,11 @@
       return;
     }
   
-    getCustomers(link.url)
+    getemployees(link.url)
   }
   
-  function getCustomers(url = null) {
-    store.dispatch("getCustomers", {
+  function getemployees(url = null) {
+    store.dispatch("getemployees", {
       url,
       search: search.value,
       per_page: perPage.value,
@@ -222,7 +205,7 @@
     });
   }
   
-  function sortCustomers(field) {
+  function sortemployees(field) {
     if (field === sortField.value) {
       if (sortDirection.value === 'desc') {
         sortDirection.value = 'asc'
@@ -234,23 +217,14 @@
       sortDirection.value = 'asc'
     }
   
-    getCustomers()
+    getemployees()
   }
   
   function showAddNewModal() {
-    showCustomerModal.value = true
+    showemployeeModal.value = true
   }
   
-  function deleteCustomer(customer) {
-    if (!confirm(`Are you sure you want to delete the customer?`)) {
-      return
-    }
-    store.dispatch('deleteCustomer', customer.id)
-      .then(res => {
-        // TODO Show notification
-        store.dispatch('getCustomers')
-      })
-  }
+
   
   </script>
   

@@ -68,8 +68,6 @@ onMounted(()=>{
 
  });
 
-
-
 });
 
 function paginate(page) {

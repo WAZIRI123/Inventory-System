@@ -8,34 +8,21 @@ const store = createStore({
             token: sessionStorage.getItem("TOKEN"),
         },
         employees: {
+            loading: false,
             data: [],
-            meta: {}
+            links: [],
+            from: null,
+            to: null,
+            page: 1,
+            limit: null,
+            total: null
         },
 
-        toast: {
-            show: false,
-            message: '',
-            delay: 5000
-        },
         dashboard: {
             loading: false,
             data: {}
         },
-        surveys: {
-            loading: false,
-            links: [],
-            data: []
-        },
-        currentSurvey: {
-            data: {},
-            loading: false,
-        },
-        questionTypes: ["text", "select", "radio", "checkbox", "textarea"],
-        notification: {
-            show: false,
-            type: 'success',
-            message: ''
-        }
+
     },
     getters: {},
     actions: {
@@ -47,15 +34,31 @@ const store = createStore({
                     return data;
                 })
         },
-        fetchEmployees({ commit }, page = 1) {
-            return axiosClient.get(`employees?page=${page}`)
-                .then(({ data }) => {
 
-                    commit('setEmployees', data);
-
-                    return data;
+        getemployees({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+            commit('setemployees', [true])
+            url = url || '/employees'
+            const params = {
+                per_page: state.employees.limit,
+            }
+            return axiosClient.get(url, {
+                    params: {
+                        ...params,
+                        search,
+                        per_page,
+                        sort_field,
+                        sort_direction
+                    }
                 })
-
+                .then((response) => {
+                    commit('setemployees', [false, response.data])
+                })
+                .catch(() => {
+                    commit('setemployees', [false])
+                })
+        },
+        getemployee({ commit }, id) {
+            return axiosClient.get(`/employees/${id}`)
         },
         updatePassword({ commit }, user) {
             return axiosClient.put('/password-update', user)
@@ -112,72 +115,7 @@ const store = createStore({
 
         },
 
-        getSurveys({ commit }, { url = null } = {}) {
-            commit('setSurveysLoading', true)
-            url = url || "/survey";
-            return axiosClient.get(url).then((res) => {
-                commit('setSurveysLoading', false)
-                commit("setSurveys", res.data);
-                return res;
-            });
-        },
-        getSurvey({ commit }, id) {
-            commit("setCurrentSurveyLoading", true);
-            return axiosClient
-                .get(`/survey/${id}`)
-                .then((res) => {
-                    commit("setCurrentSurvey", res.data);
-                    commit("setCurrentSurveyLoading", false);
-                    return res;
-                })
-                .catch((err) => {
-                    commit("setCurrentSurveyLoading", false);
-                    throw err;
-                });
-        },
-        getSurveyBySlug({ commit }, slug) {
-            commit("setCurrentSurveyLoading", true);
-            return axiosClient
-                .get(`/survey-by-slug/${slug}`)
-                .then((res) => {
-                    commit("setCurrentSurvey", res.data);
-                    commit("setCurrentSurveyLoading", false);
-                    return res;
-                })
-                .catch((err) => {
-                    commit("setCurrentSurveyLoading", false);
-                    throw err;
-                });
-        },
-        saveSurvey({ commit, dispatch }, survey) {
-            delete survey.image_url;
 
-            let response;
-            if (survey.id) {
-                response = axiosClient
-                    .put(`/survey/${survey.id}`, survey)
-                    .then((res) => {
-                        commit('setCurrentSurvey', res.data)
-                        return res;
-                    });
-            } else {
-                response = axiosClient.post("/survey", survey).then((res) => {
-                    commit('setCurrentSurvey', res.data)
-                    return res;
-                });
-            }
-
-            return response;
-        },
-        deleteSurvey({ dispatch }, id) {
-            return axiosClient.delete(`/survey/${id}`).then((res) => {
-                dispatch('getSurveys')
-                return res;
-            });
-        },
-        saveSurveyAnswer({ commit }, { surveyId, answers }) {
-            return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
-        },
     },
     mutations: {
         logout: (state) => {
@@ -185,9 +123,21 @@ const store = createStore({
             state.user.data = {};
             sessionStorage.removeItem("TOKEN");
         },
-        setEmployees: (state, data) => {
-            state.employees.data = data.data;
-            state.employees.meta = data.meta;
+        setemployees(state, [loading, data = null]) {
+
+            if (data) {
+                state.customers = {
+                    ...state.customers,
+                    data: data.data,
+                    links: data.meta.links,
+                    page: data.meta.current_page,
+                    limit: data.meta.per_page,
+                    from: data.meta.from,
+                    to: data.meta.to,
+                    total: data.meta.total,
+                }
+            }
+            state.employees.loading = loading;
         },
 
         hideToast: (state) => {
@@ -214,19 +164,7 @@ const store = createStore({
         setDashboardData: (state, data) => {
             state.dashboard.data = data
         },
-        setSurveysLoading: (state, loading) => {
-            state.surveys.loading = loading;
-        },
-        setSurveys: (state, surveys) => {
-            state.surveys.links = surveys.meta.links;
-            state.surveys.data = surveys.data;
-        },
-        setCurrentSurveyLoading: (state, loading) => {
-            state.currentSurvey.loading = loading;
-        },
-        setCurrentSurvey: (state, survey) => {
-            state.currentSurvey.data = survey.data;
-        },
+
         notify: (state, { message, type }) => {
             state.notification.show = true;
             state.notification.type = type;
