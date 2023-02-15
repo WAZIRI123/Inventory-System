@@ -18,14 +18,22 @@ class ApiEmployeeController extends Controller
     {
         $sortBy = $request->query('sortBy', 'id');
         $sortAsc = $request->query('sortAsc', true);
-        $perPage = $request->query('perPage', 15);
-
+        $perPage = $request->query('per_page', 15);
+        $search = $request->query('search', '');
+    
         $employees = Employee::with(['user'])
+            ->whereHas('user',function($query) use ($search) {
+                if ($search) {
+                    $query->where('name', 'LIKE', '%'.$search.'%')
+                        ->orWhere('email', 'LIKE', '%'.$search.'%');
+                }
+            })
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->paginate($perPage);
-
+    
         return EmployeeResource::collection($employees);
     }
+    
 
     /**
      * Show the form for creating a new resource.

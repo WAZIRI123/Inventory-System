@@ -18,6 +18,12 @@ const store = createStore({
             total: null
         },
 
+        toast: {
+            show: false,
+            message: '',
+            delay: 5000
+        },
+
         dashboard: {
             loading: false,
             data: {}
@@ -126,8 +132,8 @@ const store = createStore({
         setemployees(state, [loading, data = null]) {
 
             if (data) {
-                state.customers = {
-                    ...state.customers,
+                state.employees = {
+                    ...state.employees,
                     data: data.data,
                     links: data.meta.links,
                     page: data.meta.current_page,
