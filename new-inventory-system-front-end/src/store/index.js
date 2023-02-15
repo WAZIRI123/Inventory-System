@@ -40,6 +40,9 @@ const store = createStore({
                     return data;
                 })
         },
+        deleteemployee({ commit }, employee) {
+            return axiosClient.delete(`/employees/${employee.id}`)
+        },
 
         getemployees({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
             commit('setemployees', [true])

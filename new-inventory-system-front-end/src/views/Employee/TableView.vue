@@ -22,6 +22,7 @@
   
       <table class="table-auto w-full">
         <thead>
+          <Toast/>
         <tr>
           <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection"
                            @click="sortemployees('id')">
@@ -150,7 +151,7 @@
   <script setup>
   import {computed, onMounted, ref} from "vue";
   import store from "../../store";
-
+  import Toast from '../../components/Toast.vue';
   import {EMPLOYEES_PER_PAGE} from "../../constants";
   import TableHeaderCell from "../../components/Core/TableHeaderCell.vue";
   import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
@@ -211,7 +212,17 @@ import Spinner from "../../components/Core/Spinner.vue";
     showemployeeModal.value = true
   }
   
-
+  function deleteemployee(employee) {
+  if (!confirm(`Are you sure you want to delete the employee?`)) {
+    return
+  }
+  store.dispatch('deleteemployee', employee)
+    .then(res => {
+      // TODO Show notification
+      store.dispatch('getemployees')
+      store.commit('showToast', `Employee  has been deleted successfully`)
+    })
+}
   
   </script>
   

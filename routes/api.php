@@ -31,4 +31,3 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::patch('/password-reset',[NewPasswordController::class,'store']);
 Route::post('/password-reset-link',[ApiPasswordResetLinkController::class,'sendPasswordResetLink']);
-

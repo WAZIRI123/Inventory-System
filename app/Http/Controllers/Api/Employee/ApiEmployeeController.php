@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ApiEmployeeController extends Controller
@@ -98,6 +99,11 @@ class ApiEmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $this->authorize('delete', $employee);
+
+        User::find($employee->user_id)->delete();
+        $employee->delete();
+
+        return response()->json(['message' => 'Record Deleted Successfully'], 200);
     }
 }
