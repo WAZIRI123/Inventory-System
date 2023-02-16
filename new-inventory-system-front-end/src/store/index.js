@@ -40,6 +40,12 @@ const store = createStore({
                     return data;
                 })
         },
+        createemployee({ commit }, employee) {
+            return axiosClient.post('/employees', employee)
+        },
+        updateemployee({ commit }, employee) {
+            return axiosClient.put(`/employees/${employee.id}`, employee)
+        },
         deleteemployee({ commit }, employee) {
             return axiosClient.delete(`/employees/${employee.id}`)
         },

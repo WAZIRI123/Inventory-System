@@ -41,6 +41,14 @@ const router = createRouter({
 
 
                 {
+                    path: 'employees/:id',
+                    name: 'employees.view',
+                    component: () =>
+                        import ("../views/Employee/EmployeeView.vue"),
+                },
+
+
+                {
                     path: 'profile:id',
                     name: 'profile',
                     // route level code-splitting

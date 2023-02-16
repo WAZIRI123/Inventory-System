@@ -7,6 +7,7 @@ use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ApiEmployeeController extends Controller
 {
@@ -65,7 +66,8 @@ class ApiEmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        $employee->load('user');
+        return new EmployeeResource($employee);
     }
 
     /**
@@ -88,7 +90,20 @@ class ApiEmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($employee->user->id)->whereNull('deleted_at')],
+            'profile_picture' => 'nullable|image|mimes:jpeg,png',
+        ]);
+
+        $employee->user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+        ]);
+                // Return a success response
+                return response()->json([
+                    'message' => 'Employee updated successfully',
+                ], 200);
     }
 
     /**
