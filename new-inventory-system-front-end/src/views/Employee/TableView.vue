@@ -1,6 +1,8 @@
 <template>
-    <div class="bg-white p-4 rounded-lg shadow animate-fade-in-down">
-      <div class="flex justify-between border-b-2 pb-3">
+    <div class="bg-white rounded-lg px-8 py-6 overflow-x-scroll custom-scrollbar">
+      <h4 class="text-xl font-semibold">Recent transactions</h4>
+
+      <div class="flex justify-between  pb-3">
         <div class="flex items-center">
           <span class="whitespace-nowrap mr-3">Per Page</span>
         
@@ -21,8 +23,9 @@
                  placeholder="Type to Search employees">
         </div>
       </div>
-      <table class="table-auto w-full">
-        <thead>
+
+      <table class="w-full my-8 whitespace-nowrap">
+        <thead class="bg-secondary text-gray-100 font-bold">
           <Toast/>
         <tr>
           <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection"
@@ -42,9 +45,9 @@
             Actions
           </TableHeaderCell>
         </tr>
-        </thead>
-        <tbody v-if="employees.loading || !employees.data.length">
-        <tr>
+        </thead >
+        <tbody  class="text-sm" v-if="employees.loading || !employees.data.length">
+        <tr class="bg-gray-100 hover:bg-primary hover:bg-opacity-20 transition duration-200">
           <td colspan="7">
             <Spinner v-if="employees.loading"/>
             <p v-else class="text-center py-8 text-gray-700">
@@ -55,15 +58,15 @@
         </tbody>
         <tbody v-else>
         <tr v-for="(employee, index) of employees.data" :key="index">
-          <td class="border-b p-2 ">{{ employee.id }}</td>
-          <td class="border-b p-2 ">
+          <td class="py-3 pl-2 ">{{ employee.id }}</td>
+          <td class="py-3 pl-2 ">
            {{ employee.name }} 
           </td>
-          <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+          <td class="py-3 pl-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
             {{ employee.email }}
           </td>
   
-          <td class="border-b p-2 ">
+          <td class="py-3 pl-2 ">
             <Menu as="div" class="relative inline-block text-left">
               <div>
                 <MenuButton
