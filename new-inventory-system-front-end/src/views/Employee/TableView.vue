@@ -3,6 +3,7 @@
       <div class="flex justify-between border-b-2 pb-3">
         <div class="flex items-center">
           <span class="whitespace-nowrap mr-3">Per Page</span>
+        
           <select @change="getemployees(null)" v-model="perPage"
                   class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
             <option value="5">5</option>
@@ -13,13 +14,13 @@
           </select>
           <span class="ml-3">Found {{employees.total}} employees</span>
         </div>
+        <Button :disabled="loading" class="mr-5" @click="redirectToRoute">Create New+</Button>
         <div>
           <input v-model="search" @change="getemployees(null)"
                  class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                  placeholder="Type to Search employees">
         </div>
       </div>
-  
       <table class="table-auto w-full">
         <thead>
           <Toast/>
@@ -166,12 +167,15 @@
   import store from "../../store";
   import Toast from '../../components/Toast.vue';
   import {EMPLOYEES_PER_PAGE} from "../../constants";
+ 
   import TableHeaderCell from "../../components/Core/TableHeaderCell.vue";
   import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
   import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
 
 import Spinner from "../../components/Core/Spinner.vue";
-  
+import Button from "../../components/Core/Button.vue";
+import { useRouter } from "vue-router";
+
   const perPage = ref(EMPLOYEES_PER_PAGE);
   const search = ref('');
   const employees = computed(() => store.state.employees);
@@ -180,7 +184,7 @@ import Spinner from "../../components/Core/Spinner.vue";
   
   const employee = ref({})
   const showemployeeModal = ref(false);
-  
+  const router = useRouter();
   const emit = defineEmits(['clickEdit'])
   
   onMounted(() => {
@@ -236,6 +240,10 @@ import Spinner from "../../components/Core/Spinner.vue";
       store.commit('showToast', `Employee  has been deleted successfully`)
     })
 }
+
+const redirectToRoute = () => {
+  router.push('/employees/create'); // replace with the actual route you want to navigate to
+};
   
   </script>
   

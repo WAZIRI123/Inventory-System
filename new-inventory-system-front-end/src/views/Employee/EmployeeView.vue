@@ -2,6 +2,31 @@
     <div v-if="employee.id" class="animate-fade-in-down">
       <FormCardLayout :title=title>
       <form @submit.prevent="onSubmit">
+        <Alert v-if="errorMsg">
+          <li v-for="(error, index) in  errorMsg" :key="index">
+        {{ errorMsg[index][0]}} 
+      </li>
+ 
+      <span
+        @click="errorMsg = ''"
+        class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </span>
+    </Alert>
         <div class="bg-white px-4 pt-5 pb-4">
           <div class="grid grid-cols-2 gap-8">
           <CustomInput class="mb-2" v-model="employee.name" label="Last Name"/>
@@ -28,12 +53,36 @@
     <div v-else class="animate-fade-in-down">
       <FormCardLayout :title=title>
       <form @submit.prevent="onSubmit">
+        <Alert v-if="errorMsg">
+          <li v-for="(error, index) in  errorMsg" :key="index">
+        {{ errorMsg[index][0]}} 
+      </li>
+ 
+      <span
+        @click="errorMsg = ''"
+        class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </span>
+    </Alert>
         <div class="bg-white px-4 pt-5 pb-4">
           <div class="grid grid-cols-2 gap-8">
-          <CustomInput class="mb-2" v-model="employee.name" label="Last Name"/>
+          <CustomInput class="mb-2" v-model="employee.name" label="Name"/>
           <CustomInput class="mb-2" v-model="employee.email" label="Email"/>
           </div>
-  
         </div>
         <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button type="submit"
@@ -71,7 +120,7 @@ id:'',
 name:'',
 email:''
 });
-  
+let errorMsg = ref("");
   function onSubmit() {
     loading.value = true
     if (employee.value.id) {
@@ -85,6 +134,11 @@ email:''
             store.commit('showToast', `Employee  has been Updated successfully`)
           }
         })
+        .catch(err => {
+          loading.value = false;
+          errorMsg.value = err.response.data.errors;
+        })
+        
     } else {
       store.dispatch('createemployee', employee.value)
         .then(response => {
@@ -97,19 +151,25 @@ email:''
         })
         .catch(err => {
           loading.value = false;
-          debugger;
+          errorMsg.value = err.response.data.errors;
         })
     }
   }
-  
-  onMounted(() => {
-    store.dispatch('getemployee', route.params.id)
-      .then(({data}) => {
-        title.value = `Update employee: "${data.data.name} ${data.data.email}"`
-        employee.value = data.data
-     
-      })
-  })
+  if (route.params.id) {
+   
+    onMounted(() => {
+      store.dispatch('getemployee', route.params.id)
+        .then(({data}) => {
+          title.value = `Update employee: "${data.data.name} ${data.data.email}"`
+          employee.value = data.data
+       
+        })
+    })
+  }else{
+    onMounted(()=>{
+      title.value = `Create Employee`
+    })
+  }
   
   </script>
   

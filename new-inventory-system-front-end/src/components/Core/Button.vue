@@ -5,9 +5,9 @@
         $attrs.class
       ]"
       @click="$emit('click')"
-      :disabled="disabled"
+      :disabled="props.disabled"
     >
-      {{ $slots.default }}
+     <slot></slot>
     </button>
   </template>
   

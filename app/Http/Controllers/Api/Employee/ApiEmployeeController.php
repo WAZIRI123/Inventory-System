@@ -55,7 +55,25 @@ class ApiEmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')],
+           
+        ]);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+ 
+        ]);
+        $user->assignRole('Employee');
+
+        $employee = Employee::create([
+            'user_id' => $user->id
+        ]);
+
+        return response()->json( ['message' => 'Employee Create successfully'], 201);
+
     }
 
     /**
