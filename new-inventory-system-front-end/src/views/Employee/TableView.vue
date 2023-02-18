@@ -57,23 +57,23 @@
         </tr>
         </tbody>
         <tbody v-else>
-        <tr v-for="(employee, index) of employees.data" :key="index">
-          <td class="py-3 pl-2 ">{{ employee.id }}</td>
-          <td class="py-3 pl-2 ">
+        <tr v-for="(employee, index) of employees.data" :key="index" >
+          <td :class="isOdd(index)?'py-3 pl-2 bg-gray-400':'py-3 pl-2 bg-gray-200'">{{ employee.id }}</td>
+          <td :class="isOdd(index)?'py-3 pl-2 bg-gray-400':'py-3 pl-2 bg-gray-200'">
            {{ employee.name }} 
           </td>
-          <td class="py-3 pl-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+          <td :class="isOdd(index)?'py-3 pl-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis bg-gray-400':'py-3 pl-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis bg-gray-200'">
             {{ employee.email }}
           </td>
   
-          <td class="py-3 pl-2 ">
+          <td :class="isOdd(index)?'py-3 pl-2 bg-gray-400':'py-3 pl-2 bg-gray-200'">
             <Menu as="div" class="relative inline-block text-left">
               <div>
                 <MenuButton
                   class="inline-flex items-center justify-center w-full justify-center rounded-full w-10 h-10 bg-black bg-opacity-0 text-sm font-medium text-white hover:bg-opacity-5 focus:bg-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 >
                   <DotsVerticalIcon
-                    class="h-5 w-5 text-indigo-500"
+                    :class="isOdd(index)?'h-5 w-5 text-white' :'h-5 w-5 text-indigo-500'"
                     aria-hidden="true"/>
                 </MenuButton>
               </div>
@@ -230,6 +230,10 @@ import { useRouter } from "vue-router";
   
   function showAddNewModal() {
     showemployeeModal.value = true
+  }
+
+  function isOdd(index) {
+    return index % 2 !== 0
   }
   
   function deleteemployee(employee) {
