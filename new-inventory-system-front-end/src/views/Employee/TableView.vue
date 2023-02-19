@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg px-8 py-6 overflow-x-scroll custom-scrollbar">
+    <div class="bg-white rounded-lg px-8 py-0 overflow-x-scroll custom-scrollbar">
       <h4 class="text-xl font-semibold">Recent transactions</h4>
 
       <div class="flex justify-between  pb-3">
@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <table class="w-full my-8 whitespace-nowrap">
+      <table class="w-full my-4 whitespace-nowrap">
         <thead class="bg-secondary text-gray-100 font-bold">
           <Toast/>
         <tr>
@@ -131,11 +131,11 @@
         </tbody>
       </table>
   
-      <div v-if="!employees.loading" class="flex justify-between items-center mt-5">
-        <div v-if="employees.data.length">
-          Showing from {{ employees.from }} to {{ employees.to }}
-        </div>
-        <nav
+      <div v-if="!employees.loading" class="sm:flex justify-center sm:justify-between items-center mt-5 text-center">
+  <div v-if="employees.data.length" class="mb-3">
+    Showing from {{ employees.from }} to {{ employees.to }}
+  </div>
+  <nav
           v-if="employees.total > employees.limit"
           class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
           aria-label="Pagination"

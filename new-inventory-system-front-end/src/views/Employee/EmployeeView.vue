@@ -1,39 +1,13 @@
 <template>
-    <div v-if="employee.id" class="animate-fade-in-down">
-      <FormCardLayout :title=title>
-      <form @submit.prevent="onSubmit">
-        <Alert v-if="errorMsg">
-          <li v-for="(error, index) in  errorMsg" :key="index">
-        {{ errorMsg[index][0]}} 
-      </li>
- 
-      <span
-        @click="errorMsg = ''"
-        class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </span>
-    </Alert>
-        <div class="bg-white px-4 pt-5 pb-4">
-          <div class="grid grid-cols-2 gap-8">
-          <CustomInput class="mb-2" v-model="employee.name" label="Last Name"/>
-          <CustomInput class="mb-2" v-model="employee.email" label="Email"/>
+  <div class="h-full bg-gray-200 p-8">
+  <div v-if="employee.id" class="animate-fade-in-down">
+    <FormCardLayout :title=title>
+      <form @submit.prevent="onSubmit" class="mt-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <CustomInput class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full rounded-md" v-model="employee.name" label="Last Name"/>
+          <CustomInput class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full rounded-md" v-model="employee.email" label="Email"/>
           </div>
   
-        </div>
         <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button type="submit"
                   class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
@@ -47,12 +21,12 @@
           </router-link>
         </footer>
       </form>
-      </FormCardLayout>
+    </FormCardLayout>
     </div>
 
     <div v-else class="animate-fade-in-down">
       <FormCardLayout :title=title>
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit" class="mt-8">
         <Alert v-if="errorMsg">
           <li v-for="(error, index) in  errorMsg" :key="index">
         {{ errorMsg[index][0]}} 
@@ -78,13 +52,11 @@
         </svg>
       </span>
     </Alert>
-        <div class="bg-white px-4 pt-5 pb-4">
-          <div class="grid grid-cols-2 gap-8">
-          <CustomInput class="mb-2" v-model="employee.name" label="Name"/>
-          <CustomInput class="mb-2" v-model="employee.email" label="Email"/>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <CustomInput class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full rounded-md" v-model="employee.name" label="Last Name"/>
+          <CustomInput class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full rounded-md" v-model="employee.email" label="Email"/>
           </div>
-        </div>
-        <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button type="submit"
                   class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
                             text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500">
@@ -99,7 +71,7 @@
       </form>
       </FormCardLayout>
     </div>
-
+  </div>
   </template>
   
   <script setup>
