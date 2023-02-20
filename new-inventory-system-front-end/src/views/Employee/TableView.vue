@@ -16,7 +16,7 @@
           </select>
           <span class="ml-3">Found {{employees.total}} employees</span>
         </div>
-        <Button :disabled="loading" class="mr-5" @click="redirectToRoute">Create New+</Button>
+        <Button :disabled="loading" class="mr-5" @click="redirectToRoute" >Create New+</Button>
         <div>
           <input v-model="search" @change="getemployees(null)"
                  class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
