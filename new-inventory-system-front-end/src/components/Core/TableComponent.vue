@@ -238,7 +238,7 @@
     }
 
     
-    function getemployees(url = null) {
+    function getitems(url = null) {
       store.dispatch("getitems", {
         url,
         search: search.value,
@@ -246,6 +246,7 @@
         sort_field: sortField.value,
         sort_direction: sortDirection.value
       });
+      console.log(data)
     }
     
     function sortemployees(field) {
@@ -286,7 +287,7 @@
   const redirectToRoute = () => {
     router.push(`/employees/create`); // replace with the actual route you want to navigate to
   };
-    
+
     </script>
     
     <style scoped>

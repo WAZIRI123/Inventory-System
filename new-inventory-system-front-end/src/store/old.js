@@ -50,8 +50,8 @@ const store = createStore({
             return axiosClient.delete(`/employees/${employee.id}`)
         },
 
-        getitems({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
-            commit('setitems', [true])
+        getemployees({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+            commit('setemployees', [true])
             url = url || '/employees'
             const params = {
                 per_page: state.employees.limit,
@@ -66,10 +66,10 @@ const store = createStore({
                     }
                 })
                 .then((response) => {
-                    commit('setitems', [false, response.data])
+                    commit('setemployees', [false, response.data])
                 })
                 .catch(() => {
-                    commit('setitems', [false])
+                    commit('setemployees', [false])
                 })
         },
         getemployee({ commit }, id) {
@@ -138,7 +138,7 @@ const store = createStore({
             state.user.data = {};
             sessionStorage.removeItem("TOKEN");
         },
-        setitems(state, [loading, data = null]) {
+        setemployees(state, [loading, data = null]) {
 
             if (data) {
                 state.employees = {
