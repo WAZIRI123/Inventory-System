@@ -46,7 +46,7 @@ const store = createStore({
         updateemployee({ commit }, employee) {
             return axiosClient.put(`/employees/${employee.id}`, employee)
         },
-        deleteemployee({ commit }, employee) {
+        deleteitem({ commit }, employee) {
             return axiosClient.delete(`/employees/${employee.id}`)
         },
 
