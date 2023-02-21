@@ -6,30 +6,29 @@
         <div class="flex items-center">
           <span class="whitespace-nowrap mr-3">{{ perPageLabel }}</span>
   
-          <select @change="getItems(null)" v-model="perPage"
+          <select @change="getitems(null)" v-model="perPage"
                   class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
             <option v-for="option in perPageOptions" :key="option.value" :value="option.value">
               {{ option.label }}
             </option>
           </select>
-  
-          <span class="ml-3">Found {{data.total}}</span>
+          <span class="ml-3">Found {{data.total}} employees</span>
         </div>
   
         <Button :disabled="data.loading" class="mr-5" @click="createNew">{{ createNewLabel }}</Button>
   
         <div>
-          <input v-model="search" @change="getItems(null)"
+          <input v-model="search" @change="getitems(null)"
                  class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                 :placeholder="searchPlaceholder">
+                 placeholder="Search...">
         </div>
       </div>
   
-      <table class="w-full my-4 whitespace-nowrap">
+      <table class="w-full my-0 whitespace-nowrap">
         <thead class="bg-secondary text-gray-100 font-bold">
           <Toast/>
           <tr>
-            <TableHeaderCell v-for="header in headers" :key="header.field"
+            <TableHeaderCell v-for="header in props.headers" :key="header.field"
                              :field="header.field" :sort-field="sortField" :sort-direction="sortDirection"
                              @click="sortItems(header.field)">
               {{ header.label }}
@@ -37,7 +36,7 @@
           </tr>
         </thead>
   
-        <tbody class="text-sm" v-if="data.loading || !data.length">
+        <tbody class="text-sm" v-if="data.loading || !data.data.length">
           <tr class="bg-gray-100 hover:bg-primary hover:bg-opacity-20 transition duration-200">
             <td :colspan="headers.length" class="py-8 text-center text-gray-700">
               <Spinner v-if="data.loading"/>
@@ -47,7 +46,7 @@
         </tbody>
   
         <tbody v-else>
-          <tr v-for="(item, index) in data" :key="item.id">
+          <tr v-for="(item, index) in data.data" :key="item.id">
             <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.id }}</td>
             <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.name }}</td>
             <td :class="{'py-3 pl-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis bg-gray-400': isOdd(index), 'py-3 pl-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis bg-gray-200': !isOdd(index)}">{{ item.email }}</td>
@@ -117,7 +116,7 @@
         </tbody>
       </table>
       <div v-if="!data.loading" class="sm:flex justify-center sm:justify-between items-center mt-5 text-center">
-        <div v-if="data.length" class="mb-3">
+        <div v-if="data.data.length" class="mb-3">
           Showing from {{ data.from }} to {{ data.to }}
         </div>
   
@@ -166,7 +165,8 @@
   
     const perPage = ref(EMPLOYEES_PER_PAGE);
     const search = ref('');
-    const data = computed(() => store.state.employees);
+
+    const data = computed(() =>store.state[`${props.state}`]);
     const sortField = ref('updated_at');
     const sortDirection = ref('desc')
     const perPageOptions = ref( [
@@ -175,12 +175,7 @@
         { value: 15, label: '15' },
         { value: 20, label: '20' },
       ]);
-      const headers= ref(  [
-        { field: 'name', label: 'Name' },
-        { field: 'email', label: 'Email' },
-        { field: 'phone', label: 'Phone' }
-      ]);
-
+    
       const sortedItems=computed(()=> {
       return this.items.sort((a, b) => {
         if (a[this.sortField] < b[this.sortField]) {
@@ -205,12 +200,20 @@
     const props = defineProps({
     createNewLabel: {
     type: String,
+    default: 'Create New+',
   },
   noResultsLabel: {
     type: String,
   },
   title : {
     type: String,
+  },
+state : {
+    type: String,
+  },
+  headers:{
+    type:Object,
+
   },
   perPageLabel: {
     type: String,
@@ -246,7 +249,7 @@
         sort_field: sortField.value,
         sort_direction: sortDirection.value
       });
-      console.log(data)
+
     }
     
     function sortemployees(field) {
