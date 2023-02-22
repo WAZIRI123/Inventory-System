@@ -119,6 +119,10 @@
                     <SingleSideLink  name="employee" title="employee">
                         <HomeIcon />
                     </SingleSideLink>
+
+                    <SingleSideLink  name="product" title="product">
+                        <HomeIcon />
+                    </SingleSideLink>
         
                     <!-- start::Menu link -->
             <!-- end::Menu link -->
