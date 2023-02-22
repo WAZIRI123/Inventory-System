@@ -152,6 +152,9 @@ state : {
   perPageLabel: {
     type: String,
   },
+  createRoutName: {
+    type: String,
+  },
   bgColorActiveClass: {
     type: String,
     default: 'bg-gray-900',
@@ -209,10 +212,10 @@ state : {
       return index % 2 !== 0
     }
     
-    
+
   
-  const redirectToRoute = () => {
-    router.push(`/employees/create`); // replace with the actual route you want to navigate to
+  const createNew = () => {
+    router.push(`${props.createRoutName}`); // replace with the actual route you want to navigate to
   };
 
     </script>

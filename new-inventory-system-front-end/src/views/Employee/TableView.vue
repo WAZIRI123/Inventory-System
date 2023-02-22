@@ -1,7 +1,7 @@
 <template>
 <TableComponent state="employees"
  :headers="headers"
-
+ :createRoutName="createRoutName"
 >
 <slot name="table-body">waziri</slot>
 <template v-slot:table-body>
@@ -90,6 +90,7 @@ const headers= ref(  [
         { field: 'email', label: 'Email' },
         { field: 'action', label: 'Action' }
       ]);
+      const createRoutName= ref('/employees/create');
 
       const data = computed(() =>store.state.employees) 
       function isOdd(index) {

@@ -30,7 +30,7 @@
               </Button>
   
               <RouterButton
-                :to="{ name: 'employee' }"
+                :to="{ name: `${props.redirectRoutName}` }"
                 label="Cancel"
                 ref="cancelButton"
               />
@@ -93,7 +93,7 @@
               </Button>
   
               <RouterButton
-                :to="{ name: 'employee' }"
+                :to="{ name: `${props.redirectRoutName}` }"
                 label="Cancel"></RouterButton>
             </footer>
           </form>
@@ -109,7 +109,7 @@
   import Button from "./Button.vue";
   import RouterButton from "./RouteButton.vue";
   import CustomInput from "../CustomInput.vue";
-import FormCardLayout from "../Core/FormCardLayout.vue";
+  import FormCardLayout from "../Core/FormCardLayout.vue";
   
   const router = useRouter();
   const route = useRoute()
