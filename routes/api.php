@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\ApiProfileController;
 use App\Http\Controllers\Api\Auth\ApiPasswordResetLinkController;
 use App\Http\Controllers\Api\Auth\NewPasswordController;
 use App\Http\Controllers\Api\Employee\ApiEmployeeController;
+use App\Http\Controllers\Api\Product\ApiProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/{user}',[ApiProfileController::class,'show']);
     Route::put('/update',[ApiProfileController::class,'update']);
     Route::apiResource('employees', ApiEmployeeController::class);
+
+    Route::apiResource('products', ApiProductController::class);
 
     Route::put('/password-update',[ApiPasswordController::class,'updatePassword']);
 });

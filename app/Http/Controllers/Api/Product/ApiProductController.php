@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,27 @@ class ApiProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $sortBy = $request->input('sortBy', 'id');
+        $sortAsc = $request->input('sortAsc', true);
+        $search = $request->query('search', '');
+        $perPage = $request->input('perPage', 15);
+
+        $products = Product::query()
+            ->with(['vendor', 'stockMutations'])
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                });
+            })
+            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC');
+
+        $products = $products->paginate($perPage);
+
+        return ProductResource::collection($products);
     }
+
 
     /**
      * Show the form for creating a new resource.

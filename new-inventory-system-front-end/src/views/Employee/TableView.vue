@@ -101,10 +101,10 @@ const headers= ref(  [
     if (!confirm(`Are you sure you want to delete the employee?`)) {
       return
     }
-    store.dispatch('deleteitem', item)
+    store.dispatch('deleteemployee', item)
       .then(res => {
         // TODO Show notification
-        store.dispatch('getitems')
+        store.dispatch('getemployees')
         store.commit('showToast', `Employee  has been deleted successfully`)
       })
   }

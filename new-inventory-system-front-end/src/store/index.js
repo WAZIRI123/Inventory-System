@@ -17,6 +17,16 @@ const store = createStore({
             limit: null,
             total: null
         },
+        products: {
+            loading: false,
+            data: [],
+            links: [],
+            from: null,
+            to: null,
+            page: 1,
+            limit: null,
+            total: null
+        },
 
         toast: {
             show: false,
@@ -46,12 +56,14 @@ const store = createStore({
         updateemployee({ commit }, employee) {
             return axiosClient.put(`/employees/${employee.id}`, employee)
         },
-        deleteitem({ commit }, employee) {
+        deleteemployee({ commit }, employee) {
             return axiosClient.delete(`/employees/${employee.id}`)
         },
-
-        getitems({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
-            commit('setitems', [true])
+        deleteproduct({ commit }, product) {
+            return axiosClient.delete(`/products/${product.id}`)
+        },
+        getemployees({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+            commit('setemployees', [true])
             url = url || '/employees'
             const params = {
                 per_page: state.employees.limit,
@@ -66,14 +78,40 @@ const store = createStore({
                     }
                 })
                 .then((response) => {
-                    commit('setitems', [false, response.data])
+                    commit('setemployees', [false, response.data])
                 })
                 .catch(() => {
-                    commit('setitems', [false])
+                    commit('setemployees', [false])
+                })
+        },
+        getproducts({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+            commit('setproducts', [true])
+            url = url || '/products'
+            const params = {
+                per_page: state.products.limit,
+            }
+            return axiosClient.get(url, {
+                    params: {
+                        ...params,
+                        search,
+                        per_page,
+                        sort_field,
+                        sort_direction
+                    }
+                })
+                .then((response) => {
+                    commit('setproducts', [false, response.data])
+                })
+                .catch(() => {
+                    commit('setproducts', [false])
                 })
         },
         getemployee({ commit }, id) {
             return axiosClient.get(`/employees/${id}`)
+        },
+
+        getproduct({ commit }, id) {
+            return axiosClient.get(`/products/${id}`)
         },
         updatePassword({ commit }, user) {
             return axiosClient.put('/password-update', user)
