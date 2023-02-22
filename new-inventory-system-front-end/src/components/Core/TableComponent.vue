@@ -142,6 +142,9 @@
   title : {
     type: String,
   },
+  getAction: {
+    type: String,
+  },
 state : {
     type: String,
   },
@@ -179,7 +182,7 @@ state : {
 
     
     function getitems(url = null) {
-      store.dispatch("getitems", {
+      store.dispatch(`${props.getAction}s`, {
         url,
         search: search.value,
         per_page: perPage.value,

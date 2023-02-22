@@ -1,6 +1,7 @@
 <template>
 <TableComponent state="employees"
  :headers="headers"
+ getAction="getemployee"
  :createRoutName="createRoutName"
 >
 <slot name="table-body">waziri</slot>
