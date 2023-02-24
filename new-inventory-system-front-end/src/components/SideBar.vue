@@ -201,7 +201,7 @@ function isActiveLink(linkName) {
 
     const handleClickOutside = (event) => {
       const sidebar = document.querySelector('.sidebar')
-      if ( sidebar && !sidebar.contains(event.target) && !event.target.classList.contains('openButton')) {
+      if ( sidebar && !sidebar.contains(event.target) &&!sidebar.contains(event.target)) {
 
         emit('closeSideBar')
        
