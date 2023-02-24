@@ -9,6 +9,8 @@
       <tr v-for="(item, index) in data.data" :key="item.id">
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.id }}</td>
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.name }}</td>
+        <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.sale_price }}</td>
+        <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.purchase_price }}</td>
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index),'py-3 pl-2 bg-gray-200':!isOdd(index)}">
           <Menu as="div" class="relative inline-block text-left">
             <div>
@@ -87,6 +89,8 @@
     const headers= ref(  [
           { field: 'id', label: 'Id' },
             { field: 'name', label: 'Name' },
+            { field: 'sale_price', label: 'Sale Price' },
+            { field: 'purchase_price', label: 'Purchase Price' },
             { field: 'action', label: 'Action' }
           ]);
           const createRoutName= ref('/products/create');

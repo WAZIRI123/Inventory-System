@@ -1,5 +1,5 @@
 <template>
-    <aside :class="menuOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
+    <aside :class="props.menuOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
         class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 bg-secondary overflow-y-auto lg:translate-x-0 lg:inset-0 custom-scrollbar translate-x-0 ease-out">
         <!-- start::Logo -->
         <div class="flex items-center justify-center bg-black bg-opacity-30 h-16">
@@ -12,7 +12,7 @@
         <!-- start::Navigation -->
         <nav class="py-10 custom-scrollbar">
             <!-- start::Menu link -->
-            <SingleSideLink title="dashboard" name="dashboard">
+            <SingleSideLink title="dashboard" name="dashboard" :class="{'bg-black bg-opacity-30':isActiveLink('dashboard')}">
                 <HomeIcon />
             </SingleSideLink>
             <!-- end::Menu link -->
@@ -116,18 +116,18 @@
             </div>
                     <!-- end::Menu link -->
 
-                    <SingleSideLink  name="employee" title="employee">
+                    <SingleSideLink  name="employee" title="employee" :class="{'bg-black bg-opacity-30':isActiveLink('employee')}">
                         <HomeIcon />
                     </SingleSideLink>
 
-                    <SingleSideLink  name="product" title="product">
+                    <SingleSideLink  name="product" title="product" :class="{'bg-black bg-opacity-30':isActiveLink('product')}">
                         <HomeIcon />
                     </SingleSideLink>
         
                     <!-- start::Menu link -->
             <!-- end::Menu link -->
 
-            <SingleSideLink  name="profile" title="profile"  :id=userId>
+            <SingleSideLink  name="profile" title="profile" :class="{'bg-black bg-opacity-30':isActiveLink('profile')}" :id=userId >
                 <HomeIcon />
             </SingleSideLink>
 
@@ -154,13 +154,21 @@
 
 
 <script setup>
-
+import {computed, onMounted, ref} from "vue";
+import { useRouter } from "vue-router";
 import router from "../router";
 import store from "../store";
 import SingleSideLink from './Resusables/SingleSideLink.vue';
 import HomeIcon from "./SvgsIcons/HomeIcon.vue";
 
 const userId=sessionStorage.getItem('Auth')
+
+
+const props = defineProps({
+    menuOpen: {
+    type: Boolean,
+    default: true,
+  }});
 function loggedUser() {
     store.dispatch("getLoggedUser").then((user) => {
         router.push({
@@ -177,6 +185,12 @@ function logout() {
         });
     });
 }
+
+function isActiveLink(linkName) {
+   
+      return useRouter().currentRoute.value.name=== linkName;
+    }
+   
 </script>
 
 

@@ -12,7 +12,7 @@
               {{ option.label }}
             </option>
           </select>
-          <span class="ml-3">Found {{data.total}} employees</span>
+          <span class="ml-3">Found {{data.total?? 0}} {{ props.state }}</span>
         </div>
   
         <Button :disabled="data.loading" class="mr-5" @click="createNew">{{ createNewLabel }}</Button>
@@ -30,7 +30,7 @@
           <tr>
             <TableHeaderCell v-for="header in props.headers" :key="header.field"
                              :field="header.field" :sort-field="sortField" :sort-direction="sortDirection"
-                             @click="sortItems(header.field)">
+                            >
               {{ header.label }}
             </TableHeaderCell>
           </tr>
