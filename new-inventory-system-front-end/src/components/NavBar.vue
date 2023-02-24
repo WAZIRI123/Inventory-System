@@ -1,13 +1,14 @@
 
 
 <template>
-<div v-click-outside="$emit('closeSidebar')"><h1>waziri</h1></div>
+
 <div class="flex flex-col">
         <header class="flex justify-between items-center h-16 py-4 px-6 bg-white">
             <!-- start::Mobile menu button -->
             <div class="flex items-center">
-                <button @click="$emit('toggle')" 
-                    class="text-gray-500 hover:text-primary focus:outline-none lg:hidden transition duration-200">
+                <button @click="$emit('toggle')"
+                 
+                    class=" text-gray-500 hover:text-primary focus:outline-none lg:hidden transition duration-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -340,7 +341,7 @@
 <script setup>
 import router from "../router";
 import store from "../store";
-import vClickOutside from 'v-click-outside';
+
 function logout() {
     store.dispatch("logout").then(() => {
         router.push({

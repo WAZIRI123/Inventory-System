@@ -1,12 +1,18 @@
 <template>
-    <aside :class="props.menuOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-        class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 bg-secondary overflow-y-auto lg:translate-x-0 lg:inset-0 custom-scrollbar translate-x-0 ease-out">
+    <aside :class="props.menuOpen ? 'translate-x-0 ease-out open' : '-translate-x-full ease-in'"
+        class=" sidebar fixed z-30 inset-y-0 left-0 w-64 transition duration-300 bg-secondary overflow-y-auto lg:translate-x-0 lg:inset-0 custom-scrollbar translate-x-0 ease-out">
         <!-- start::Logo -->
         <div class="flex items-center justify-center bg-black bg-opacity-30 h-16">
             <h1 class="text-gray-100 text-lg font-bold uppercase tracking-widest">
                 Inventory System
             </h1>
         </div>
+        <button v-if="props.menuOpen" @click="$emit('closeSideBar')" class=" bg-red-600 absolute top-0 right-0 m-0 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-100 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+          
         <!-- end::Logo -->
 
         <!-- start::Navigation -->
@@ -154,7 +160,7 @@
 
 
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed,defineEmits, onMounted,onUnmounted, ref} from "vue";
 import { useRouter } from "vue-router";
 import router from "../router";
 import store from "../store";
@@ -169,6 +175,7 @@ const props = defineProps({
     type: Boolean,
     default: true,
   }});
+  const emit = defineEmits(['closeSideBar']);
 function loggedUser() {
     store.dispatch("getLoggedUser").then((user) => {
         router.push({
@@ -190,6 +197,23 @@ function isActiveLink(linkName) {
    
       return useRouter().currentRoute.value.name=== linkName;
     }
+
+
+    const handleClickOutside = (event) => {
+      const sidebar = document.querySelector('.sidebar')
+      if ( sidebar && !sidebar.contains(event.target) && !event.target.classList.contains('openButton')) {
+
+        emit('closeSideBar')
+       
+      }
+    }
+
+    onMounted(() => {
+      document.addEventListener('click', handleClickOutside)
+    })
+    onUnmounted(() => {
+      document.removeEventListener('click', handleClickOutside);
+    });
    
 </script>
 

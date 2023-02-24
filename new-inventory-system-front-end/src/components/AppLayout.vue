@@ -17,9 +17,9 @@ function toggleMenuOpened() {
 
 <template>
 <div class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden hidden"></div>
-    <SideBar :menuOpen="menuOpen"/>
+    <SideBar :menuOpen="menuOpen" @closeSideBar="closeSidebar"/>
 <div class="lg:pl-64 w-full flex flex-col">
-    <NavBar @toggle="toggleMenuOpened" @closeSidebar="closeSidebar()"/>
+    <NavBar @toggle="toggleMenuOpened"/>
     <RouterView/>
 </div>
 </template>
