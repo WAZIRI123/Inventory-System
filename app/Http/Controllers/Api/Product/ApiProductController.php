@@ -19,7 +19,7 @@ class ApiProductController extends Controller
         $sortBy = $request->input('sortBy', 'id');
         $sortAsc = $request->input('sortAsc', true);
         $search = $request->query('search', '');
-        $perPage = $request->input('perPage', 15);
+        $perPage = $request->query('per_page', 15);
 
         $products = Product::query()
             ->with(['vendor', 'stockMutations'])
