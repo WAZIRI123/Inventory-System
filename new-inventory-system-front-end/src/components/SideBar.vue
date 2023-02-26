@@ -4,14 +4,16 @@
         <!-- start::Logo -->
         <div class="flex items-center justify-center bg-black bg-opacity-30 h-16">
             <h1 class="text-gray-100 text-lg font-bold uppercase tracking-widest">
-                Inventory System
+                
             </h1>
         </div>
         <button v-if="props.menuOpen" @click="$emit('closeSideBar')" class=" bg-red-600 absolute top-0 right-0 m-0 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-100 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
+            
           </button>
+          
           
         <!-- end::Logo -->
 
@@ -174,7 +176,12 @@ const props = defineProps({
     menuOpen: {
     type: Boolean,
     default: true,
-  }});
+  },
+  OpenButton: {
+    type: Object,
+   
+  }
+});
   const emit = defineEmits(['closeSideBar']);
 function loggedUser() {
     store.dispatch("getLoggedUser").then((user) => {
@@ -201,8 +208,7 @@ function isActiveLink(linkName) {
 
     const handleClickOutside = (event) => {
       const sidebar = document.querySelector('.sidebar')
-      if ( sidebar && !sidebar.contains(event.target) &&!sidebar.contains(event.target)) {
-
+      if ( sidebar && !props.OpenButton.contains(event.target) &&!sidebar.contains(event.target)) {
         emit('closeSideBar')
        
       }

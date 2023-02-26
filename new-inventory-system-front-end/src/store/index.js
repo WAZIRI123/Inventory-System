@@ -17,6 +17,7 @@ const store = createStore({
             limit: null,
             total: null
         },
+
         products: {
             loading: false,
             data: [],
@@ -106,6 +107,7 @@ const store = createStore({
                     commit('setproducts', [false])
                 })
         },
+
         getemployee({ commit }, id) {
             return axiosClient.get(`/employees/${id}`)
         },
