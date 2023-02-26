@@ -4,7 +4,7 @@
         <!-- start::Logo -->
         <div class="flex items-center justify-center bg-black bg-opacity-30 h-16">
             <h1 class="text-gray-100 text-lg font-bold uppercase tracking-widest">
-                
+                Inventory System 
             </h1>
         </div>
         <button v-if="props.menuOpen" @click="$emit('closeSideBar')" class=" bg-red-600 absolute top-0 right-0 m-0 cursor-pointer">
