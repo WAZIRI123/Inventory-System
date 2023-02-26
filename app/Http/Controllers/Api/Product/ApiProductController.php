@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\Vendor\VendorResource;
 use App\Models\Product;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ApiProductController extends Controller
 {
@@ -43,7 +47,9 @@ class ApiProductController extends Controller
      */
     public function create()
     {
-        //
+        $vendors = Vendor::orderBy('name')->get();
+
+        return VendorResource::collection($vendors);
     }
 
     /**
@@ -52,10 +58,27 @@ class ApiProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+
+        $validatedData = $request->validated();
+
+        $product = Product::create([
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'purchase_price' => $validatedData['purchase_price'],
+            'sale_price' => $validatedData['sale_price'],
+            'vendor_id' => $validatedData['vendor_id'],
+        ]);
+
+        $product->increaseStock($validatedData['quantity']);
+
+        return response()->json([
+            'success' => true,
+            'data' => ProductResource::collection($product),
+        ]);
     }
+
 
     /**
      * Display the specified resource.
