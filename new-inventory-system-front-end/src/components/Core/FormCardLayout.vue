@@ -4,16 +4,28 @@
         <!-- start:: Multiple Columns -->
         <div>
             <h4 class="text-xl capitalize">{{title}}</h4>
-           <slot></slot>
+           <slot :vendors="vendors"></slot>
         </div>
     </div>
     </div>
 </template>
 
 <script setup>
+    import {computed, onMounted, ref} from "vue";
+    import store from "../../store";
+    const vendors=ref([]);
+    onMounted(() => {
+        store.dispatch('getvendors')
+          .then(res => {
+         vendors.value=res.data.data
+          })
+    }) 
 const {title} = defineProps({
-  title: String
+  title: String,
+
 })
+
+
 </script>
 
 

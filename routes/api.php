@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/update',[ApiProfileController::class,'update']);
     Route::apiResource('employees', ApiEmployeeController::class);
 
+    Route::get('/create-product', [ApiProductController::class, 'create']);
+
     Route::apiResource('products', ApiProductController::class);
 
     Route::put('/password-update',[ApiPasswordController::class,'updatePassword']);
