@@ -29,6 +29,17 @@ const store = createStore({
             total: null
         },
 
+        vendors: {
+            loading: false,
+            data: [],
+            links: [],
+            from: null,
+            to: null,
+            page: 1,
+            limit: null,
+            total: null
+        },
+
         toast: {
             show: false,
             message: '',
@@ -111,7 +122,9 @@ const store = createStore({
         getemployee({ commit }, id) {
             return axiosClient.get(`/employees/${id}`)
         },
-
+        getvendors({ commit }) {
+            return axiosClient.get(`/create-product`)
+        },
         getproduct({ commit }, id) {
             return axiosClient.get(`/products/${id}`)
         },

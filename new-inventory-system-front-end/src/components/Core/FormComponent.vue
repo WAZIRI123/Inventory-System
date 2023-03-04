@@ -1,7 +1,7 @@
 <template>
     <div class="h-full bg-gray-200 p-8">
       <div v-if="employee.id" class="animate-fade-in-down">
-        <FormCardLayout :title="title">
+        <FormCardLayout :title="title" >
           <form @submit.prevent="onSubmit" class="mt-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <CustomInput
@@ -40,7 +40,7 @@
       </div>
   
       <div v-else class="animate-fade-in-down">
-        <FormCardLayout :title="title">
+        <FormCardLayout :title="title" v-slot="slotProps">
           <form @submit.prevent="onSubmit" class="mt-8">
             <Alert v-if="errorMsg">
               <li v-for="(error, index) in  errorMsg" :key="index">
@@ -68,12 +68,21 @@
               </span>
             </Alert>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+
               <CustomInput
                 v-model="employee.name"
                 label="Last Name"
                 :class="customInputClass"
               />
+              
               <CustomInput
+                v-model="employee.email"
+                label="Email"
+                :class="customInputClass"
+              />
+              <CustomInput
+              type="select"
+              :selectOptions="slotProps.vendors"
                 v-model="employee.email"
                 label="Email"
                 :class="customInputClass"
@@ -125,7 +134,10 @@ email:''
 const props = defineProps({
     updateAction: {
     type: String,
-  },
+  },  
+  vendors: {
+        required: true,
+      },
   getAction: {
     type: String,
   },
