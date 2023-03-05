@@ -1,8 +1,32 @@
 <template>
-    <FormComponent updateAction="updateproduct" redirectRoutName="product" getAction="getproduct" createAction="createproduct"/>
+  <FormComponent updateAction="updateproduct" 
+  :fields="fields"
+  :model="model"
+  submitLabel="Submit"
+  redirectRoutName="product" getAction="getproduct" createAction="createproduct">
+  <template #fields="{ fields, model }">
+    <div v-for="(field, index) in fields" :key="index">
+      <CustomInput
+      v-model="model[field.name]"
+      :label="field.label"
+      :type="field.type"
+      :class="customInputClass"
+    />
+      <p v-if="errors[field.name]" class="error">{{ errors[field.name][0] }}</p>
+    </div>
   </template>
-  <script setup>
-  import FormComponent from '../../components/Core/FormComponent.vue';
-  
-  
-  </script>
+</FormComponent>
+</template>
+<script setup>
+  import { ref} from "vue";
+import FormComponent from '../../components/Core/FormComponent.vue';
+import CustomInput from "../../components/CustomInput.vue";
+
+const fields = [
+        { name: 'name', label: 'Name', type: 'text', required: true },
+        { name: 'email', label: 'Email', type: 'text', required: true },
+      ]
+      const model = ref({ name: '' })
+      const errors = ref({})
+
+</script>
