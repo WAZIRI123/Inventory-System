@@ -1,19 +1,36 @@
 <template>
     <div class="h-full bg-gray-200 p-8">
-      <div v-if="employee.id" class="animate-fade-in-down">
-        <FormCardLayout :title="title" >
+      <div v-if="model.id" class="animate-fade-in-down">
+        <FormCardLayout :title="title" v-slot="slotProps" >
           <form @submit.prevent="onSubmit" class="mt-8">
+            <Alert v-if="errorMsg">
+              <li v-for="(error, index) in  errorMsg" :key="index">
+                {{ errorMsg[index][0]}} 
+              </li>
+  
+              <span
+                @click="errorMsg = ''"
+                class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </span>
+            </Alert>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <CustomInput
-                v-model="employee.name"
-                label="Last Name"
-                :class="customInputClass"
-              />
-              <CustomInput
-                v-model="employee.email"
-                label="Email"
-                :class="customInputClass"
-              />
+           <!---->              
+            <slot name="fields" :fields="fields" :model="model"></slot>
             </div>
   
             <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -26,7 +43,7 @@
                 class="mr-5"
                 @click="redirectToRoute"
               >
-                Submit
+              {{ submitLabel }}
               </Button>
   
               <RouterButton
@@ -68,25 +85,8 @@
               </span>
             </Alert>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <slot name="fields" :fields="fields" :model="model"></slot>
 
-              <CustomInput
-                v-model="employee.name"
-                label="Last Name"
-                :class="customInputClass"
-              />
-              
-              <CustomInput
-                v-model="employee.email"
-                label="Email"
-                :class="customInputClass"
-              />
-              <CustomInput
-              type="select"
-              :selectOptions="slotProps.vendors"
-                v-model="employee.email"
-                label="Email"
-                :class="customInputClass"
-              />
             </div>
             <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <Button
@@ -124,19 +124,25 @@
   const route = useRoute()
   
   const title = ref('');
-
+  const model = ref(props.model);
   const loading = ref(false);
-  const employee = ref({
-id:'',
-name:'',
-email:''
-});
+
 const props = defineProps({
     updateAction: {
     type: String,
-  },  
-  vendors: {
-        required: true,
+  }, 
+
+      fields: {
+        type: Array,
+        default: () => []
+      },
+      model: {
+        type: Object,
+        default: () => ({})
+      },
+      submitLabel: {
+        type: String,
+        default: 'Submit'
       },
   getAction: {
     type: String,
@@ -152,15 +158,15 @@ const props = defineProps({
 let errorMsg = ref("");
   function onSubmit() {
     loading.value = true
-    if (employee.value.id) {
-      store.dispatch(`${props.updateAction}`, employee.value)
+    if (model.value.id) {
+      store.dispatch(`${props.updateAction}`, model.value)
         .then(response => {
           loading.value = false;
           if (response.status === 200) {
             // TODO show notification
             store.dispatch(`${props.redirectRoutName}s`)
             router.push({name: `${props.redirectRoutName}`})
-            store.commit('showToast', `Employee  has been Updated successfully`)
+            store.commit('showToast', `model  has been Updated successfully`)
           }
         })
         .catch(err => {
@@ -169,7 +175,7 @@ let errorMsg = ref("");
         })
         
     } else {
-      store.dispatch(`${props.createAction}`, employee.value)
+      store.dispatch(`${props.createAction}`, model.value)
         .then(response => {
           loading.value = false;
           if (response.status === 201) {
@@ -189,8 +195,8 @@ let errorMsg = ref("");
     onMounted(() => {
       store.dispatch(`${props.getAction}`, route.params.id)
         .then(({data}) => {
-          title.value = `Update employee: "${data.data.name} ${data.data.email}"`
-          employee.value = data.data
+          title.value = `Update model: "${data.data.name} ${data.data.email}"`
+          model.value = data.data
        
         })
     })
