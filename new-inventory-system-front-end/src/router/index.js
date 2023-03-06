@@ -19,7 +19,6 @@ const router = createRouter({
 
             children: [
 
-
                 {
                     path: 'dashboard',
                     name: 'dashboard',

@@ -124,18 +124,18 @@
             </div>
                     <!-- end::Menu link -->
 
-                    <SingleSideLink  name="employee" title="employee" :class="{'bg-black bg-opacity-30':isActiveLink('employee')}">
+                    <SingleSideLink  name="employee" title="employee" :class="{'bg-black bg-opacity-30':$route.path=='/employee'||$route.path.startsWith('/employees/')}">
                         <HomeIcon />
                     </SingleSideLink>
 
-                    <SingleSideLink  name="product" title="product" :class="{'bg-black bg-opacity-30':isActiveLink('product')}">
+                    <SingleSideLink  name="product" title="product" :class="{'bg-black bg-opacity-30':$route.path=='/product'||$route.path.startsWith('/products/')}">
                         <HomeIcon />
                     </SingleSideLink>
         
                     <!-- start::Menu link -->
             <!-- end::Menu link -->
 
-            <SingleSideLink  name="profile" title="profile" :class="{'bg-black bg-opacity-30':isActiveLink('profile')}" :id=userId >
+            <SingleSideLink  name="profile" title="profile" :class="{'bg-black bg-opacity-30':$route.path==`/profile${userId}`||$route.path.startsWith('/profiles/')}" :id=userId >
                 <HomeIcon />
             </SingleSideLink>
 
