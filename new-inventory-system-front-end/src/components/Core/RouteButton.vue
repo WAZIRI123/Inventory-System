@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: 'employee' }" :class="classes" ref="buttonRef">
+    <router-link :to="{ name: `${props.to}` }" :class="classes" ref="buttonRef">
       {{ label }}
     </router-link>
   </template>
@@ -9,6 +9,9 @@
   disabled: {
     type: Boolean,
     default: false,
+  },
+  redirectRoutName: {
+    type: String,
   },
   to: {
         type: [String],
