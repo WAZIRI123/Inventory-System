@@ -47,7 +47,7 @@
               </Button>
   
               <RouterButton
-                :to="{ name: `${props.redirectRoutName}` }"
+                :to="props.redirectRoutName"
                 label="Cancel"
                 ref="cancelButton"
               />
