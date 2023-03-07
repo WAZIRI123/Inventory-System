@@ -13,13 +13,8 @@
 <script setup>
     import {computed, onMounted, ref} from "vue";
     import store from "../../store";
-    const vendors=ref([]);
-    onMounted(() => {
-        store.dispatch('getvendors')
-          .then(res => {
-         vendors.value=res.data.data
-          })
-    }) 
+   
+
 const {title} = defineProps({
   title: String,
 

@@ -6,11 +6,12 @@
         </span>
         <template v-if="type === 'select'">
           <select :name="name"
+                  :type="type"
                   :required="required"
                   :value="props.modelValue"
                   :class="inputClasses"
                   @change="onChange($event.target.value)">
-            <option v-for="option of selectOptions" :value="option.key">{{ option.text }}</option>
+            <option v-for="option of selectOptions" :value="option.id">{{ option.name }}</option>
             
           </select>
         </template>
@@ -59,7 +60,7 @@
   
   <script setup>
   
-  import {computed, ref} from "vue";
+  import {computed, onMounted, ref} from "vue";
   
   const props = defineProps({
     modelValue: [String, Number, File,Boolean],
@@ -106,6 +107,9 @@
     emit('update:modelValue', value)
     emit('change', value)
   }
+
+
+
   
   </script>
   

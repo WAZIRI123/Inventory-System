@@ -125,7 +125,6 @@ export function getUser({ commit }, id) {
     return axiosClient.get(`/profile/${id}`)
         .then(res => {
             commit('setUser', res.data.user)
-
         })
 }
 export function getDashboardData({ commit }) {
