@@ -8,6 +8,7 @@ use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Vendor\VendorResource;
 use App\Models\Product;
 use App\Models\Vendor;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -111,7 +112,31 @@ class ApiProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validatedData =$request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'quantity' => 'required|numeric',
+            'vendor_id' => 'required|exists:vendors,id'
+        ]);
+        
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'purchase_price' => $request->purchase_price,
+            'sale_price' => $request->sale_price,
+            'vendor_id' => $request->vendor_id,
+        ]);
+
+        $product->setStock($request->quantity);
+
+        return new JsonResponse([
+            'status' => 'success',
+            'message' => 'Record Updated Successfully',
+            'data' => new ProductResource($product),
+        ]);
+
     }
 
     /**

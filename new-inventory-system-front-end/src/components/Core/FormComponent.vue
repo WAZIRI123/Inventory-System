@@ -195,7 +195,7 @@ let errorMsg = ref("");
     onMounted(() => {
       store.dispatch(`${props.getAction}`, route.params.id)
         .then(({data}) => {
-          title.value = `Update model: "${data.data.name} ${data.data.email}"`
+          title.value = `Update model: "${data.data.name}"`
           model.value = data.data
        
         })

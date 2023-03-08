@@ -1,7 +1,6 @@
 <template>
   <FormComponent updateAction="updateproduct" 
   :fields="fields"
-  :model="model"
   submitLabel="Submit"
   redirectRoutName="product" getAction="getproduct" createAction="createproduct">
   <template #fields="{ fields, model }">
@@ -15,13 +14,13 @@
     />
 
     <CustomInput v-if="field.type==='select'"
-      v-model="model[field.vendor_id]"
+      v-model="model[field.name]"
       :label="field.label"
       :type="field.type"
       :selectOptions="vendors"
       :class="customInputClass"
     />
-      <p v-if="errors[field.vendor_id]" class="error">{{ errors[field.vendor_id][0] }}</p>
+    <p v-if="errors[field.name]" class="error">{{ errors[field.name][0] }}</p>
     </div>
   </template>
 </FormComponent>
@@ -35,8 +34,12 @@ import store from "../../store";
 const fields = [
         { name: 'name', label: 'Name', type: 'text', required: true },
         { name: 'vendor_id', label: 'Vendor', type: 'select', required: true },
+        { name: 'description', label: 'Description', type: 'text', required: true },
+        { name: 'purchase_price', label: 'Purchase_price', type: 'text', required: true },
+               { name: 'sale_price', label: 'Sale_price', type: 'text', required: true },
+
+               { name: 'quantity', label: 'Quantity', type: 'text', required: true },
       ]
-      const model = ref({ name: '' ,vendor_id:''})
       const errors = ref({})
       const vendors = ref([])
 

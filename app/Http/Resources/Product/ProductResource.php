@@ -21,7 +21,8 @@ class ProductResource extends JsonResource
             'purchase_price' => $this->purchase_price,
             'sale_price' => $this->sale_price,
             'description' => $this->description,
-            'email' => $this->vendor->name,
+            'quantity'    => $this->stock()
+           
         ];
     }
 }

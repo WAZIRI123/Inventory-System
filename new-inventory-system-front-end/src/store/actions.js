@@ -20,7 +20,9 @@ export function createproduct({ commit }, product) {
 export function updateemployee({ commit }, employee) {
     return axiosClient.put(`/employees/${employee.id}`, employee)
 }
-
+export function updateproduct({ commit }, product) {
+    return axiosClient.put(`/products/${product.id}`, product)
+}
 export function deleteemployee({ commit }, employee) {
     return axiosClient.delete(`/employees/${employee.id}`)
 }

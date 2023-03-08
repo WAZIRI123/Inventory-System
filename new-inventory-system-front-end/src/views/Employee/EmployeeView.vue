@@ -26,7 +26,7 @@ const fields = [
         { name: 'name', label: 'Name', type: 'text', required: true },
         { name: 'email', label: 'Email', type: 'text', required: true },
       ]
-      const model = ref({ name: '' })
+      
       const errors = ref({})
 
 </script>
