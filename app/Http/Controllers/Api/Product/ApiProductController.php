@@ -74,10 +74,7 @@ class ApiProductController extends Controller
 
         $product->increaseStock($validatedData['quantity']);
 
-        return response()->json([
-            'success' => true,
-            'data' => ProductResource::collection($product),
-        ]);
+        return response()->json(['message' => 'Record Created Successfully'], 201);
     }
 
 
@@ -147,6 +144,12 @@ class ApiProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+     
+    
+        $product->clearStock();
+        $product->delete();
+
+
+        return response()->json(['message' => 'Record Deleted Successfully'], 200);
     }
 }

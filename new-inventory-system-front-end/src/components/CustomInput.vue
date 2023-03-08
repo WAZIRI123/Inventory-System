@@ -108,9 +108,6 @@
     emit('change', value)
   }
 
-
-
-  
   </script>
   
   <style scoped>

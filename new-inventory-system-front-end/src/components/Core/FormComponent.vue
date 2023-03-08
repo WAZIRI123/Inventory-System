@@ -166,7 +166,7 @@ let errorMsg = ref("");
             // TODO show notification
             store.dispatch(`${props.redirectRoutName}s`)
             router.push({name: `${props.redirectRoutName}`})
-            store.commit('showToast', `model  has been Updated successfully`)
+            store.commit('showToast', `Record  has been Updated successfully`)
           }
         })
         .catch(err => {
@@ -182,6 +182,7 @@ let errorMsg = ref("");
             // TODO show notification
             store.dispatch(`${props.getAction}s`)
             router.push({name: `${props.redirectRoutName}`})
+            store.commit('showToast', `Record  has been reated successfully`)
           }
         })
         .catch(err => {
