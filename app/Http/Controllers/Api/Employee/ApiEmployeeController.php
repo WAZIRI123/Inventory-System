@@ -22,7 +22,6 @@ class ApiEmployeeController extends Controller
         $sortAsc = $request->query('sortAsc', true);
         $perPage = $request->query('per_page', 15);
         $search = $request->query('search', '');
-    
         $employees = Employee::with(['user'])
             ->whereHas('user',function($query) use ($search) {
                 if ($search) {

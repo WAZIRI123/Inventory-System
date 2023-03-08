@@ -103,11 +103,19 @@ const headers= ref(  [
       return
     }
     store.dispatch('deleteemployee', item)
-      .then(res => {
-        // TODO Show notification
-        store.dispatch('getemployees')
-        store.commit('showToast', `Employee  has been deleted successfully`)
-      })
+    .then(res => {
+  if (res.status === 401) { // check if user is unauthorized
+    // show error message to user
+    store.commit('showToast', 'You are not authorized to perform this action.')
+  } else if (res.status === 200) { // check if deletion is successful
+    // show success message to user
+    store.dispatch('getemployees')
+    store.commit('showToast', 'Employee has been deleted successfully.')
+  }
+}).catch(error => {
+  // show error message to user
+  store.commit('showToast', 'An error occurred while deleting the employee.')
+})
   }
   </script>
   
