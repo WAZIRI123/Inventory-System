@@ -110,6 +110,11 @@
             store.dispatch('getproducts')
             store.commit('showToast', `product  has been deleted successfully`)
           })
+          .catch(error => {
+    // TODO Handle error
+    console.error(error)
+    store.commit('showToast', `${error.message}`)
+  })
       }
       </script>
       

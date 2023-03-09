@@ -11,9 +11,11 @@ use App\Models\Vendor;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ApiProductController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      *
@@ -86,6 +88,8 @@ class ApiProductController extends Controller
      */
     public function show(Product $product)
     {
+        $this->authorize('update',$product);
+
         return new ProductResource($product);
     }
 
@@ -144,8 +148,11 @@ class ApiProductController extends Controller
      */
     public function destroy(Product $product)
     {
-     
-    
+        try {
+            $this->authorize('delete', $product);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         $product->clearStock();
         $product->delete();
 
