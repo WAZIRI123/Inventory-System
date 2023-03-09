@@ -13,7 +13,7 @@
 
                 <div class="mt-4">
                 <!-- start::Default Input -->
-               <CustomInput label="password" v-model="user.password" />
+               <CustomInput label="password" v-model="user.password" type="password" />
                 <!-- end::Default Input -->
                 <InputError :messages="errorMsg.password?errorMsg.password[0]:errorMsg.password"/>
                 </div>

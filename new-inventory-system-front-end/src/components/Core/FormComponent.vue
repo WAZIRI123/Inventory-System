@@ -3,34 +3,9 @@
       <div v-if="model.id" class="animate-fade-in-down">
         <FormCardLayout :title="title" v-slot="slotProps" >
           <form @submit.prevent="onSubmit" class="mt-8">
-            <Alert v-if="errorMsg">
-              <li v-for="(error, index) in  errorMsg" :key="index">
-                {{ errorMsg[index][0]}} 
-              </li>
-  
-              <span
-                @click="errorMsg = ''"
-                class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </span>
-            </Alert>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
            <!---->              
-            <slot name="fields" :fields="fields" :model="model"></slot>
+            <slot name="fields" :fields="fields" :model="model" :errorMsg="errorMsg"></slot>
             </div>
   
             <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -59,33 +34,9 @@
       <div v-else class="animate-fade-in-down">
         <FormCardLayout :title="title" v-slot="slotProps">
           <form @submit.prevent="onSubmit" class="mt-8">
-            <Alert v-if="errorMsg">
-              <li v-for="(error, index) in  errorMsg" :key="index">
-                {{ errorMsg[index][0]}} 
-              </li>
-  
-              <span
-                @click="errorMsg = ''"
-                class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </span>
-            </Alert>
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <slot name="fields" :fields="fields" :model="model"></slot>
+              <slot name="fields" :fields="fields" :model="model" :errorMsg="errorMsg"></slot>
 
             </div>
             <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

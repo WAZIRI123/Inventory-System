@@ -3,25 +3,30 @@
   :fields="fields"
   submitLabel="Submit"
   redirectRoutName="product" getAction="getproduct" createAction="createproduct">
-  <template #fields="{ fields, model }">
+  <template #fields="{ fields, model,errorMsg }">
     <div v-for="(field, index) in fields" :key="index">
 
-      <CustomInput v-if="field.type==='text'"
-      v-model="model[field.name]"
-      :label="field.label"
-      :type="field.type"
-      :class="customInputClass"
-    />
-
-    <CustomInput v-if="field.type==='select'"
-      v-model="model[field.name]"
-      :label="field.label"
-      :type="field.type"
-      :selectOptions="vendors"
-      :class="customInputClass"
-    />
-    <p v-if="errors[field.name]" class="error">{{ errors[field.name][0] }}</p>
-    </div>
+      <div class="mt-4">
+        <CustomInput v-if="field.type==='text'"
+        v-model="model[field.name]"
+        :label="field.label"
+        :type="field.type"
+        :class="customInputClass"
+            />
+            
+          </div>
+          <div class="mt-4">
+            <CustomInput v-if="field.type==='select'"
+            v-model="model[field.name]"
+            :label="field.label"
+            :type="field.type"
+            :selectOptions="vendors"
+            :class="customInputClass"
+            />
+            <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
+          </div>
+          
+        </div>
   </template>
 </FormComponent>
 </template>
@@ -29,6 +34,7 @@
   import {computed, onMounted, ref} from "vue";
 import FormComponent from '../../components/Core/FormComponent.vue';
 import CustomInput from "../../components/CustomInput.vue";
+import InputError from "../../components/InputError.vue";
 import store from "../../store";
 
 const fields = [
@@ -40,7 +46,6 @@ const fields = [
 
                { name: 'quantity', label: 'Quantity', type: 'text', required: true },
       ]
-      const errors = ref({})
       const vendors = ref([])
 
       onMounted(()=>store.dispatch('getvendors')
