@@ -148,11 +148,9 @@ class ApiProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        try {
-            $this->authorize('delete', $product);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+ 
+        $this->authorize('delete', $product);
+ 
         $product->clearStock();
         $product->delete();
 

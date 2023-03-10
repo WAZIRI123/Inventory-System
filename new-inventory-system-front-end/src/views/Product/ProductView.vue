@@ -6,7 +6,7 @@
   <template #fields="{ fields, model,errorMsg }">
     <div v-for="(field, index) in fields" :key="index">
 
-      <div class="mt-4">
+
         <CustomInput v-if="field.type==='text'"
         v-model="model[field.name]"
         :label="field.label"
@@ -14,8 +14,6 @@
         :class="customInputClass"
             />
             
-          </div>
-          <div class="mt-4">
             <CustomInput v-if="field.type==='select'"
             v-model="model[field.name]"
             :label="field.label"
@@ -24,7 +22,7 @@
             :class="customInputClass"
             />
             <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
-          </div>
+    
           
         </div>
   </template>

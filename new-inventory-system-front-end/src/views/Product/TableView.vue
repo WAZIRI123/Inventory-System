@@ -4,7 +4,7 @@
      getAction="getproduct"
      :createRoutName="createRoutName"
     >
-    <slot name="table-body">waziri</slot>
+    <slot name="table-body"></slot>
     <template v-slot:table-body>
       <tr v-for="(item, index) in data.data" :key="item.id">
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.id }}</td>
