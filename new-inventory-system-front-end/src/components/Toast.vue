@@ -45,8 +45,11 @@
 
   const percent = ref(0)
   
+
+
   const toast = computed(() => store.state.toast)
   watch(store.state.toast, (newToast) => {
+
     if (newToast.show) {
   
       if (interval) {

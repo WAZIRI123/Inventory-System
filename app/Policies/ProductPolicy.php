@@ -74,7 +74,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        if ($user->hasRole('Admins')) {
+        if ($user->hasRole('Admin')) {
             return true;
         }
     }

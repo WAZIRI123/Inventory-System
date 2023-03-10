@@ -109,7 +109,7 @@
  if (res.status === 200) { // check if deletion is successful
     // show success message to user
     store.dispatch('getemployees')
-    store.commit('showToast', 'Product has been deleted successfully.','')
+    store.commit('showToast', 'Product has been deleted successfully.','success')
   }
 }).catch(error => {
   if (error.response.status === 403) { // check if user is unauthorized

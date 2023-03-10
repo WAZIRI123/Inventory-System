@@ -13,7 +13,6 @@
         :type="field.type"
         :class="customInputClass"
             />
-            
             <CustomInput v-if="field.type==='select'"
             v-model="model[field.name]"
             :label="field.label"

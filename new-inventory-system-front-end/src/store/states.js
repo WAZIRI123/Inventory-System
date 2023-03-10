@@ -40,7 +40,7 @@ export default {
         show: false,
         message: '',
         delay: 5000,
-        type: 'success'
+        type: 'success',
     },
 
     dashboard: {

@@ -50,6 +50,8 @@ class ApiProductController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',[Product::class]);
+        
         $vendors = Vendor::orderBy('name')->get();
 
         return VendorResource::collection($vendors);
@@ -63,7 +65,7 @@ class ApiProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-
+        $this->authorize('create',[Product::class]);
         $validatedData = $request->validated();
 
         $product = Product::create([
