@@ -104,21 +104,22 @@
         if (!confirm(`Are you sure you want to delete the product?`)) {
           return
         }
-        store.dispatch('deleteproduct', item)
-        .then(res => {
+    store.dispatch('deleteproduct', item)
+   .then(res => {
  if (res.status === 200) { // check if deletion is successful
     // show success message to user
     store.dispatch('getemployees')
-    store.commit('showToast', 'Product has been deleted successfully.')
+    store.commit('showToast', 'Product has been deleted successfully.','')
   }
 }).catch(error => {
-  if (error.status === 403) { // check if user is unauthorized
+  if (error.response.status === 403) { // check if user is unauthorized
     // show error message to user
-    store.commit('showToast', 'You are not authorized to perform this action.')
+    store.commit('showToast', 'You are not authorized to perform this action.','danger')
   } 
+
   else{
 
-    store.commit('showToast', 'An error occurred while deleting the product.')
+    store.commit('showToast', 'An error occurred while deleting the product.','danger')
   }
   // show error message to user
 })

@@ -42,9 +42,11 @@ export function hideToast(state) {
     state.toast.message = '';
 }
 
-export function showToast(state, message) {
+export function showToast(state, message, type) {
     state.toast.show = true;
     state.toast.message = message;
+    state.toast.type = type;
+
 }
 
 export function setUser(state, user) {

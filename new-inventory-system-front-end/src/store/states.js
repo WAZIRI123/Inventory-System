@@ -39,7 +39,8 @@ export default {
     toast: {
         show: false,
         message: '',
-        delay: 5000
+        delay: 5000,
+        type: 'success'
     },
 
     dashboard: {

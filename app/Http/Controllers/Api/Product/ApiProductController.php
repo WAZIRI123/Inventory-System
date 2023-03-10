@@ -156,7 +156,6 @@ class ApiProductController extends Controller
         $product->clearStock();
         $product->delete();
 
-
         return response()->json(['message' => 'Record Deleted Successfully'], 200);
     }
 }
