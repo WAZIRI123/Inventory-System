@@ -109,17 +109,17 @@
  if (res.status === 200) { // check if deletion is successful
     // show success message to user
     store.dispatch('getemployees')
-    store.commit('showToast', 'Product has been deleted successfully.','success')
+    store.commit('showToast', {message:'Product has been deleted successfully.'})
   }
 }).catch(error => {
   if (error.response.status === 403) { // check if user is unauthorized
     // show error message to user
-    store.commit('showToast', 'You are not authorized to perform this action.','danger')
+    store.commit('showToast', {message:'You are not authorized to perform this action.',type:'danger'})
   } 
 
   else{
 
-    store.commit('showToast', 'An error occurred while deleting the product.','danger')
+    store.commit('showToast', {message:'An error occurred while deleting the product.',type:'danger'})
   }
   // show error message to user
 })

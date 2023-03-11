@@ -117,7 +117,7 @@ let errorMsg = ref("");
             // TODO show notification
             store.dispatch(`${props.redirectRoutName}s`)
             router.push({name: `${props.redirectRoutName}`})
-            store.commit('showToast', `Record  has been Updated successfully`)
+            store.commit('showToast',{message:'Record  has been Updated successfully'},)
           }
         })
         .catch(err => {

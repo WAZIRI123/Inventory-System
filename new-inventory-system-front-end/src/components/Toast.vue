@@ -3,9 +3,9 @@
       v-show="toast.show"
       class="fixed w-[400px] left-1/2 -ml-[200px] top-16 py-2 px-4 pb-4   text-white"
 
-      :class="[toast.type === 'success' ? 'bg-emerald-500' : 'bg-red-500']"
+      :class="[toast.type == 'success' ? 'bg-emerald-500' : 'bg-red-500']"
     >
-      <div class="font-semibold">{{ toast.message }}</div>
+      <div class="font-semibold">{{ toast.messages }}</div>
       <button
         @click="close"
         class="absolute flex items-center justify-center right-2 top-2 w-[30px] h-[30px] rounded-full hover:bg-black/10 transition-colors"
@@ -45,7 +45,6 @@
 
   const percent = ref(0)
   
-
 
   const toast = computed(() => store.state.toast)
   watch(store.state.toast, (newToast) => {
