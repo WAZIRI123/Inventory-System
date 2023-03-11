@@ -46,6 +46,15 @@ const router = createRouter({
                     component: () =>
                         import ("../views/Product/TableView.vue"),
                 },
+                {
+                    path: '/sale',
+                    name: 'sale',
+                    meta: {
+                        requiresAuth: true
+                    },
+                    component: () =>
+                        import ("../views/sale/TableView.vue"),
+                },
 
 
                 {

@@ -37,6 +37,23 @@ export function setemployees(state, [loading, data = null]) {
     state.employees.loading = loading;
 }
 
+export function setsales(state, [loading, data = null]) {
+
+    if (data) {
+        state.sales = {
+            ...state.sales,
+            data: data.data,
+            links: data.meta.links,
+            page: data.meta.current_page,
+            limit: data.meta.per_page,
+            from: data.meta.from,
+            to: data.meta.to,
+            total: data.meta.total,
+        }
+    }
+    state.sales.loading = loading;
+}
+
 export function hideToast(state) {
     state.toast.show = false;
     state.toast.message = '';

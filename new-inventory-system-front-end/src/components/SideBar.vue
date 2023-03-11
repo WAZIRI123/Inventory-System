@@ -131,6 +131,10 @@
                     <SingleSideLink  name="product" title="product" :class="{'bg-black bg-opacity-30':$route.path=='/product'||$route.path.startsWith('/products/')}">
                         <HomeIcon />
                     </SingleSideLink>
+
+                    <SingleSideLink  name="sale" title="sale" :class="{'bg-black bg-opacity-30':$route.path=='/sale'||$route.path.startsWith('/sales/')}">
+                        <HomeIcon />
+                    </SingleSideLink>
         
                     <!-- start::Menu link -->
             <!-- end::Menu link -->

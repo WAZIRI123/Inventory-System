@@ -25,6 +25,17 @@ export default {
         total: null
     },
 
+    sales: {
+        loading: false,
+        data: [],
+        links: [],
+        from: null,
+        to: null,
+        page: 1,
+        limit: null,
+        total: null
+    },
+
     vendors: {
         loading: false,
         data: [],
@@ -35,6 +46,7 @@ export default {
         limit: null,
         total: null
     },
+
 
     toast: {
         show: false,

@@ -54,6 +54,29 @@ export function getemployees({ commit, state }, { url = null, search = '', per_p
         })
 }
 
+export function getsales({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+    commit('setsales', [true])
+    url = url || '/sales'
+    const params = {
+        per_page: state.sales.limit,
+    }
+    return axiosClient.get(url, {
+            params: {
+                ...params,
+                search,
+                per_page,
+                sort_field,
+                sort_direction
+            }
+        })
+        .then((response) => {
+            commit('setsales', [false, response.data])
+        })
+        .catch(() => {
+            commit('setsales', [false])
+        })
+}
+
 export function getproducts({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
     commit('setproducts', [true])
     url = url || '/products'

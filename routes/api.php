@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\ApiPasswordResetLinkController;
 use App\Http\Controllers\Api\Auth\NewPasswordController;
 use App\Http\Controllers\Api\Employee\ApiEmployeeController;
 use App\Http\Controllers\Api\Product\ApiProductController;
+use App\Http\Controllers\Api\Sale\ApiSaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/create-product', [ApiProductController::class, 'create']);
 
     Route::apiResource('products', ApiProductController::class);
+
+    Route::apiResource('sales', ApiSaleController::class);
 
     Route::put('/password-update',[ApiPasswordController::class,'updatePassword']);
 });
