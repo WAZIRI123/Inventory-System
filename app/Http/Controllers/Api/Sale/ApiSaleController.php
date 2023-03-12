@@ -52,22 +52,22 @@ class ApiSaleController extends Controller
     public function store(StoreSaleRequest $request)
     {
         $itemCount = $request->input('itemCount', 1);
-        $item = $request->input('item');
+        $validatedData= $request->validated();
         $employeeId = auth()->user()->id;
     
         for ($i = 1; $i <= $itemCount; $i++) {
-            $product = Product::find($item[$i]['product_id']);
+            $product = Product::find($validatedData[$i]['product_id']);
     
-            if (!$product->inStock($item[$i]['quantity'])) {
-                return response()->json(['errors' => ['item' => ['The provided quantity exceeds the stock quantity.']]], 422);
+            if (!$product->inStock($validatedData[$i]['quantity'])) {
+                return response()->json(['message' => 'The provided quantity exceeds the stock quantity.'], 422);
             }
     
-            $product->decreaseStock($item[$i]['quantity']);
+            $product->decreaseStock($validatedData[$i]['quantity']);
     
             Sale::create([
                 'employee_id' => $employeeId,
-                'quantity' => $item[$i]['quantity'],
-                'product_id' => $item[$i]['product_id'],
+                'quantity' => $validatedData[$i]['quantity'],
+                'product_id' => $validatedData[$i]['product_id'],
             ]);
         }
     
