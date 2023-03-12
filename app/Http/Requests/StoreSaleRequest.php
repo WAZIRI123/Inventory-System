@@ -13,7 +13,7 @@ class StoreSaleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,14 @@ class StoreSaleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $itemCount = $this->input('itemCount', 1);
+        $rules = [];
+
+        for ($i = 1; $i <= $itemCount; $i++) {
+            $rules["item.{$i}.quantity"] = ['required', 'numeric', 'min:1'];
+            $rules["item.{$i}.product_id"] = ['required', 'exists:products,id'];
+        }
+
+        return $rules;
     }
 }

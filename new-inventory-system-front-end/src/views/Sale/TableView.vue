@@ -9,6 +9,7 @@
       <tr v-for="(item, index) in data.data" :key="item.id">
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.id }}</td>
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.product_name }}</td>
+        <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.quantity }}</td>
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index), 'py-3 pl-2 bg-gray-200': !isOdd(index)}">{{ item.employee_name }}</td>
   
         <td :class="{'py-3 pl-2 bg-gray-400': isOdd(index),'py-3 pl-2 bg-gray-200':!isOdd(index)}">
@@ -89,6 +90,7 @@
     const headers= ref(  [
           { field: 'id', label: 'Id' },
             { field: 'product_name', label: 'product name' },
+            { field: 'quantity', label: 'Quantity' },
             { field: 'employee_name', label: 'employee name' },
             { field: 'action', label: 'Action' }
           ]);
