@@ -1,27 +1,27 @@
 <template>
-  <FormComponent updateAction="updateproduct" 
+  <FormComponent updateAction="updatesale" 
   :fields="fields"
   submitLabel="Submit"
-  redirectRoutName="product" getAction="getproduct" createAction="createproduct">
+  redirectRoutName="sale" getAction="getsale" createAction="createsale">
   <template #fields="{ fields, model,errorMsg }">
     <div v-for="(field, index) in fields" :key="index">
-
-
         <CustomInput v-if="field.type==='text'"
         v-model="model[field.name]"
         :label="field.label"
         :type="field.type"
         :class="customInputClass"
             />
-            <CustomInput v-if="field.type==='select'"
-            v-model="model[field.name]"
-            :label="field.label"
-            :type="field.type"
-            :selectOptions="vendors"
-            :class="customInputClass"
-            />
-            <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
-    
+
+            <div v-if="field.type==='select'">
+              <CustomInput 
+              v-model="model[field.name]"
+              :label="field.label"
+              :type="field.type"
+              :selectOptions="vendors"
+              :class="customInputClass"
+              />
+              <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
+            </div>
           
         </div>
   </template>

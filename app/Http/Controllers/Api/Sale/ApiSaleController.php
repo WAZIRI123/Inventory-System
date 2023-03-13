@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Sale;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSaleRequest;
+use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Sales\SaleResource;
 use App\Models\Product;
 use App\Models\Sale;
@@ -40,7 +41,9 @@ class ApiSaleController extends Controller
      */
     public function create()
     {
-     //
+          $products = Product::orderBy('name')->get();
+
+        return ProductResource::collection( $products );
     }
 
     /**
