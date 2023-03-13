@@ -41,7 +41,7 @@ import store from "../../store";
 const fields = [
 
   { name: 'vendor_id', label: 'Vendor', type: 'select', required: true },
-  { name: 'quantity', label: 'Quantitys', type: 'text', required: true },
+  { name: 'quantity', label: 'Quantity', type: 'text', required: true },
 
       ]
       const vendors = ref([])
