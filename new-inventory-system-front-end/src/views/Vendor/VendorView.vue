@@ -38,8 +38,6 @@
 
           { name: 'contact_email', label: 'contact email', type: 'text', required: true },
           { name: 'contact_phone', label: 'contact_phone', type: 'text', required: true },
-                 { name: 'payment_terms', label: 'payment_terms', type: 'text', required: true },
-                 { name: 'quantity', label: 'Quantity', type: 'text', required: true },
         ]
      
   

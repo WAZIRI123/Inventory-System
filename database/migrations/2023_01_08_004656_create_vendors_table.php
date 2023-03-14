@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('contact_name');
             $table->string('contact_email');
             $table->string('contact_phone');
-            $table->string('payment_terms');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -133,7 +133,7 @@ let errorMsg = ref("");
             // TODO show notification
             store.dispatch(`${props.getAction}s`)
             router.push({name: `${props.redirectRoutName}`})
-            store.commit('showToast', `Record  has been reated successfully`)
+            store.commit('showToast', {message:'Record  has been created successfully'})
           }
         })
         .catch(err => {

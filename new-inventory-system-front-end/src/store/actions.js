@@ -55,6 +55,9 @@ export function deleteproduct({ commit }, product) {
     return axiosClient.delete(`/products/${product.id}`)
 }
 
+export function createvendor({ commit }, vendor) {
+    return axiosClient.post('/vendors', vendor)
+}
 
 export function getvendors({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
     commit('setvendors', [true])

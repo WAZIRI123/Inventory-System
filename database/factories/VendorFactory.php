@@ -18,10 +18,9 @@ class VendorFactory extends Factory
     {
         return [
             'name' => $this->faker->company,
-            'contact_name' => $this->faker->name,
             'contact_email' => $this->faker->email,
             'contact_phone' => $this->faker->phoneNumber,
-            'payment_terms' => 'Net 30',
+ 
         ];
     }
 }

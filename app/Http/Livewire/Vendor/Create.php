@@ -25,10 +25,10 @@ class Create extends Component
      */
     protected $rules = [
         'item.name' => '',
-        'item.contact_name' => '',
+  
         'item.contact_email' => '',
         'item.contact_phone' => '',
-        'item.payment_terms' => '',
+
     ];
 
     /**
@@ -36,10 +36,10 @@ class Create extends Component
      */
     protected $validationAttributes = [
         'item.name' => 'Name',
-        'item.contact_name' => 'Contact Name',
+
         'item.contact_email' => 'Contact Email',
         'item.contact_phone' => 'Contact Phone',
-        'item.payment_terms' => 'Payment Terms',
+   
     ];
 
     /**
@@ -94,11 +94,10 @@ class Create extends Component
     {
         $this->validate();
         $item = Vendor::create([
-            'name' => $this->item['name'] ?? '', 
-            'contact_name' => $this->item['contact_name'] ?? '', 
+            'name' => $this->item['name'] ?? '',  
             'contact_email' => $this->item['contact_email'] ?? '', 
             'contact_phone' => $this->item['contact_phone'] ?? '', 
-            'payment_terms' => $this->item['payment_terms'] ?? '', 
+            
         ]);
         $this->confirmingItemCreation = false;
         $this->emitTo('vendor.table', 'refresh');

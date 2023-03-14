@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Vendor\StoreVendorRequest;
 use App\Http\Resources\Vendor\VendorResource;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -50,9 +51,16 @@ class apiVendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreVendorRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        $item = Vendor::create([
+            'name' => $validatedData['name'],
+            'contact_email' => $validatedData['contact_email'],
+            'contact_phone' => $validatedData['contact_phone'],
+        ]);
+
+        return response()->json(['message' => 'Record Created Successfully'], 201);
     }
 
     /**
