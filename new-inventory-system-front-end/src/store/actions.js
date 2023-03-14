@@ -1,34 +1,15 @@
 import axiosClient from "../axios";
 
-//password-update
-export function saveUser({ commit }, user) {
-    return axiosClient.put('/update', user)
-        .then(({ data }) => {
-            commit('setUser', data.user);
-            return data;
-        })
-}
+
 
 export function createemployee({ commit }, employee) {
     return axiosClient.post('/employees', employee)
 }
-
-export function createproduct({ commit }, product) {
-    return axiosClient.post('/products', product)
-}
-
 export function updateemployee({ commit }, employee) {
     return axiosClient.put(`/employees/${employee.id}`, employee)
 }
-export function updateproduct({ commit }, product) {
-    return axiosClient.put(`/products/${product.id}`, product)
-}
 export function deleteemployee({ commit }, employee) {
     return axiosClient.delete(`/employees/${employee.id}`)
-}
-
-export function deleteproduct({ commit }, product) {
-    return axiosClient.delete(`/products/${product.id}`)
 }
 
 export function getemployees({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
@@ -52,6 +33,53 @@ export function getemployees({ commit, state }, { url = null, search = '', per_p
         .catch(() => {
             commit('setemployees', [false])
         })
+}
+export function getemployee({ commit }, id) {
+    return axiosClient.get(`/employees/${id}`)
+}
+
+export function createproduct({ commit }, product) {
+    return axiosClient.post('/products', product)
+}
+export function getproduct({ commit }, id) {
+    return axiosClient.get(`/products/${id}`)
+}
+
+
+export function updateproduct({ commit }, product) {
+    return axiosClient.put(`/products/${product.id}`, product)
+}
+
+
+export function deleteproduct({ commit }, product) {
+    return axiosClient.delete(`/products/${product.id}`)
+}
+
+
+export function getvendors({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+    commit('setvendors', [true])
+    url = url || '/vendors'
+    const params = {
+        per_page: state.vendors.limit,
+    }
+    return axiosClient.get(url, {
+            params: {
+                ...params,
+                search,
+                per_page,
+                sort_field,
+                sort_direction
+            }
+        })
+        .then((response) => {
+            commit('setvendors', [false, response.data])
+        })
+        .catch(() => {
+            commit('setvendors', [false])
+        })
+}
+export function getvendor({ commit }, id) {
+    return axiosClient.get(`/vendors/${id}`)
 }
 
 export function getsales({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
@@ -99,17 +127,19 @@ export function getproducts({ commit, state }, { url = null, search = '', per_pa
             commit('setproducts', [false])
         })
 }
-
-export function getemployee({ commit }, id) {
-    return axiosClient.get(`/employees/${id}`)
+export function getUser({ commit }, id) {
+    return axiosClient.get(`/profile/${id}`)
+        .then(res => {
+            commit('setUser', res.data.user)
+        })
 }
-
-export function getvendors({ commit }) {
-    return axiosClient.get(`/create-product`)
-}
-
-export function getproduct({ commit }, id) {
-    return axiosClient.get(`/products/${id}`)
+//password-update
+export function saveUser({ commit }, user) {
+    return axiosClient.put('/update', user)
+        .then(({ data }) => {
+            commit('setUser', data.user);
+            return data;
+        })
 }
 
 export function updatePassword({ commit }, user) {
@@ -146,12 +176,7 @@ export function logout({ commit }) {
             return response;
         })
 }
-export function getUser({ commit }, id) {
-    return axiosClient.get(`/profile/${id}`)
-        .then(res => {
-            commit('setUser', res.data.user)
-        })
-}
+
 export function getDashboardData({ commit }) {
     commit('dashboardLoading', true)
     return axiosClient.get(`/dashboard`)

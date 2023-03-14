@@ -28,15 +28,7 @@ const router = createRouter({
                     component: () =>
                         import ("../views/HomeView.vue"),
                 },
-                {
-                    path: '/employee',
-                    name: 'employee',
-                    meta: {
-                        requiresAuth: true
-                    },
-                    component: () =>
-                        import ("../views/Employee/TableView.vue"),
-                },
+
                 {
                     path: '/product',
                     name: 'product',
@@ -45,37 +37,6 @@ const router = createRouter({
                     },
                     component: () =>
                         import ("../views/Product/TableView.vue"),
-                },
-                {
-                    path: '/sale',
-                    name: 'sale',
-                    meta: {
-                        requiresAuth: true
-                    },
-                    component: () =>
-                        import ("../views/sale/TableView.vue"),
-                },
-
-
-                {
-                    path: 'employees/:id',
-                    name: 'employees.view',
-                    component: () =>
-                        import ("../views/Employee/EmployeeView.vue"),
-                },
-
-                {
-                    path: 'products/:id',
-                    name: 'products.view',
-                    component: () =>
-                        import ("../views/Product/ProductView.vue"),
-                },
-
-                {
-                    path: 'employees/create',
-                    name: 'employees.create',
-                    component: () =>
-                        import ("../views/Employee/EmployeeView.vue"),
                 },
 
                 {
@@ -86,10 +47,72 @@ const router = createRouter({
                 },
 
                 {
+                    path: 'products/:id',
+                    name: 'products.view',
+                    component: () =>
+                        import ("../views/Product/ProductView.vue"),
+                },
+
+                {
+                    path: '/sale',
+                    name: 'sale',
+                    meta: {
+                        requiresAuth: true
+                    },
+                    component: () =>
+                        import ("../views/sale/TableView.vue"),
+                },
+
+                {
                     path: 'sales/create',
                     name: 'sales.create',
                     component: () =>
                         import ("../views/sale/SaleView.vue"),
+                },
+                {
+                    path: '/employee',
+                    name: 'employee',
+                    meta: {
+                        requiresAuth: true
+                    },
+                    component: () =>
+                        import ("../views/Employee/TableView.vue"),
+                },
+                {
+                    path: 'employees/:id',
+                    name: 'employees.view',
+                    component: () =>
+                        import ("../views/Employee/EmployeeView.vue"),
+                },
+
+                {
+                    path: 'employees/create',
+                    name: 'employees.create',
+                    component: () =>
+                        import ("../views/Employee/EmployeeView.vue"),
+                },
+                {
+                    path: '/vendor',
+                    name: 'vendor',
+                    meta: {
+                        requiresAuth: true
+                    },
+                    component: () =>
+                        import ("../views/Vendor/TableView.vue"),
+                },
+                {
+                    path: 'vendors/create',
+                    name: 'vendors.create',
+                    component: () =>
+                        import ("../views/Vendor/VendorView.vue"),
+                },
+
+
+                {
+                    path: 'vendors/:id',
+                    name: 'vendors.view',
+                    component: () =>
+                        import ("../views/Vendor/VendorView.vue"),
                 },
 
 
