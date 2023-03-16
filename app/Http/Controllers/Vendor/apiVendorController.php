@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Vendor\StoreVendorRequest;
+use App\Http\Requests\Vendor\UpdateVendorRequest;
 use App\Http\Resources\Vendor\VendorResource;
 use App\Models\Vendor;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class apiVendorController extends Controller
@@ -93,9 +95,21 @@ class apiVendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateVendorRequest $request, Vendor $vendor)
     {
-        //
+        $validatedData = $request->validated();
+        $vendor->update([
+            'name' =>$validatedData['name'],
+            'contact_email' => $validatedData['contact_email'],
+            'contact_phone' => $validatedData['contact_phone'],
+        ]);
+
+        return new JsonResponse([
+            'status' => 'success',
+            'message' => 'Record Updated Successfully',
+            'data' => new VendorResource($vendor),
+        ]);
+
     }
 
     /**
