@@ -46,7 +46,7 @@ const fields = [
       ]
       const vendors = ref([])
 
-      let  itemCount = ref(2)
+      let  itemCount = ref(1)
 
     const decrementItemCount = () => {
       if (itemCount.value > 1) {

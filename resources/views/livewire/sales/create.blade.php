@@ -33,7 +33,6 @@
     <x-tall-crud-error-message>{{ session()->get('error.'.$i) }}</x-tall-crud-error-message>
     @endif
             </div>
-
                 <div class="mt-4">
                     <x-tall-crud-label>Product</x-tall-crud-label>
                     <x-tall-crud-select class="block mt-1 w-full" wire:model.defer="item.{{ $i }}.product_id" name="item[product_id][{{$i}}]" wire:key="item[product_id][{{$i}}]">
