@@ -60,7 +60,14 @@ const router = createRouter({
                         requiresAuth: true
                     },
                     component: () =>
-                        import ("../views/sale/TableView.vue"),
+                        import ("../views/Sale/TableView.vue"),
+                },
+
+                {
+                    path: 'sales/:id',
+                    name: 'sales.view',
+                    component: () =>
+                        import ("../views/Sale/SaleView.vue"),
                 },
 
                 {

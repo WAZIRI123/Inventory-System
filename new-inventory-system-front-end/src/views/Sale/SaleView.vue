@@ -18,7 +18,7 @@
                 v-model="model[field.name]"
                 :label="field.label"
                 :type="field.type"
-                :selectOptions="vendors"
+                :selectOptions="products"
                 :class="customInputClass"
                 />
                 <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
@@ -40,11 +40,11 @@ import store from "../../store";
 
 const fields = [
 
-  { name: 'vendor_id', label: 'Vendor', type: 'select', required: true },
+  { name: 'product_id', label: 'Product', type: 'select', required: true },
   { name: 'quantity', label: 'Quantity', type: 'text', required: true },
 
       ]
-      const vendors = ref([])
+      const products = ref([])
 
       let  itemCount = ref(1)
 
@@ -60,9 +60,11 @@ const fields = [
       
     }
 
-      onMounted(()=>store.dispatch('getvendors')
+      onMounted(()=>store.dispatch('getproducts')
           .then(res => {
-         vendors.value=res.data.data
+         products.value=res.data.data
+
+         console.log(products)
           }))
       
 </script>

@@ -86,6 +86,9 @@ export function getvendors({ commit, state }, { url = null, search = '', per_pag
 export function getvendor({ commit }, id) {
     return axiosClient.get(`/vendors/${id}`)
 }
+export function deletevendor({ commit }, vendor) {
+    return axiosClient.delete(`/vendors/${vendor.id}`)
+}
 
 export function getsales({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
     commit('setsales', [true])

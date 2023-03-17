@@ -89,9 +89,9 @@
     
     const headers= ref(  [
           { field: 'id', label: 'Id' },
-            { field: 'product_name', label: 'product name' },
+            { field: 'product_name', label: 'product' },
             { field: 'quantity', label: 'Quantity' },
-            { field: 'employee_name', label: 'employee name' },
+            { field: 'employee_name', label: 'employee' },
             { field: 'action', label: 'Action' }
           ]);
           const createRoutName= ref('/sales/create');
@@ -109,7 +109,7 @@
    .then(res => {
  if (res.status === 200) { // check if deletion is successful
     // show success message to user
-    store.dispatch('getemployees')
+    store.dispatch('getsales')
     store.commit('showToast', {message:'sale has been deleted successfully.'})
   }
 }).catch(error => {

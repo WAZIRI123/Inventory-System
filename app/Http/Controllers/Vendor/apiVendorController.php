@@ -118,8 +118,10 @@ class apiVendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Vendor $vendor)
     {
-        //
+        $vendor->delete();
+        
+        return response()->json(['message' => 'Record Deleted Successfully'], 200);
     }
 }
