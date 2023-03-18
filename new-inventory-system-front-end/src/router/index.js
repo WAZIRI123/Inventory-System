@@ -74,7 +74,7 @@ const router = createRouter({
                     path: 'sales/create',
                     name: 'sales.create',
                     component: () =>
-                        import ("../views/sale/SaleView.vue"),
+                        import ("../views/Sale/SaleView.vue"),
                 },
                 {
                     path: '/employee',

@@ -78,6 +78,7 @@ export function getvendors({ commit, state }, { url = null, search = '', per_pag
         })
         .then((response) => {
             commit('setvendors', [false, response.data])
+            return response
         })
         .catch(() => {
             commit('setvendors', [false])
@@ -130,6 +131,7 @@ export function getproducts({ commit, state }, { url = null, search = '', per_pa
         })
         .then((response) => {
             commit('setproducts', [false, response.data])
+            return response
         })
         .catch(() => {
             commit('setproducts', [false])

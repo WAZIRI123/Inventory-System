@@ -6,7 +6,7 @@
   <template #fields="{ fields, model,errorMsg }">
    
       <div v-for="(field, index) in fields" :key="index">
-        <div v-for="i in itemCount" :key="i">
+
           <CustomInput v-if="field.type==='text'"
           v-model="model[field.name]"
           :label="field.label"
@@ -26,7 +26,6 @@
 
         </div>
       
-          </div>
     
   </template>
 </FormComponent>
@@ -60,11 +59,11 @@ const fields = [
       
     }
 
-      onMounted(()=>store.dispatch('getproducts')
+      onMounted(()=>
+      store.dispatch('getproducts')
           .then(res => {
-         products.value=res.data.data
+            products.value=res.data.data
 
-         console.log(products)
           }))
       
 </script>
