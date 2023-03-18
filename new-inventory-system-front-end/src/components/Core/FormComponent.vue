@@ -51,6 +51,18 @@
               >
                 Submit
               </Button>
+
+              <Button
+              type="submit"
+              :disabled="loading"
+              :bgColor="buttonBgColor"
+              :bgColorHoverClass="buttonBgColorHoverClass"
+              :bgColorActiveClass="buttonBgColorActiveClass"
+              class="mr-5"
+              @click="addForm"
+            >
+              AddForm
+            </Button>
   
               <RouterButton
                 :to="props.redirectRoutName"
@@ -77,7 +89,7 @@
   const title = ref('');
   const model = ref(props.model);
   const loading = ref(false);
-
+const emit=defineEmits(['addForm'])
 const props = defineProps({
     updateAction: {
     type: String,

@@ -2,29 +2,34 @@
   <FormComponent updateAction="updatesale" 
   :fields="fields"
   submitLabel="Submit"
-  redirectRoutName="sale" getAction="getsale" createAction="createsale">
+  redirectRoutName="sale" getAction="getsale" createAction="createsale" @addForm="addForm">
   <template #fields="{ fields, model,errorMsg }">
    
       <div v-for="(field, index) in fields" :key="index">
+          
+         
 
-          <CustomInput v-if="field.type==='text'"
-          v-model="model[field.name]"
-          :label="field.label"
-          :type="field.type"
-          :class="customInputClass"
-              />
-              <div v-if="field.type==='select'">
-                <CustomInput
-                v-model="model[field.name]"
-                :label="field.label"
-                :type="field.type"
-                :selectOptions="products"
-                :class="customInputClass"
-                />
-                <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
-              </div>
+            <div class="mb-6">
+              <CustomInput v-if="field.type==='text'"
+              v-model="model[field.name]"
+              :label="field.label"
+              :type="field.type"
+              :class="customInputClass"
+                  />
+                  <div v-if="field.type==='select'">
+                    <CustomInput
+                    v-model="model[field.product_id]"
+                    :label="field.label"
+                    :type="field.type"
+                    :selectOptions="products"
+                    :class="customInputClass"
+                    />
+                    <InputError v-if="errorMsg[field.name] " :messages="errorMsg[field.name][0]?errorMsg[field.name][0]:errorMsg[field.name][0]"/>
+                  </div>
+            </div>
+          </div>
 
-        </div>
+
       
     
   </template>
@@ -45,13 +50,12 @@ const fields = [
       ]
       const products = ref([])
 
-      let  itemCount = ref(1)
+      let  itemCount = ref(2)
 
-    const decrementItemCount = () => {
-      if (itemCount.value > 1) {
-        itemCount.value--
-      }
-    }
+      const addForm = () => {
+        fields.value.push( { name: 'product_id', label: 'Product', type: 'select', required: true },
+  { name: 'quantity', label: 'Quantity', type: 'text', required: true });
+    };
 
     const incrementItemCount = () => {
 
