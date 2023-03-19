@@ -2,13 +2,14 @@
   <FormComponent updateAction="updatesale" 
   :fields="fields"
   submitLabel="Submit"
-  redirectRoutName="sale" getAction="getsale" createAction="createsale" @addForm="addForm">
+  @add-form="addForm()"
+
+  @remove-form="removeForm()"
+  redirectRoutName="sale" getAction="getsale" createAction="createsale">
   <template #fields="{ fields, model,errorMsg }">
    
       <div v-for="(field, index) in fields" :key="index">
-          
-         
-
+        
             <div class="mb-6">
               <CustomInput v-if="field.type==='text'"
               v-model="model[field.name]"
@@ -29,9 +30,6 @@
             </div>
           </div>
 
-
-      
-    
   </template>
 </FormComponent>
 </template>
@@ -52,10 +50,25 @@ const fields = [
 
       let  itemCount = ref(2)
 
-      const addForm = () => {
-        fields.value.push( { name: 'product_id', label: 'Product', type: 'select', required: true },
-  { name: 'quantity', label: 'Quantity', type: 'text', required: true });
-    };
+ 
+
+    function addForm(){
+      fields.push(
+        { name: 'product_id', label: 'Product', type: 'select', required: true },
+  { name: 'quantity', label: 'Quantity', type: 'text', required: true }
+  );
+    }
+
+    function removeForm(){
+      if (fields.length>2) {
+        
+        fields.splice(
+     -1,2)
+      }else{
+        alert('you can not remove all fields')
+      }
+    }
+
 
     const incrementItemCount = () => {
 

@@ -47,21 +47,30 @@
                 :bgColorHoverClass="buttonBgColorHoverClass"
                 :bgColorActiveClass="buttonBgColorActiveClass"
                 class="mr-5"
-                @click="redirectToRoute"
               >
                 Submit
               </Button>
 
               <Button
-              type="submit"
-              :disabled="loading"
+              
               :bgColor="buttonBgColor"
               :bgColorHoverClass="buttonBgColorHoverClass"
               :bgColorActiveClass="buttonBgColorActiveClass"
               class="mr-5"
-              @click="addForm"
+              @click="$emit('addForm')"
             >
               AddForm
+            </Button>
+
+                          <Button
+                       
+              :bgColor="buttonBgColor"
+              :bgColorHoverClass="buttonBgColorHoverClass"
+              :bgColorActiveClass="buttonBgColorActiveClass"
+              class="mr-5"
+              @click="$emit('removeForm')"
+            >
+              RemoveForm
             </Button>
   
               <RouterButton
@@ -169,5 +178,7 @@ let errorMsg = ref("");
       title.value = `Create ${props.redirectRoutName}`
     })
   }
+
+
   
   </script>
