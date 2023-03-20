@@ -216,14 +216,19 @@ function isActiveLink(linkName) {
 
     const handleClickOutside = (event) => {
       const sidebar = document.querySelector('.sidebar')
-      if ( sidebar && !props.OpenButton.contains(event.target) &&!sidebar.contains(event.target)) {
-        emit('closeSideBar')
-       
-      }
+ if (typeof props.OpenButton.contains === 'function') {
+    
+     if ( sidebar && !props.OpenButton.contains(event.target) &&!sidebar.contains(event.target)) {
+       emit('closeSideBar')
+   
+   }
+}
     }
 
     onMounted(() => {
+
       document.addEventListener('click', handleClickOutside)
+
     })
     onUnmounted(() => {
       document.removeEventListener('click', handleClickOutside);

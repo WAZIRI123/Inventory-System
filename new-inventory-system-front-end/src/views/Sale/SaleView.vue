@@ -53,10 +53,7 @@ const fields = [
  
 
     function addForm(){
-      fields.push(
-        { name: 'product_id', label: 'Product', type: 'select', required: true },
-  { name: 'quantity', label: 'Quantity', type: 'text', required: true }
-  );
+   alert('waziri')
     }
 
     function removeForm(){
