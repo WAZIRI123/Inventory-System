@@ -48,29 +48,17 @@
                 :bgColorActiveClass="buttonBgColorActiveClass"
                 class="mr-5"
               >
-                Submit
+                Save
               </Button>
 
               <Button
-              
+              type="submit"
               :bgColor="buttonBgColor"
               :bgColorHoverClass="buttonBgColorHoverClass"
               :bgColorActiveClass="buttonBgColorActiveClass"
               class="mr-5"
-              @click="$emit('addForm')"
             >
-              AddForm
-            </Button>
-
-                          <Button
-                       
-              :bgColor="buttonBgColor"
-              :bgColorHoverClass="buttonBgColorHoverClass"
-              :bgColorActiveClass="buttonBgColorActiveClass"
-              class="mr-5"
-              @click="$emit('removeForm')"
-            >
-              RemoveForm
+              Save&AddNew
             </Button>
   
               <RouterButton
@@ -98,7 +86,6 @@
   const title = ref('');
   const model = ref(props.model);
   const loading = ref(false);
-const emit=defineEmits(['addForm'])
 const props = defineProps({
     updateAction: {
     type: String,

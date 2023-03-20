@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
+use App\Rules\Stock\checkInStock;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSaleRequest extends FormRequest
@@ -23,14 +25,16 @@ class StoreSaleRequest extends FormRequest
      */
     public function rules()
     {
-        $itemCount = $this->input('itemCount', 1);
+   
         $rules = [];
 
-        for ($i = 1; $i <= $itemCount; $i++) {
-            $rules["item.{$i}.quantity"] = ['required', 'numeric', 'min:1'];
-            $rules["item.{$i}.product_id"] = ['required', 'exists:products,id'];
-        }
-
+        $productId = $this->input('product_id');
+        $rules["product_id"] = ['required', 'exists:products,id'];
+            $rules["quantity"] = ['required', 'numeric', 'min:1',new checkInStock($productId)];
+        
         return $rules;
     }
+
+  
+
 }
