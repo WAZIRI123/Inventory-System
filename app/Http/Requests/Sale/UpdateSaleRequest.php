@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Sale;
 
-use App\Rules\Stock\checkInStock;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSaleRequest extends FormRequest
@@ -14,7 +13,7 @@ class UpdateSaleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,14 +23,8 @@ class UpdateSaleRequest extends FormRequest
      */
     public function rules()
     {
-        $productId = $this->input('product_id');
         return [
-            'quantity' => [
-                'required',
-                'integer',
-                'min:1',
-                new checkInStock($productId)
-            ],
+            'quantity' => 'required|integer|min:1',
             'product_id' => 'required|exists:products,id',
             'employee_id' => 'required|exists:employees,id',
         ];
