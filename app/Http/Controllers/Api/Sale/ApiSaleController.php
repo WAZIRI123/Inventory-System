@@ -41,9 +41,9 @@ class ApiSaleController extends Controller
      */
     public function create()
     {
-          $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('name')->get();
 
-        return ProductResource::collection( $products );
+        return ProductResource::collection($products);
     }
 
     /**
@@ -68,7 +68,7 @@ class ApiSaleController extends Controller
             ]);
         
     
-        return response()->json(['message' => 'Record Added Successfully']);
+        return response()->json(['message' => 'Record Added Successfully'],201);
     }
 
     /**

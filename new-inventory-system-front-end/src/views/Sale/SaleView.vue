@@ -45,7 +45,7 @@ const fields = ref([
   const products = ref([])
 
       onMounted(()=>
-      store.dispatch('getproducts')
+      store.dispatch('getproductsForSale')
           .then(res => {
             products.value=res.data.data
 

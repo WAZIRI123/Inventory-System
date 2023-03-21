@@ -117,6 +117,10 @@ export function createsale({ commit }, sale) {
     return axiosClient.post('/sales', sale)
 }
 
+export function getproductsForSale({ commit }, sale) {
+    return axiosClient.get('/create-sale')
+}
+
 
 export function getproducts({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
     commit('setproducts', [true])

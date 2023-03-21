@@ -134,17 +134,21 @@ let errorMsg = ref("");
         })
         
     } else {
+    
       store.dispatch(`${props.createAction}`, model.value)
         .then(response => {
+         
           loading.value = false;
           if (response.status === 201) {
             // TODO show notification
+      
             store.dispatch(`${props.getAction}s`)
             router.push({name: `${props.redirectRoutName}`})
             store.commit('showToast', {message:'Record  has been created successfully'})
           }
         })
         .catch(err => {
+         
           loading.value = false;
           errorMsg.value = err.response.data.errors;
         })
