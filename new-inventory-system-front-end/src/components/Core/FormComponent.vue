@@ -34,7 +34,7 @@
     <div v-else class="animate-fade-in-down">
       <FormCardLayout :title="title" v-slot="slotProps">
         <form  class="mt-8">
-
+          <Toast/>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <slot name="fields" :fields="fields" :model="model" :errorMsg="errorMsg"></slot>
 
@@ -79,7 +79,7 @@ import store from "../../store";
 import {useRoute, useRouter} from "vue-router";
 import Button from "./Button.vue";
 import RouterButton from "./RouteButton.vue";
-import CustomInput from "../CustomInput.vue";
+import Toast from '../Toast.vue';
 import FormCardLayout from "../Core/FormCardLayout.vue";
 
 const router = useRouter();
