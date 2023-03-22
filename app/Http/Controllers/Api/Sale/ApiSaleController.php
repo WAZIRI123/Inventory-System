@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Sale;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSaleRequest;
+use App\Http\Requests\UpdateSaleRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Http\Resources\Sales\SaleResource;
 use App\Models\Product;
@@ -83,27 +84,39 @@ class ApiSaleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    
+        public function update(UpdateSaleRequest $request, $sale): JsonResponse
     {
-        //
+    
+        $product = Product::find($productId);
+        $oldQuantity = $request->input('old_quantity');
+    
+        $product->increaseStock($oldQuantity);
+    
+        if (!$product->inStock($request->input('quantity'))) {
+            $product->decreaseStock($oldQuantity);
+            return response()->json(['error' => 'The provided quantity exceeds the stock quantity.'], 422);
+        }
+    
+        $product->decreaseStock($request->input('quantity'));
+    
+      $sale = Sale::findOrFail($request->input('id'));
+      $sale->quantity = $request->input('quantity');
+      $sale->save();
+    
+        return new JsonResponse([
+            'status' => 'success',
+            'message' => 'Record Updated Successfully',
+            'data' => new SaleResource($sale),
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
