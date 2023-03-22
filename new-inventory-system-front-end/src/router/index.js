@@ -77,13 +77,13 @@ const router = createRouter({
                         import ("../views/Sale/SaleView.vue"),
                 },
                 {
-                    path: '/employee',
-                    name: 'employee',
+                    path: '/report',
+                    name: 'report',
                     meta: {
                         requiresAuth: true
                     },
                     component: () =>
-                        import ("../views/Employee/TableView.vue"),
+                        import ("../views/Report/GeneralReport.vue"),
                 },
                 {
                     path: 'employees/:id',
@@ -122,7 +122,15 @@ const router = createRouter({
                         import ("../views/Vendor/VendorView.vue"),
                 },
 
-
+                {
+                    path: '/employee',
+                    name: 'employee',
+                    meta: {
+                        requiresAuth: true
+                    },
+                    component: () =>
+                        import ("../views/Employee/TableView.vue"),
+                },
                 {
                     path: 'profile:id',
                     name: 'profile',
