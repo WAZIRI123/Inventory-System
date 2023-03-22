@@ -177,7 +177,12 @@ if (route.params.id) {
   onMounted(() => {
     store.dispatch(`${props.getAction}`, route.params.id)
       .then(({data}) => {
-        title.value = `Update model: "${data.data.name}"`
+        if (data.data.name) {
+          title.value = `Update model: "${data.data.name}"`
+        }
+        else{
+          title.value = `Update model: "${data.data.id}"`
+        }
         model.value = data.data
      
       })

@@ -78,9 +78,11 @@ class ApiSaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sale $sale)
     {
-        //
+
+        return new SaleResource($sale);
+    
     }
 
     /**
@@ -91,34 +93,41 @@ class ApiSaleController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-        public function update(UpdateSaleRequest $request, $sale): JsonResponse
-    {
-    
-        $product = Product::find($productId);
-        $oldQuantity = $request->input('old_quantity');
-    
-        $product->increaseStock($oldQuantity);
-    
-        if (!$product->inStock($request->input('quantity'))) {
-            $product->decreaseStock($oldQuantity);
-            return response()->json(['error' => 'The provided quantity exceeds the stock quantity.'], 422);
-        }
-    
-        $product->decreaseStock($request->input('quantity'));
-    
-      $sale = Sale::findOrFail($request->input('id'));
-      $sale->quantity = $request->input('quantity');
-      $sale->save();
-    
-        return new JsonResponse([
-            'status' => 'success',
-            'message' => 'Record Updated Successfully',
-            'data' => new SaleResource($sale),
-        ]);
-    }
+     public function update(UpdateSaleRequest $request, Sale $sale)
+     {
+
+         $oldQuantity = $sale->quantity;
+         $product = Product::find($request->input('product_id'));
+ 
+         $product->increaseStock($oldQuantity);
+ 
+         if (!$product->inStock($request->input('quantity'))) {
+             $product->decreaseStock($oldQuantity);
+ 
+             return response()->json([
+                'errors' => [
+                    'quantity' => ['The provided quantity exceeds the stock quantity.']
+                ]
+            ], 422);
+            
+         }
+ 
+         $product->decreaseStock($request->input('quantity'));
+ 
+         $sale->update([
+             'quantity' => $request->input('quantity'),
+             'product_id' => $request->input('product_id'),'employee_id'=>auth()->user()->id
+
+         ]);
+ 
+         return response()->json([
+             'message' => 'Record updated successfully.'
+         ]);
+     }
 
 
     /**
+     * {"message":"The provided quantity exceeds the stock quantity.","errors":{"quantity":["The provided quantity exceeds the stock quantity."]}}
      * Remove the specified resource from storage.
      *
      * @param  int  $id

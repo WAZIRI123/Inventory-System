@@ -37,9 +37,9 @@ import InputError from "../../components/InputError.vue";
 import store from "../../store";
 
 const fields = ref([
-
-{ name: 'product_id', label: 'Product', type: 'select', required: true },
 { name: 'quantity', label: 'Quantity', type: 'text', required: true },
+{ name: 'product_id', label: 'Product', type: 'select', required: true },
+
 
     ])    
   const products = ref([])

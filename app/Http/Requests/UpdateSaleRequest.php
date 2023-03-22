@@ -14,7 +14,7 @@ class UpdateSaleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,10 +30,9 @@ class UpdateSaleRequest extends FormRequest
                 'required',
                 'integer',
                 'min:1',
-                new checkInStock($productId)
             ],
             'product_id' => 'required|exists:products,id',
-            'employee_id' => 'required|exists:employees,id',
+            
         ];
     }
 }

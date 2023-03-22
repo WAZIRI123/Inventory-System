@@ -117,8 +117,16 @@ export function createsale({ commit }, sale) {
     return axiosClient.post('/sales', sale)
 }
 
+export function updatesale({ commit }, sale) {
+    return axiosClient.put(`/sales/${sale.id}`, sale)
+}
+
 export function getproductsForSale({ commit }, sale) {
     return axiosClient.get('/create-sale')
+}
+
+export function getsale({ commit }, id) {
+    return axiosClient.get(`/sales/${id}`)
 }
 
 
