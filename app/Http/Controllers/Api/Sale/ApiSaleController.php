@@ -133,8 +133,12 @@ class ApiSaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Sale $sale)
     {
-        //
+        $product = $sale->product()->first();
+        $sale->delete();
+        $product->increaseStock($sale->quantity);
+        
+        return response()->json(['message' => 'Record Deleted Successfully'], 200);
     }
 }
