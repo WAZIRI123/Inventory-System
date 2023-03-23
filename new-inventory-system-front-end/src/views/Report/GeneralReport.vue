@@ -1,7 +1,7 @@
 <template>
     <GeneralTableComponent state="sales"
      :headers="headers"
-     getAction="getsale"
+     getAction="getReport"
      :createRoutName="createRoutName"
     >
   

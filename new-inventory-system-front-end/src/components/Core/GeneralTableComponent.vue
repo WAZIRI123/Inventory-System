@@ -3,17 +3,20 @@
       <h4 class="text-xl font-semibold">{{ title }}</h4>
   
         
-              <div class="flex mb-2 w-1/3">
+              <div class="flex mb-2 xl:w-1/3 ">
                   <CustomInput
+                      type="date"
+                      label="From"
+                      v-model="dateFrom"
                       />
+                      
                   <CustomInput
-                      />
-                      <Button>report</Button>
+                  type="date" 
+                  label="to"
+                  v-model="dateTo"
+                  />
+                      <Button  @click.prevent="getitems()">report</Button>
               </div>  
-          
-                
-      
-    
   
       <table class="w-full my-0 whitespace-nowrap">
         <thead class="bg-secondary text-gray-100 font-bold">
@@ -93,6 +96,8 @@ import CustomInput from "../CustomInput.vue";
     const perPage = ref(EMPLOYEES_PER_PAGE);
     const search = ref('');
 
+    const dateRange = ref({dateFrom:'',dateTo:'',});
+
     const data = computed(() =>store.state[`${props.state}`]);
     const sortField = ref('updated_at');
     const sortDirection = ref('desc')
@@ -121,9 +126,6 @@ import CustomInput from "../CustomInput.vue";
     const router = useRouter();
     const emit = defineEmits(['clickEdit'])
     
-    onMounted(() => {
-      getitems();
-    }) 
     const props = defineProps({
     createNewLabel: {
     type: String,
@@ -178,6 +180,7 @@ state : {
       store.dispatch(`${props.getAction}s`, {
         url,
         search: search.value,
+    
         per_page: perPage.value,
         sort_field: sortField.value,
         sort_direction: sortDirection.value

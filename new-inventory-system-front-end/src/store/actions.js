@@ -129,6 +129,9 @@ export function getsale({ commit }, id) {
     return axiosClient.get(`/sales/${id}`)
 }
 
+export function getReports({ commit }) {
+    return axiosClient.get(`/sale-report`)
+}
 export function deletesale({ commit }, sale) {
     return axiosClient.delete(`/sales/${sale.id}`)
 }
