@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api\Report;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Sales\SaleResource;
 use App\Models\Sale;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class apiReportController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    
+    public function index(Request $request)
     {
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
@@ -21,11 +22,11 @@ class apiReportController extends Controller
             ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
             ->get();
 
-        return response()->json($results);
+        return SaleResource::collection($results);
     }
 
 
-    public function print(Request $request): JsonResponse
+    public function print(Request $request)
     {
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
