@@ -12,8 +12,8 @@ class apiReportController extends Controller
     
     public function index(Request $request)
     {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $startDate = $request->input('dateFrom');
+        $endDate = $request->input('dateTo');
         $sortBy = $request->input('sort_by', 'id');
         $sortAsc = $request->input('sort_asc', true);
 

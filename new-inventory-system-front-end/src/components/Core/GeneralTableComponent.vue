@@ -96,7 +96,8 @@ import CustomInput from "../CustomInput.vue";
     const perPage = ref(EMPLOYEES_PER_PAGE);
     const search = ref('');
 
-    const dateRange = ref({dateFrom:'',dateTo:'',});
+    const dateFrom= ref('');
+    const dateTo= ref('');
 
     const data = computed(() =>store.state[`${props.state}`]);
     const sortField = ref('updated_at');
@@ -180,7 +181,8 @@ state : {
       store.dispatch(`${props.getAction}s`, {
         url,
         search: search.value,
-    
+        dateFrom:dateFrom.value,
+        dateTo:dateTo.value,
         per_page: perPage.value,
         sort_field: sortField.value,
         sort_direction: sortDirection.value

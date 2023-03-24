@@ -129,8 +129,18 @@ export function getsale({ commit }, id) {
     return axiosClient.get(`/sales/${id}`)
 }
 
-export function getReports({ commit }) {
-    return axiosClient.get(`/sale-report`)
+export function getReports({ commit }, { url = null, search = '', per_page, sort_field, sort_direction, dateFrom, dateTo }) {
+    return axiosClient.get(`/sale-report`, {
+        params: {
+            search,
+            per_page,
+            sort_field,
+            sort_direction,
+            dateFrom,
+            dateTo
+        }
+
+    })
 }
 export function deletesale({ commit }, sale) {
     return axiosClient.delete(`/sales/${sale.id}`)

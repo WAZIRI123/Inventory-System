@@ -100,7 +100,7 @@ import GeneralTableComponent from "../../components/Core/GeneralTableComponent.v
           function isOdd(index) {
           return index % 2 !== 0
         }
-    
+   
         function deleteitem(item) {
         if (!confirm(`Are you sure you want to delete the sale?`)) {
           return
