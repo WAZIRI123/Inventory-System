@@ -71,6 +71,8 @@ export function setsales(state, [loading, data = null]) {
     state.sales.loading = loading;
 }
 
+
+
 export function hideToast(state) {
     state.toast.show = false;
     state.toast.message = '';

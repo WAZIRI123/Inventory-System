@@ -16,12 +16,11 @@ class apiReportController extends Controller
         $endDate = $request->input('dateTo');
         $sortBy = $request->input('sort_by', 'id');
         $sortAsc = $request->input('sort_asc', true);
-
-        $results = Sale::with(['employee', 'product', 'employee.user'])
+        $perPage = $request->get('perPage', 15);
+        $query = Sale::with(['employee', 'product', 'employee.user'])
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC')
-            ->get();
-
+            ->orderBy($sortBy, $sortAsc ? 'ASC' : 'DESC');
+            $results = $query->paginate($perPage);
         return SaleResource::collection($results);
     }
 

@@ -97,6 +97,7 @@ import GeneralTableComponent from "../../components/Core/GeneralTableComponent.v
           const createRoutName= ref('/sales/create');
     
           const data = computed(() =>store.state.sales) 
+      
           function isOdd(index) {
           return index % 2 !== 0
         }
@@ -125,6 +126,18 @@ import GeneralTableComponent from "../../components/Core/GeneralTableComponent.v
   // show error message to user
 })
       }
+      onMounted(()=>{
+        store.state.sales={
+        loading: false,
+        data: [],
+        links: [],
+        from: null,
+        to: null,
+        page: 1,
+        limit: null,
+        total: null
+    }
+      })
       </script>
       
       <style scoped>

@@ -108,6 +108,7 @@ export function getsales({ commit, state }, { url = null, search = '', per_page,
         })
         .then((response) => {
             commit('setsales', [false, response.data])
+
         })
         .catch(() => {
             commit('setsales', [false])
@@ -129,18 +130,34 @@ export function getsale({ commit }, id) {
     return axiosClient.get(`/sales/${id}`)
 }
 
-export function getReports({ commit }, { url = null, search = '', per_page, sort_field, sort_direction, dateFrom, dateTo }) {
+export function getReports({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction, dateFrom, dateTo }) {
+    commit('setsales', [true])
+    const params = {
+        per_page: state.products.limit,
+    }
     return axiosClient.get(`/sale-report`, {
-        params: {
-            search,
-            per_page,
-            sort_field,
-            sort_direction,
-            dateFrom,
-            dateTo
-        }
+            params: {
+                ...params,
+                search,
+                per_page,
+                sort_field,
+                sort_direction,
+                dateFrom,
+                dateTo
+            }
 
-    })
+        })
+        .then((response) => {
+
+            commit('setsales', [false, response.data])
+
+            return response
+
+        })
+        .catch(() => {
+            commit('setsales', [false])
+        })
+
 }
 export function deletesale({ commit }, sale) {
     return axiosClient.delete(`/sales/${sale.id}`)
