@@ -164,7 +164,6 @@ state : {
       if (!link.url || link.active) {
         return;
       }
-    
       getitems(link.url)
     }
    function sortItems (field) {
@@ -176,7 +175,6 @@ state : {
       }
     }
 
-    
     function getitems(url = null) {
       store.dispatch(`${props.getAction}s`, {
         url,

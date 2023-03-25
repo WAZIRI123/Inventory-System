@@ -132,10 +132,11 @@ export function getsale({ commit }, id) {
 
 export function getReports({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction, dateFrom, dateTo }) {
     commit('setsales', [true])
+    url = url || '/sale-report'
     const params = {
         per_page: state.products.limit,
     }
-    return axiosClient.get(`/sale-report`, {
+    return axiosClient.get(url, {
             params: {
                 ...params,
                 search,
