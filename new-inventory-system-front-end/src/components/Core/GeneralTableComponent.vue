@@ -3,20 +3,23 @@
       <h4 class="text-xl font-semibold">{{ title }}</h4>
   
         
-              <div class="flex mb-2 xl:w-1/3 ">
-                  <CustomInput
-                      type="date"
-                      label="From"
-                      v-model="dateFrom"
-                      />
-                      
-                  <CustomInput
-                  type="date" 
-                  label="to"
-                  v-model="dateTo"
-                  />
-                      <Button  @click.prevent="getitems()">report</Button>
-              </div>  
+              <div class="flex justify-between items-center">
+                <div class="flex mb-2 xl:w-1/3 ">
+                    <CustomInput
+                        type="date"
+                        label="From"
+                        v-model="dateFrom"
+                        />
+                
+                    <CustomInput
+                    type="date"
+                    label="to"
+                    v-model="dateTo"
+                    />
+                        <Button  @click.prevent="getitems()">report</Button>
+                </div>
+                <Button  @click.prevent="getitems()">print</Button>
+              </div>
   
       <table class="w-full my-0 whitespace-nowrap">
         <thead class="bg-secondary text-gray-100 font-bold">
