@@ -4,7 +4,7 @@
   
         
               <div class="flex justify-between items-center">
-                <div class="flex mb-2 xl:w-1/3 ">
+                <div class="flex mb-2 w-60  xl:w-1/3 ">
                     <CustomInput
                         type="date"
                         label="From"
