@@ -12,13 +12,14 @@
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.12",
         "@heroicons/vue": "^1.0.6",
         "axios": "^1.2.5",
-        "html2pdf.js": "^0.10.1",
-        "jspdf": "^2.5.1",
+
+
         "v-click-outside": "^3.2.0",
         "vue": "^3.2.45",
-        "vue-html2pdf": "^1.8.0",
+
         "vue-router": "^4.1.6",
         "vuex": "^4.1.0"
     },
