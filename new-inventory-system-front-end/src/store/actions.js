@@ -114,6 +114,22 @@ export function getsales({ commit, state }, { url = null, search = '', per_page,
             commit('setsales', [false])
         })
 }
+
+export function saleReport({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction, dateFrom, dateTo } = {}) {
+
+
+    return axiosClient.get('/print-sale-report', {
+        params: {
+            search,
+            per_page,
+            sort_field,
+            sort_direction,
+            dateFrom,
+            dateTo
+        }
+    })
+
+}
 export function createsale({ commit }, sale) {
     return axiosClient.post('/sales', sale)
 }

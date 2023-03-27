@@ -18,26 +18,10 @@
                     />
                         <Button  @click.prevent="getitems()">report</Button>
                 </div>
-                <Button  @click.prevent="generateReport">print</Button>
+                <Button  @click.prevent="generatePdf">print</Button>
               </div>
-      <vue-html2pdf
-      :show-layout="false"
-      :float-layout="true"
-      :enable-download="true"
-      :preview-modal="true"
-      :paginate-elements-by-height="1400"
-      filename="report.pdf"
-      :pdf-quality="2"
-      :manual-pagination="false"
-      pdf-format="a4"
-      pdf-orientation="landscape"
-      pdf-content-width="800px"
-      @progress="onProgress"
-      @hasStartedGeneration="onStartedGeneration"
-      @hasGenerated="onGenerated"
-      ref="html2Pdf"
-    >
-    <section slot="pdf-content">
+
+ 
       <table class="w-full my-0 whitespace-nowrap">
         <thead class="bg-secondary text-gray-100 font-bold">
           <Toast/>
@@ -63,8 +47,6 @@
           <slot name="table-body"></slot>
         </tbody>
       </table>
-      </section>
-       </vue-html2pdf>
       <div v-if="!data.loading" class="sm:flex justify-center sm:justify-between items-center mt-5 text-center">
         <div v-if="data.data.length" class="mb-3">
           Showing from {{ data.from }} to {{ data.to }}
@@ -104,7 +86,7 @@
     import store from "../../store";
     import Toast from '../Toast.vue';
     import {EMPLOYEES_PER_PAGE} from "../../constants";
-   import VueHtml2pdf from 'vue-html2pdf';
+
     import TableHeaderCell from "./TableHeaderCell.vue";
     import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
     import {DotsVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/outline'
@@ -209,6 +191,18 @@ state : {
       });
 
     }
+
+    function generatePdf(url = null) {
+      store.dispatch(`saleReport`, {
+        url,
+        search: search.value,
+        dateFrom:dateFrom.value,
+        dateTo:dateTo.value,
+        sort_field: sortField.value,
+        sort_direction: sortDirection.value
+      });
+
+    }
     
     function sortemployees(field) {
       if (field === sortField.value) {
@@ -233,33 +227,9 @@ state : {
       return index % 2 !== 0
     }
     
-
-  
   const createNew = () => {
     router.push(`${props.createRoutName}`); // replace with the actual route you want to navigate to
   };
-
-  function  generateReport() {
-      // Call the generatePdf method of the vue-html2pdf component
-      this.$refs.html2Pdf.generatePdf();
-    }
-
-   function onProgress(progress) {
-      // Handle the progress event
-      console.log(`PDF generation progress: ${progress}%`);
-    }
-   function onStartedGeneration() {
-      // Handle the hasStartedGeneration event
-      console.log('PDF generation started');
-    }
-
-    function    onGenerated(pdf) {
-      // Handle the hasGenerated event
-      console.log('PDF generation completed');
-      // Create a URL for the generated PDF and open it in a new window
-      const url = window.URL.createObjectURL(new Blob([pdf]));
-      window.open(url, '_blank');
-    }
 
     </script>
     

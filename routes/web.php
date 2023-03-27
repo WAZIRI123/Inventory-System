@@ -21,7 +21,6 @@ Route::redirect('/', '/login');
 
 Route::get('/dashboards', function () {
     $results=session()->get('results');
-
     return PrintService::createPdfFromView('result.pdf', 'livewire.reports.sales-pdf', ['results' => $results]);
 
 })->middleware(['auth'])->name('sale-reports');

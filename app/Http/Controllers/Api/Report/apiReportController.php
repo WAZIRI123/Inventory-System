@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Report;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sales\SaleResource;
 use App\Models\Sale;
+use App\Services\Print\PrintService;
 use Illuminate\Http\Request;
 
 class apiReportController extends Controller
@@ -27,8 +28,8 @@ class apiReportController extends Controller
 
     public function print(Request $request)
     {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $startDate = $request->input('dateFrom');
+        $endDate = $request->input('dateTo');
         $sortBy = $request->input('sort_by', 'id');
         $sortAsc = $request->input('sort_asc', true);
 
@@ -39,9 +40,9 @@ class apiReportController extends Controller
 
         // Store results in session
         session()->put('results', $results);
-
+        $results=session()->get('results');
         // Return response
-        return response()->json(['message' => 'Results stored in session']);
+        return PrintService::createPdfFromView('result.pdf', 'livewire.reports.sales-pdf', ['results' => $results]);
     }
 
 }
