@@ -118,16 +118,24 @@ export function getsales({ commit, state }, { url = null, search = '', per_page,
 export function saleReport({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction, dateFrom, dateTo } = {}) {
 
 
-    return axiosClient.get('/print-sale-report', {
+     axiosClient.get('/print-sale-report', {
         params: {
             search,
             per_page,
             sort_field,
             sort_direction,
             dateFrom,
-            dateTo
-        }
-    })
+            dateTo,
+            
+        },responseType: 'blob',
+    }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.pdf');
+        document.body.appendChild(link);
+        link.click();
+      });
 
 }
 export function createsale({ commit }, sale) {
