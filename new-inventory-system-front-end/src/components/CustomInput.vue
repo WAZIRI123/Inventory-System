@@ -1,7 +1,7 @@
 <template>
       <label class="sr-only" :for="label">{{ label }}</label>
         <span v-if="prepend"
-              class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+              class="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
           {{ prepend }}
         </span>
         <template v-if="type === 'select'">
@@ -39,8 +39,8 @@
                  :checked="props.modelValue"
                  :required="required"
                  @change="emit('update:modelValue', $event.target.checked)"
-                 class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
-                 <label :for="id" class="ml-2  text-sm text-gray-900"> {{ label }} </label>
+                 class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"/>
+                 <label :for="id" class="ml-2 text-sm text-gray-900"> {{ label }} </label>
         </template>
         <template v-else>
           <input :type="type"
@@ -53,7 +53,7 @@
                  step="0.01"/>
         </template>
         <span v-if="append"
-              class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+              class="inline-flex items-center px-3 border border-l-0 border-gray-300 ml- mtext-gray-500 mtext-sm rounded-r-md bg-gray-50">
           {{ append }}
         </span>
   </template>
@@ -89,7 +89,7 @@
   })
   const inputClasses = computed(() => {
     const cls = [
-      `border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full`,
+      `border-gray-300 dark:border-gray-700 ml-2 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full`,
     ];
   
     if (props.append && !props.prepend) {

@@ -1,10 +1,10 @@
 <template>
-    <div class="bg-white rounded-lg px-8 py-0 overflow-x-scroll custom-scrollbar">
+    <div class="px-8 py-0 overflow-x-scroll bg-white rounded-lg custom-scrollbar">
       <h4 class="text-xl font-semibold">{{ title }}</h4>
   
         
-              <div class="flex justify-between items-center">
-                <div class="flex mb-2 w-60  xl:w-1/3 ">
+              <div class="flex items-center justify-between">
+                <div class="flex mb-2 w-60 sm:w-1/2 ">
                     <CustomInput
                         type="date"
                         label="From"
@@ -23,7 +23,7 @@
 
  
       <table class="w-full my-0 whitespace-nowrap">
-        <thead class="bg-secondary text-gray-100 font-bold">
+        <thead class="font-bold text-gray-100 bg-secondary">
           <Toast/>
           <tr>
             <TableHeaderCell v-for="header in props.headers" :key="header.field"
@@ -35,7 +35,7 @@
         </thead>
   
         <tbody class="text-sm" v-if="data.loading || !data.data.length">
-          <tr class="bg-gray-100 hover:bg-primary hover:bg-opacity-20 transition duration-200">
+          <tr class="transition duration-200 bg-gray-100 hover:bg-primary hover:bg-opacity-20">
             <td :colspan="headers.length" class="py-8 text-center text-gray-700">
               <Spinner v-if="data.loading"/>
               <p v-else>{{ noResultsLabel }}</p>
@@ -47,14 +47,14 @@
           <slot name="table-body"></slot>
         </tbody>
       </table>
-      <div v-if="!data.loading" class="sm:flex justify-center sm:justify-between items-center mt-5 text-center">
+      <div v-if="!data.loading" class="items-center justify-center mt-5 text-center sm:flex sm:justify-between">
         <div v-if="data.data.length" class="mb-3">
           Showing from {{ data.from }} to {{ data.to }}
         </div>
   
         <nav
         v-if="data.total > data.limit"
-        class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
+        class="relative z-0 inline-flex justify-center -space-x-px rounded-md shadow-sm"
         aria-label="Pagination"
       >
       <a
@@ -64,7 +64,7 @@
       href="#"
       @click="getForPage($event, link)"
       aria-current="page"
-      class="relative inline-flex items-center px-4 py-2 border text-sm font-medium whitespace-nowrap"
+      class="relative inline-flex items-center px-4 py-2 text-sm font-medium border whitespace-nowrap"
       :class="[
           link.active
             ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'

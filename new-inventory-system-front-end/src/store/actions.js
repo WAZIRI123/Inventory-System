@@ -1,7 +1,5 @@
 import axiosClient from "../axios";
 
-
-
 export function createemployee({ commit }, employee) {
     return axiosClient.post('/employees', employee)
 }
