@@ -1,6 +1,6 @@
 <template>
   <button :type="type"
-    :class="`inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white  tracking-widest ${bgColorClass} hover:${bgColorHoverClass} active:${bgColorActiveClass} focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm`
+    :class="`inline-flex items-center  px-4 py-2 mb-2 border border-transparent rounded-md font-semibold text-xs text-white  tracking-widest ${bgColorClass} hover:${bgColorHoverClass} active:${bgColorActiveClass} focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm`
     "
     :disabled="props.disabled"
   >

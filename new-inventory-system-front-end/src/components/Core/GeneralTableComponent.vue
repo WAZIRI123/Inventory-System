@@ -3,23 +3,30 @@
       <h4 class="text-xl font-semibold">{{ title }}</h4>
   
         
-              <div class="flex items-center justify-between">
-                <div class="flex mb-2 w-60 sm:w-1/2 ">
-                    <CustomInput
-                        type="date"
-                        label="From"
-                        v-model="dateFrom"
-                        />
-                
-                    <CustomInput
-                    type="date"
-                    label="to"
-                    v-model="dateTo"
-                    />
-                        <Button  @click.prevent="getitems()">report</Button>
-                </div>
-                <Button  @click.prevent="generatePdf">print</Button>
-              </div>
+      <div class="flex flex-col items-center justify-between sm:flex-row">
+  <div class="flex flex-col w-full mb-2 sm:space-x-2 sm:flex-row sm:w-auto sm:max-w-sm">
+    <CustomInput
+      type="date"
+      label="From"
+      v-model="dateFrom"
+      class="px-4 py-2 mb-2 bg-gray-100 border border-gray-300 rounded-lg sm:mb-0 sm:mr-2 focus:outline-none focus:border-blue-500"
+      />
+    
+    <CustomInput
+      type="date"
+      label="To"
+      v-model="dateTo"
+      class="px-4 py-2 mt-3 bg-gray-100 border border-gray-300 rounded-lg mb sm:mr-2 focus:outline-none focus:border-blue-500"
+      />
+      <div class="flex flex-col w-full sm:flex-row sm:w-auto sm:max-w-sm">
+    <Button  @click.prevent="getitems()">Report</Button>
+    </div>
+  </div>
+  <div class="flex flex-col w-full mb-2 sm:flex-row sm:w-auto sm:max-w-sm">
+  <Button class="text-center"  @click.prevent="generatePdf">Print</Button>
+  </div>
+</div>
+
 
  
       <table class="w-full my-0 whitespace-nowrap">

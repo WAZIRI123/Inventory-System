@@ -89,7 +89,8 @@
   })
   const inputClasses = computed(() => {
     const cls = [
-      `border-gray-300 dark:border-gray-700 ml-2 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full`,
+      `border-gray-300
+       dark:border-gray-700 mb-2 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full`,
     ];
   
     if (props.append && !props.prepend) {
