@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Product;
+namespace App\Http\Livewire\CounterInventories;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
 use \Illuminate\View\View;
 
-use App\Models\Product;
-use Carbon\Carbon;
+use App\Models\CounterInventory;
 
-class Table extends Component
+class Wertwert extends Component
 {
     use WithPagination;
 
@@ -47,18 +46,17 @@ class Table extends Component
     public function render(): View
     {
         $results = $this->query()
-            ->with(['stockMutations',])
             ->when($this->q, function ($query) {
                 return $query->where(function ($query) {
-                    $query->where('name', 'like', '%' . $this->q . '%');
+                    $query->where('product_id', 'like', '%' . $this->q . '%');
                 });
             })
             ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC')
             ->paginate($this->per_page);
 
-        return view('livewire.product.table', [
+        return view('livewire.wertwert', [
             'results' => $results
-        ])->layoutData(['title' => 'product | School Management System']);
+        ]);
     }
 
     public function sortBy(string $field): void
@@ -81,6 +79,6 @@ class Table extends Component
 
     public function query(): Builder
     {
-        return Product::query();
+        return CounterInventory::query();
     }
 }

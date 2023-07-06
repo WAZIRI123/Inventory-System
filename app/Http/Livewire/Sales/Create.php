@@ -173,7 +173,7 @@ class Create extends Component
     
         if (!$product->inStock($this->item['quantity'])) {
            
-            $product->decreaseStock($this->oldQuantity);
+          $product->decreaseStock($this->oldQuantity);
 
           session()->flash('error', 'The provided quantity exceeds the stock quantity.');  
            

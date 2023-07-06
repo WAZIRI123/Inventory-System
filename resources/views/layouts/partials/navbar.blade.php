@@ -12,12 +12,19 @@
         </div>
         <div class="flex items-center"> 
 
-        </div>
+</div>
         <!-- end::Mobile menu button 239-->
 
         <!-- start::Right side top menu -->
         <div class="flex items-center">
             <!-- start::Profile -->
+            <label for="rounded_select"></label>
+                                <select name="rounded_select" id="rounded_select" class="mt-2  py-1 border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-300 rounded-lg">
+                                    <option>change company</option>
+                                    <option>Option 1</option>
+                                    <option>Option 2</option>
+                                    <option>Option 3</option>
+                                </select>
             <div x-data="{ linkActive: false }" class="relative">
                
                 <div @click="linkActive = !linkActive" class="cursor-pointer">

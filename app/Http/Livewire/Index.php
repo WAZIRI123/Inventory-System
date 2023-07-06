@@ -31,9 +31,10 @@ class Index extends Component
 
     public function render()
     {
-        $totalRevenue = Sale::join('products', 'sales.product_id', '=', 'products.id')
-        ->selectRaw('SUM(products.sale_price* sales.quantity) as total_revenue')
-        ->first()->total_revenue;
+        // $totalRevenue = Sale::join('products', 'sales.product_id', '=', 'products.id')
+        // ->selectRaw('SUM(products.sale_price* sales.quantity) as total_revenue')
+        // ->first()->total_revenue;
+        $totalRevenue=0;
         $latestSales=Sale::with('product')->latest()->take(10)->get();
 
         $this->latestSales= $latestSales;

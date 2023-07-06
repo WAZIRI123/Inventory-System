@@ -26,6 +26,10 @@
         <x-side-menu.div-link route="sales" title="Sales" />
         <!-- end::Menu link -->
 
+          <!-- start::Menu link  -->
+          <x-side-menu.div-link route="purchases" title="Purchases" />
+        <!-- end::Menu link -->
+
         @if (auth()->user()->hasRole('Admin'))
                         <!-- start::Menu link  -->
                         <x-side-menu.div-link route="product" title="products" />

@@ -1,9 +1,8 @@
 <div class="h-full bg-gray-200 p-8">
 <div class="mt-8 min-h-screen">
-    @livewire('livewire-toast')
     <div class="flex justify-between">
-        <div class="text-2xl">Products</div>
-        <button type="submit" wire:click="$emitTo('product.create', 'showCreateForm');" class="text-blue-500">
+        <div class="text-2xl">Purchases</div>
+        <button type="submit" wire:click="$emitTo('purchases.create', 'showCreateForm');" class="text-blue-500">
             <x-tall-crud-icon-add />
         </button> 
     </div>
@@ -15,7 +14,7 @@
             </div>
             <div class="flex">
 
-                <x-tall-crud-page-dropdown/>
+                <x-tall-crud-page-dropdown />
             </div>
         </div>
         <table class="w-full whitespace-no-wrap mt-4 shadow-2xl text-xs" wire:loading.class.delay="opacity-50">
@@ -29,17 +28,12 @@
                 </td>
                 <td class="px-3 py-2" >
                     <div class="flex items-center">
-                        <button wire:click="sortBy('name')">Name</button>
-                        <x-tall-crud-sort-icon sortField="name" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                        <button wire:click="sortBy('product_id')">Product Id</button>
+                        <x-tall-crud-sort-icon sortField="product_id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
                     </div>
                 </td>
-               
-                
-                <td class="px-3 py-2" >Sale Price</td>
-                <td class="px-3 py-2" >Purchase Price</td>
-                <td class="px-3 py-2" >Description</td>
-                <td class="px-3 py-2" >Stock</td>
-         
+                <td class="px-3 py-2" >Vendor Id</td>
+                <td class="px-3 py-2" >Quantity</td>
                 <td class="px-3 py-2" >Actions</td>
                 </tr>
             </thead>
@@ -47,20 +41,14 @@
             @foreach($results as $result)
                 <tr class="hover:bg-blue-300 {{ ($loop->even ) ? "bg-blue-100" : ""}}">
                     <td class="px-3 py-2" >{{ $result->id }}</td>
-                    <td class="px-3 py-2" >{{ $result->name }}</td>
-                    <td class="px-3 py-2" >{{ $result->sale_price }}</td>
-                    <td class="px-3 py-2" >{{ $result->purchase_price }}</td>
-                
-                    <td class="px-3 py-2" >{{ $result->description }}</td>
-               
-                 
-                    <td class="px-3 py-2" >{{ $result->stock() }}</td>
-                 
+                    <td class="px-3 py-2" >{{ $result->product_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->vendor_id }}</td>
+                    <td class="px-3 py-2" >{{ $result->quantity }}</td>
                     <td class="px-3 py-2" >
-                        <button type="submit" wire:click="$emitTo('product.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
+                        <button type="submit" wire:click="$emitTo('purchases.create', 'showEditForm', {{ $result->id}});" class="text-green-500">
                             <x-tall-crud-icon-edit />
                         </button>
-                        <button type="submit" wire:click="$emitTo('product.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
+                        <button type="submit" wire:click="$emitTo('purchases.create', 'showDeleteForm', {{ $result->id}});" class="text-red-500">
                             <x-tall-crud-icon-delete />
                         </button>
                     </td>
@@ -73,7 +61,7 @@
     <div class="mt-4">
         {{ $results->links() }}
     </div>
-    @livewire('product.create')
-    
+    @livewire('purchases.create')
+    @livewire('livewire-toast')
 </div>
 </div>

@@ -20,11 +20,9 @@ class ProductFactory extends Factory
        $vendor=Vendor::factory()->create();
         return [
             'name' => $this->faker->name,
-            'vendor_id' => $vendor->id,
             'description' => $this->faker->sentence,
-            'purchase_price' => $this->faker->randomFloat(2, 0, 100),
-            'sale_price' => $this->faker->randomFloat(2, 0, 100),
-            
+            'purchase_price' =>$this->faker->numberBetween(1000,2000),
+            'sale_price' => $this->faker->numberBetween(1500,2300),
         ];
     }
 }

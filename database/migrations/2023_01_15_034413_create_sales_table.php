@@ -22,7 +22,6 @@ return new class extends Migration
             
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('employee_id')->references('id')->on('employees');
-
             $table->softDeletes();
         });
     }
